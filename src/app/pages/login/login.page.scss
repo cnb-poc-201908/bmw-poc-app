@@ -1,6 +1,14 @@
 :host {
     ion-content {
         --background: linear-gradient(135deg, var(--ion-color-dark), var(--ion-color-primary));
+
+        .auth-content {
+            margin-top : 30%;
+        }
+
+        ion-button {
+            margin-top : 20%;
+        }
     }
 }
 
