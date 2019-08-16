@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>用户信息列表</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-label>
+      <p>{{ dateTime }}</p>
+</ion-label>
+  <ion-list>
+    <ion-item *ngFor="let item of vericlelist" [routerLink]="['/button']">
+        <ion-label>{{item.regno}}</ion-label>
+        <ion-label>{{item.reservFlag}}</ion-label>
+        <ion-label>进场时间: {{item.checkintime}}</ion-label>
+    </ion-item>
+</ion-list>
+
+</ion-content>

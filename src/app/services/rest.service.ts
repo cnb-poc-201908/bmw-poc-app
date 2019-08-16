@@ -71,5 +71,10 @@ export class RestService {
         return this.httpGet(this.url + `/repairOrder/employeeGlist`);
     }
 
+    /*get all customers and virecles information*/
+    getBasicInfolist(): Observable<any> {
+        return this.httpGet(this.url + `/repairOrder/GetBasicInfolist`);
+    }
+
 
 }
