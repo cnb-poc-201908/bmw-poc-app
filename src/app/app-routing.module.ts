@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'home-results', loadChildren: './pages/home-results/home-results.module#HomeResultsPageModule' },
   { path: 'packages', loadChildren: './pages/packages/packages.module#PackagesPageModule' },
   { path: 'virecle-list', loadChildren: './pages/virecle-list/virecle-list.module#VirecleListPageModule' },
+  { path: 'search-filter', loadChildren: './pages/modal/search-filter/search-filter.module#SearchFilterPageModule' },
 
 ];
 

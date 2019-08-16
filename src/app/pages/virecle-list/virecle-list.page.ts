@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-virecle-list',
   templateUrl: './virecle-list.page.html',
@@ -11,12 +13,20 @@ export class VirecleListPage implements OnInit {
   public vericlelistinfo: any = [];
   public dateTime: string;
 
-  constructor(private rest: RestService) { }
+  constructor(private rest: RestService, public router: Router) { }
 
   ngOnInit() {
     this.getVircleRecords();
     this.dateTime = new Date().toISOString().substr(0,10);
   }
+
+  RedirectToDetail(object) {
+    this.router.navigate(['search-filter'], {
+        queryParams: {
+          object: JSON.stringify(object)
+        }
+    });
+}
 
   getVircleRecords() {
     this.rest.getBasicInfolist().subscribe( response => {
@@ -35,7 +45,9 @@ export class VirecleListPage implements OnInit {
           let jsonBasicInfo = {
             'regno': regno,
             'reservFlag': reservFlag,
-            'checkintime': checkintime
+            'checkintime': checkintime,
+            'virecle_info': this.vericlelistinfo[i]['virecle_info'],
+            'customer_info': this.vericlelistinfo[i]['customer_info']
           }
           this.vericlelist.push(jsonBasicInfo);
           this.vericlelist.sort(function( a, b ){

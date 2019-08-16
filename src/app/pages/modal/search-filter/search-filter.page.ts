@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-search-filter',
@@ -13,13 +14,21 @@ export class SearchFilterPage implements OnInit {
     lower: 10
   };
 
-  constructor(private modalCtrl: ModalController) { }
+  public objectReceive: any;
 
-  ngOnInit() {
-  }
+  constructor(private modalCtrl: ModalController, public activeRoute: ActivatedRoute) { }
+
+  ngOnInit() {}
 
   closeModal() {
     this.modalCtrl.dismiss();
   }
 
+  ionViewDidEnter(){
+    this.activeRoute.queryParams.subscribe((params: Params) => {
+       this.objectReceive = params['object'];
+       this.objectReceive = JSON.parse(this.objectReceive);
+       console.log(this.objectReceive)
+    });
+ }
 }
