@@ -17,6 +17,7 @@ import { SearchFilterPageModule } from './pages/modal/search-filter/search-filte
 
 // Components
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ServicesModule } from './services/services.module';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { NotificationsComponent } from './components/notifications/notifications
     AppRoutingModule,
     HttpClientModule,
     ImagePageModule,
-    SearchFilterPageModule
+    SearchFilterPageModule,
+    ServicesModule
   ],
   entryComponents: [NotificationsComponent],
   providers: [

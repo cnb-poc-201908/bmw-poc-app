@@ -1,0 +1,25 @@
+:host {
+    ion-content {
+        --background: var(--ion-color-light);
+
+        ion-segment-button {
+            --padding-end: 20px;
+            --padding-start: 20px;
+            --padding-bottom: 5px;
+            --padding-top: 5px;
+            --border-radius: 0;
+            --background-hover: transparent;
+            --background-activated: transparent;
+            --background-checked: transparent;
+            // --border-width: 2px;
+            // --border-color: transparent;
+            --color-checked: black;
+            border: 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        ion-segment-button:hover, ion-segment-button:active, ion-segment-button:checked, ion-segment-button::selection{    
+            border-bottom: 2px solid black;
+        }
+    }
+}
