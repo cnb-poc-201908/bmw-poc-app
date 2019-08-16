@@ -1,0 +1,33 @@
+:host {
+    ion-content {
+        --background: var(--ion-color-light);
+    }
+
+    ion-item {
+        border-radius: 0;
+        border-bottom: 1px dotted var(--ion-color-medium);
+    }
+
+    ion-card {
+        &.no-radius {
+            border-radius: 0;
+        }
+    }
+    ion-card-content{
+        padding-inline-start: 0px;
+        padding-inline-end: 0px;
+        padding-bottom: 7px;
+        padding-top: 7px;
+    }
+    
+
+}
+
+.reservationcss{
+    font-family: PingFangSC-Regular;
+    font-size: 11px;
+    color: #FFFFFF;
+    text-align: left;
+    background: #40B84B;
+}
+

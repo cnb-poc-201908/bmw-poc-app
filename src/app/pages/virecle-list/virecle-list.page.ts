@@ -23,8 +23,11 @@ export class VirecleListPage implements OnInit {
       if (response.code === 200) {
         this.vericlelistinfo = response['basicInfoList'];
         for (let i = 0; i < this.vericlelistinfo.length; i++) {
+          if ( this.vericlelistinfo[i]['status'] !== 'W') {
+            continue;
+          }
           let regno = this.vericlelistinfo[i]['virecle_info']['regno'];
-          let reservFlag = '已预约'
+          let reservFlag = '已预约';
           if ( this.vericlelistinfo[i]['isreservation'] === 'N') {
             reservFlag = ''
           }
