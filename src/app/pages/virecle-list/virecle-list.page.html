@@ -1,13 +1,15 @@
 <ion-header>
   <ion-toolbar color="newblue">
-    <ion-title>等待车辆列表</ion-title>
+    <ion-title>客户车辆列表</ion-title>
+    <ion-buttons slot="primary">
+        <ion-button (click)="takePhoto()">
+          <ion-icon slot="icon-only" name="camera"></ion-icon>
+        </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-  <p><button ion-button round icon-only block (click)="takePhoto()">
-    <ion-icon name = "camera"></ion-icon>
-  </button></p>
   <ion-label>
       <p>{{ dateTime }}</p>
 </ion-label>
