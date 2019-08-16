@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sit-bmw-pocapp
+  namespace: sit
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sit-bmw-pocapp
+    spec:
+      containers:
+        - name: sit-bmw-pocapp
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/sit-bmw-pocapp:{version}
+          ports:
+            - name: http-port
+              containerPort: 80
+      imagePullSecrets:
+        - name: bmwpoc

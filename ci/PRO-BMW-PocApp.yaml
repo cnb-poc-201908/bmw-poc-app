@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pro-bmw-pocapp
+  namespace: pro
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pro-bmw-pocapp
+    spec:
+      containers:
+        - name: pro-bmw-pocapp
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/pro-bmw-pocapp:{version}
+          ports:
+            - name: http-port
+              containerPort: 80
+      imagePullSecrets:
+        - name: bmwpoc
