@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: uat-bmw-pocapp
+  namespace: uat
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: uat-bmw-pocapp
+    spec:
+      containers:
+        - name: uat-bmw-pocapp
+          image: registry.cn-beijing.aliyuncs.com/bmwpoc/uat-bmw-pocapp:{version}
+          ports:
+            - name: http-port
+              containerPort: 80
+      imagePullSecrets:
+        - name: bmwpoc

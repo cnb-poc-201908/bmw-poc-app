@@ -1,0 +1,50 @@
+#!groovy
+node {   
+// '##################Creditial SETUP########################'
+def GIT_URL = 'git@github.com:bmw-poc/bmw-poc-app.git'
+def E2E_GIT_URL = 'git@github.com:bmw-poc/test_selenium.git'
+def GIT_CRED = 'gitcom-user-bchen'
+
+def SONAR_CRED = 'sonar-token'
+String DOCKER_REPO="registry.cn-beijing.aliyuncs.com/bmwpoc"
+
+String DOCKER_REG="https://" + DOCKER_REPO + "/"
+String DOCKER_REG_KEY = "9643e3f4-6725-4294-a8ca-94a156195e8f"
+
+def PRODUCT_NAME=env.JOB_NAME.toLowerCase()
+
+String IMAGE_NAME="${PRODUCT_NAME}"
+String IMAGE_TAG=env.BUILD_NUMBER
+
+def customImage
+
+//################# CI PART ###################################
+
+    stage('Setup Environment') {
+        checkout([$class: 'GitSCM', branches: [[name: '*/new-feature']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: GIT_CRED, url: GIT_URL]]])
+    }
+	
+	stage('Build') {
+		sh "npm install -g ionic"
+		sh "npm install --registry  https://registry.npm.taobao.org"
+        sh "ionic build"	
+    }
+
+//################# CD PART ###################################
+       stage("Build image and Deploy to Env "){
+       docker.withRegistry(DOCKER_REG,DOCKER_REG_KEY){
+              customImage = docker.build(DOCKER_REPO + "/" + IMAGE_NAME, "-f ci/Dockerfile .")    
+              customImage.push(IMAGE_TAG)
+            }
+	   sh "sed -i 's/{version}/" + IMAGE_TAG + "/g' ./ci/${env.JOB_NAME}.yaml"
+	   sh "kubectl apply -f ./ci/${env.JOB_NAME}.yaml"
+    }      
+
+	//################# Tag Image as SIT Pass ###################################
+	   stage("Complete The pipeline"){
+       docker.withRegistry(DOCKER_REG,DOCKER_REG_KEY){
+              customImage.push("pass")
+			  customImage.push("latest")
+            }
+    } 
+}
