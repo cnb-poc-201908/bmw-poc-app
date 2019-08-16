@@ -8,6 +8,8 @@ import { RestService } from 'src/app/services/rest.service';
 })
 export class PackagesPage implements OnInit {
 
+  public currentTab:string = "maintenance";
+  
   constructor(private rest: RestService,) { }
 
   ngOnInit() {
@@ -18,5 +20,11 @@ export class PackagesPage implements OnInit {
     })
 
   }
+
+  changeTab(event) {
+    this.currentTab = event.detail.value;
+  }
+
+
 
 }

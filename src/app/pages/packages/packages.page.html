@@ -16,43 +16,40 @@
 
 
 <ion-content>
-  <ion-segment scrollable>
-    <ion-segment-button checked>
-      <ion-label>Call</ion-label>
+  <ion-segment scrollable (ionChange)="changeTab($event)">
+    <ion-segment-button checked value="maintenance">
+      <ion-label>保养</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="check">
+      <ion-label>查修</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="accident">
+      <ion-label>事故车</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="etc">
+      <ion-label>杂项</ion-label>
+    </ion-segment-button>
+    <!-- <ion-segment-button>
+      <ion-label>首保</ion-label>
     </ion-segment-button>
     <ion-segment-button>
-      <ion-label>Favorite</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Map</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Other</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>ETC</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>ETC</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>ETC</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Map</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Map</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>Map</ion-label>
-    </ion-segment-button>
+      <ion-label>PDI</ion-label>
+    </ion-segment-button> -->
 
   </ion-segment>
 
   <ion-content>
-    <div style="height : 1200px;">
-      AAA
+    <div *ngIf="currentTab == 'maintenance'">
+      <tab-maintenance></tab-maintenance>
+    </div>
+    <div *ngIf="currentTab == 'check'">
+      <tab-check></tab-check>
+    </div>
+    <div *ngIf="currentTab == 'accident'">
+      <tab-accident></tab-accident>
+    </div>
+    <div *ngIf="currentTab == 'etc'">
+      <tab-etc></tab-etc>
     </div>
   </ion-content> 
 

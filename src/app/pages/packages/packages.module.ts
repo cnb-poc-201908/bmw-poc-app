@@ -6,6 +6,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PackagesPage } from './packages.page';
+import { MaintenanceComponent } from './maintenance/maintenance.component';
+import { CheckComponent } from './check/check.component';
+import { AccidentComponent } from './accident/accident.component';
+import { EtcComponent } from './etc/etc.component';
 
 const routes: Routes = [
   {
@@ -21,6 +25,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PackagesPage]
+  declarations: [PackagesPage, MaintenanceComponent, CheckComponent, AccidentComponent, EtcComponent]
 })
 export class PackagesPageModule {}
