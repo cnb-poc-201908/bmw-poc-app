@@ -21,6 +21,8 @@ import { ServicesModule } from './services/services.module';
 
 import { InterceptorService } from './services/interceptor.service';
 
+import { Camera } from '@ionic-native/camera/ngx';
+
 @NgModule({
   declarations: [AppComponent, NotificationsComponent],
   imports: [
@@ -37,6 +39,7 @@ import { InterceptorService } from './services/interceptor.service';
   providers: [
     StatusBar,
     SplashScreen,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],

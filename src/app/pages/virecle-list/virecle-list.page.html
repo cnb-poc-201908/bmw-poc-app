@@ -1,10 +1,13 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>用户信息列表</ion-title>
+  <ion-toolbar color="newblue">
+    <ion-title>等待车辆列表</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
+  <p><button ion-button round icon-only block (click)="takePhoto()">
+    <ion-icon name = "camera"></ion-icon>
+  </button></p>
   <ion-label>
       <p>{{ dateTime }}</p>
 </ion-label>
@@ -20,7 +23,7 @@
             </ion-label>
           </ion-col>
           <ion-col size="6" class="reservationTime">
-            进场时间: {{item.checkintime}}
+            到店时间: {{item.checkintime}}
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { Router } from '@angular/router';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-virecle-list',
@@ -13,7 +14,7 @@ export class VirecleListPage implements OnInit {
   public vericlelistinfo: any = [];
   public dateTime: string;
 
-  constructor(private rest: RestService, public router: Router) { }
+  constructor(private rest: RestService, public router: Router, private camera: Camera) { }
 
   ngOnInit() {
     this.getVircleRecords();
@@ -37,11 +38,13 @@ export class VirecleListPage implements OnInit {
             continue;
           }
           let regno = this.vericlelistinfo[i]['virecle_info']['regno'];
-          let reservFlag = '已预约';
+          let reservFlag = '已预约.';
           if ( this.vericlelistinfo[i]['isreservation'] === 'N') {
             reservFlag = ''
           }
           let checkintime = this.vericlelistinfo[i]['checkintime']
+
+          //reformat the data
           let jsonBasicInfo = {
             'regno': regno,
             'reservFlag': reservFlag,
@@ -50,6 +53,8 @@ export class VirecleListPage implements OnInit {
             'customer_info': this.vericlelistinfo[i]['customer_info']
           }
           this.vericlelist.push(jsonBasicInfo);
+          
+          //sort by checktime 
           this.vericlelist.sort(function( a, b ){
             let checkintimeA = a.checkintime,
             checkintimeB = b.checkintime;
@@ -61,4 +66,26 @@ export class VirecleListPage implements OnInit {
       }
     })
   }
+
+  takePhoto() {
+    const options: CameraOptions = {
+     quality: 100,                                                   // 相片质量 0 -100
+     destinationType: this.camera.DestinationType.DATA_URL,        // DATA_URL 是 base64   FILE_URL 是文件路径
+     encodingType: this.camera.EncodingType.JPEG,
+     mediaType: this.camera.MediaType.PICTURE,   //有PICTURE VIDEO ALLMEDIA
+     saveToPhotoAlbum: true,                                       // 是否保存到相册
+     sourceType: this.camera.PictureSourceType.CAMERA ,         //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
+   }
+
+   this.camera.getPicture(options).then((imageData) => {
+     console.log('got file: ' + imageData);
+
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      var img=new Image();
+      img.src=base64Image;
+
+   }, (err) => {
+     console.log(err);
+   });  }
 }

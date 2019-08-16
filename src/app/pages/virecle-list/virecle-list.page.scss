@@ -1,18 +1,4 @@
 :host {
-    ion-content {
-        --background: var(--ion-color-light);
-    }
-
-    ion-item {
-        border-radius: 0;
-        border-bottom: 1px dotted var(--ion-color-medium);
-    }
-
-    ion-card {
-        &.no-radius {
-            border-radius: 0;
-        }
-    }
     ion-card-content{
         padding-inline-start: 0px;
         padding-inline-end: 0px;
@@ -20,6 +6,12 @@
         padding-top: 7px;
     }
     
+    ion-title{
+        font-family: NotoNastaliqUrdu;
+        font-size: 20px;
+        color: #FFFFFF;
+        text-align: center;
+    }
 
 }
 
@@ -35,3 +27,14 @@
     text-align: right
 }
 
+
+  
+.ion-color-newblue {
+    --ion-color-base: var(--ion-color-new);
+    --ion-color-base-rgb: var(--ion-color-new-rgb);
+    --ion-color-contrast: var(--ion-color-new-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-new-contrast-rgb);
+    --ion-color-shade: var(--ion-color-new-shade);
+    --ion-color-tint: var(--ion-color-new-tint);
+  }
+  
