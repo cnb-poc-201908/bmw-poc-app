@@ -1,11 +1,11 @@
 :host {
     ion-content {
         --background: var(--ion-color-light);
-    
+
         ion-segment {
             border-bottom: 2px solid #2f32a0;
         }
-    
+
         ion-segment-button {
             // --padding-end: 20px;
             // --padding-start: 20px;
@@ -15,38 +15,28 @@
             // --background-hover: transparent;
             // --background-activated: transparent;
             // --background-checked: transparent;
-            // // --border-width: 2px;
-            // // --border-color: transparent;
+            // --border-width: 2px;
+            // --border-color: transparent;
             // --color-checked: black;
             // border: 0;
             // border-bottom: 2px solid transparent;
-    
+
             border: 1px solid;
             border-radius: 5px;
             --padding-bottom: 15px;
             --padding-top: 15px;
             margin: 0 10px 10px 0;
         }
-    
+
         ion-segment-button:last-child {
             margin-right: 0;
         }
-    
+
         ion-segment-button:hover,
         ion-segment-button:active,
         ion-segment-button:checked {
             border: 1px solid #2f32a0;
         }
     }
-    
-    ion-col {
-        text-align: center;
-        background-color: #f7f7f7;
-        border: 1px dashed #2f32a0;
-        padding: 10px;
-    }
-    
-    .door {
-        padding: 0;
-    }
+
 }
