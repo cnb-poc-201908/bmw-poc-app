@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   NavController,
   AlertController,
@@ -22,6 +22,9 @@ export class HomeResultsPage {
   searchKey = '';
   yourLocation = '123 Test Street';
   themeCover = 'assets/img/ionic4-Start-Theme-cover.jpg';
+  public currentTab:string = "maintenance";
+  items:any;
+  @ViewChild('slidingList') slidingList;
 
   constructor(
     public navCtrl: NavController,
@@ -31,7 +34,31 @@ export class HomeResultsPage {
     public modalCtrl: ModalController,
     public toastCtrl: ToastController
   ) {
+    this.items = [
+      {title: 'item1'},
+      {title: 'item2'},
+      {title: 'item3'},
+      {title: 'item4'},
+      {title: 'item5'},
+      {title: 'item6'},
+      {title: 'item7'},
+      {title: 'item8'},
+      {title: 'item9'},
+      {title: 'item10'}
+  ];
+  }
+  
+  back() {
+    window.history.back();
+  }
+  
+  async remove(i) {
+    this.items.splice(i, 1);
+    await this.slidingList.closeSlidingItems();
+  }
 
+  changeTab(event) {
+    this.currentTab = event.detail.value;
   }
 
   ionViewWillEnter() {
