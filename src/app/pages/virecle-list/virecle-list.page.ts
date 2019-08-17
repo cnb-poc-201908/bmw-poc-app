@@ -32,60 +32,60 @@ export class VirecleListPage implements OnInit {
     });
   }
 
+/*
   getItems(e) {
     var q = e.target.value;
     if ( q && q.trim() !== '') {
       this.vericlelist = this.ListForFilter.filter((item) => {
-        item = item['regno'];
+        item = item['REGNO'];
         return (item.toLowerCase().indexOf(q.toLowerCase()) > -1);
       });
     }
 
   }
+*/
 
   //search virecles
-  searchFilter() {
-    if ( this.searchKey === '' || this.searchKey == null ) {
-      this.getVircleRecords();
-    } else {
-      this.rest.getBasicInfoById(this.searchKey).subscribe( res => {
-        if (res.code === 200) {
-          this.vericlelist.splice(0,this.vericlelist.length);
-          this.vericlelistinfo = res['basicInfoList'];
-          for (let i = 0; i < this.vericlelistinfo.length; i++) {
-            if ( this.vericlelistinfo[i]['status'] !== 'W') {
+  searchFilter(e) {
+    this.rest.getBasicInfoById(e.target.value).subscribe( res => {
+      if (res.code === 200) {
+        this.vericlelist.splice(0,this.vericlelist.length);
+        this.vericlelistinfo = res['basicInfoList'];
+        for (let i = 0; i < this.vericlelistinfo.length; i++) {
+          if ( this.vericlelistinfo[i]['STATUS'] !== 'w') {
               continue;
             }
-            const regno = this.vericlelistinfo[i]['virecle_info']['regno'];
-            let reservFlag = true;
-            let saName = 'SA:' + this.vericlelistinfo[i]['AppointmentSA'];
-            if ( this.vericlelistinfo[i]['AppointmentFlag'] !== 'Y') {
+          const regno = this.vericlelistinfo[i]['VEHICLE']['REGNO'];
+          let reservFlag = true;
+          let saName = 'SA:' + this.vericlelistinfo[i]['BOOKSA'];
+          if ( this.vericlelistinfo[i]['BOOKF'] !== 'Y') {
               reservFlag = false;
               saName = '';
-            }
-            const checkintime = this.vericlelistinfo[i]['checkintime']
-            //reformat the data
-            const jsonBasicInfo = {
+          }
+          const checkintime = this.vericlelistinfo[i]['ARRIVALTIME'];
+          const jsonBasicInfo = {
               'regno': regno,
               'reservFlag': reservFlag,
               'checkintime': checkintime,
               'saName': saName,
-              'virecle_info': this.vericlelistinfo[i]['virecle_info'],
-              'customer_info': this.vericlelistinfo[i]['customer_info']
-            }
-            this.vericlelist.push(jsonBasicInfo);
-            //sort by checktime 
-            this.vericlelist.sort(function( a, b ) {
+              'virecle_info': this.vericlelistinfo[i]['VEHICLE'],
+              'customer_info': this.vericlelistinfo[i]['CUSTOMER']
+          };
+          this.vericlelist.push(jsonBasicInfo);
+          //sort by checktime 
+          this.vericlelist.sort(function( a, b ) {
               const checkintimeA = a.checkintime,
               checkintimeB = b.checkintime;
               if ( checkintimeA > checkintimeB ) {
                 return 1;
               }
-            });
-          }
-        } else {}
-      });
-    }
+          });
+        }
+      }
+      else {
+        this.vericlelist.splice(0, this.vericlelist.length);
+      }
+    });
   }
 
   getVircleRecords() {
@@ -94,18 +94,18 @@ export class VirecleListPage implements OnInit {
         this.vericlelist.splice(0, this.vericlelist.length);
         this.vericlelistinfo = response['basicInfoList'];
         for (let i = 0; i < this.vericlelistinfo.length; i++) {
-          if ( this.vericlelistinfo[i]['status'] !== 'W') {
+          if ( this.vericlelistinfo[i]['STATUS'] !== 'w') {
             continue;
           }
-          const regno = this.vericlelistinfo[i]['virecle_info']['regno'];
+          const regno = this.vericlelistinfo[i]['VEHICLE']['REGNO'];
           let reservFlag = true;
-          let saName = 'SA:' + this.vericlelistinfo[i]['AppointmentSA'];
-          if ( this.vericlelistinfo[i]['AppointmentFlag'] !== 'Y') {
+          let saName = 'SA:' + this.vericlelistinfo[i]['BOOKSA'];
+          if ( this.vericlelistinfo[i]['BOOKF'] !== 'Y') {
             reservFlag = false;
             saName = '';
 
           }
-          const checkintime = this.vericlelistinfo[i]['checkintime']
+          const checkintime = this.vericlelistinfo[i]['ARRIVALTIME']
 
           //reformat the data
           const jsonBasicInfo = {
@@ -113,8 +113,8 @@ export class VirecleListPage implements OnInit {
             'reservFlag': reservFlag,
             'checkintime': checkintime,
             'saName': saName,
-            'virecle_info': this.vericlelistinfo[i]['virecle_info'],
-            'customer_info': this.vericlelistinfo[i]['customer_info']
+            'virecle_info': this.vericlelistinfo[i]['VEHICLE'],
+            'customer_info': this.vericlelistinfo[i]['CUSTOMER']
           };
           this.vericlelist.push(jsonBasicInfo);
           this.ListForFilter.push(jsonBasicInfo);

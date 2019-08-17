@@ -13,7 +13,7 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-toolbar color="primary">
-      <ion-searchbar [(ngModel)]="searchKey" (ionChange)="getItems($event)" (ionClear)="getVircleRecords()"></ion-searchbar>
+      <ion-searchbar [(ngModel)]="searchKey" (ionBlur)="searchFilter($event)" (ionClear)="getVircleRecords()"></ion-searchbar>
       <!--
       <ion-buttons slot="end">
           <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
