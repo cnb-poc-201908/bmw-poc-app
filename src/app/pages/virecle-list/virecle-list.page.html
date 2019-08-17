@@ -18,10 +18,13 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <ion-label>{{item.regno}}</ion-label>
+            <ion-label>{{item.regno}}&nbsp;</ion-label>
+            <ion-label class="reservationcss" *ngIf="item.reservFlag">
+                <ion-icon name="star-outline" slot="icon-only"></ion-icon>
+            </ion-label>
             <ion-label>&nbsp;</ion-label>
-            <ion-label class="reservationcss" ng-if="item.reservFlag!=''">
-                {{item.reservFlag}}
+            <ion-label class="sacss" *ngIf="item.reservFlag">
+                {{item.saName}}
             </ion-label>
           </ion-col>
           <ion-col size="6" class="reservationTime">
