@@ -14,9 +14,9 @@ const routes: Routes = [
   { path: 'pack-check', loadChildren: './pages/pack-check/pack-check.module#PackCheckPageModule' },
   { path: 'pack-accident', loadChildren: './pages/pack-accident/pack-accident.module#PackAccidentPageModule' },
   { path: 'pack-etc', loadChildren: './pages/pack-etc/pack-etc.module#PackEtcPageModule' },
+  { path: 'pack-campain', loadChildren: './pages/pack-campain/pack-campain.module#PackCampainPageModule' },
   { path: '**', loadChildren: './pages/login/login.module#LoginPageModule' },
-  { path: 'pack-campain', loadChildren: './pack-campain/pack-campain.module#PackCampainPageModule' },
-
+  
 ];
 
 @NgModule({

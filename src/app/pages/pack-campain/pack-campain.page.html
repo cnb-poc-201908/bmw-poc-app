@@ -1,9 +1,55 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>pack-campain</ion-title>
-  </ion-toolbar>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-back-button text="返回" defaultHref="home-results"></ion-back-button>
+      </ion-buttons>
+      <ion-title>
+        活动
+      </ion-title>
+    </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-
+<ion-content>
+    <ion-card color="light" *ngFor="let pack of packages" >
+      <ion-card-content style="float:left;width:100%" (click)="doClick(pack)">
+          <ion-item (click)="doClick(pack)">
+            <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
+            <ion-label>{{pack.title}}</ion-label>
+            <ion-note *ngIf="pack.prefer" class="ticket" slot="end">优惠券</ion-note>
+            <ion-note slot="end">￥{{pack.price}}</ion-note>
+          </ion-item>
+          <div *ngIf="pack.selected == true">
+            <ion-item *ngFor="let item of pack.details">
+                <ion-label class="details">{{item.label}}</ion-label>
+                <ion-note slot="end">X {{item.amount}}</ion-note>
+            </ion-item>
+          </div>
+      </ion-card-content>
+    </ion-card>
 </ion-content>
+
+<ion-footer class="main-footer">
+    <ion-grid class="footer-grid">
+      <ion-row class="footer-grid-row">
+        <ion-col size="7">
+          <ion-grid style="height: 100%">
+            <ion-row style="padding:3px;">
+              Packages: {{selectedAmount}}
+            </ion-row>
+            <ion-row style="padding:3px;">
+              预计维修时长: {{selectedHours}}
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="5">
+          <ion-row>
+            <ion-button class="btn-submit" size="large" color="danger">确定</ion-button>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+    <!-- <ion-item>
+        <ion-label>Package:</ion-label>
+    </ion-item> -->
+</ion-footer>
