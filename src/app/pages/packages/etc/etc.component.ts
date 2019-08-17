@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  NavController,
   AlertController,
-  MenuController,
-  ToastController,
-  PopoverController,
-  ModalController } from '@ionic/angular';
+  ToastController
+} from '@ionic/angular';
 
 @Component({
   selector: 'tab-etc',
@@ -14,9 +11,14 @@ import {
 })
 export class EtcComponent implements OnInit {
 
-  etcItems = [
-    {text: '加油', value: 200},
-    {text: '加油', value: 100}
+  currentTab = 'cost';
+  costItems = [
+    { text: '费用类1', value: 200 },
+    { text: '费用类2', value: 100 }
+  ];
+  outItems = [
+    { text: '外包1', value: 200 },
+    { text: '外包2', value: 100 }
   ];
 
   constructor(
@@ -25,6 +27,10 @@ export class EtcComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  changeTab(event) {
+    this.currentTab = event.detail.value;
   }
 
   async addItem() {
@@ -54,10 +60,10 @@ export class EtcComponent implements OnInit {
           text: 'OK',
           handler: async (data) => {
             // console.log('Change clicked', data);
-            if (data.text === '' ||  data.value === '') {
+            if (data.text === '' || data.value === '') {
               return;
             }
-            this.etcItems.push({text: data.text, value: data.value});
+            this[this.currentTab + 'Items'].push({ text: data.text, value: data.value });
             const toast = await this.toastCtrl.create({
               message: '添加成功！',
               duration: 3000,
