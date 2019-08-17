@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {
+  NavController,
+  AlertController,
+  MenuController,
+  ToastController,
+  PopoverController,
+  ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'tab-etc',
@@ -7,17 +14,64 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EtcComponent implements OnInit {
 
-  items = [
-    {text: '加油', value: '200元'},
-    {text: '加油', value: '100元'}
+  etcItems = [
+    {text: '加油', value: 200},
+    {text: '加油', value: 100}
   ];
-  constructor() { }
+
+  constructor(
+    public alertCtrl: AlertController,
+    public toastCtrl: ToastController
+  ) { }
 
   ngOnInit() {
   }
 
-  addItem() {
-    this.items.push({text: '加油', value: '300元'});
+  async addItem() {
+    const changeLocation = await this.alertCtrl.create({
+      header: '添加条目',
+      // message: 'Type your Address.',
+      inputs: [
+        {
+          name: 'text',
+          placeholder: '名称',
+          type: 'text'
+        },
+        {
+          name: 'value',
+          placeholder: '费用',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'OK',
+          handler: async (data) => {
+            // console.log('Change clicked', data);
+            if (data.text === '' ||  data.value === '') {
+              return;
+            }
+            this.etcItems.push({text: data.text, value: data.value});
+            const toast = await this.toastCtrl.create({
+              message: '添加成功！',
+              duration: 3000,
+              position: 'top',
+              closeButtonText: 'OK',
+              showCloseButton: true
+            });
+
+            toast.present();
+          }
+        }
+      ]
+    });
+    changeLocation.present();
   }
 
 }
