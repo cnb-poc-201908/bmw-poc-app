@@ -61,20 +61,15 @@
 </ion-header>
 
 
-<ion-content>
-  <ion-content>
-    <div *ngIf="currentTab == 'maintenance'">
+    <ion-content *ngIf="currentTab == 'maintenance'">
       <tab-maintenance></tab-maintenance>
-    </div>
-    <div *ngIf="currentTab == 'check'">
+    </ion-content>
+    <ion-content *ngIf="currentTab == 'check'">
       <tab-check></tab-check>
-    </div>
-    <div *ngIf="currentTab == 'accident'">
+    </ion-content>
+    <ion-content *ngIf="currentTab == 'accident'">
       <tab-accident></tab-accident>
-    </div>
-    <div *ngIf="currentTab == 'etc'">
+    </ion-content>
+    <ion-content *ngIf="currentTab == 'etc'">
       <tab-etc></tab-etc>
-    </div>
-  </ion-content>
-
-</ion-content>
+    </ion-content>

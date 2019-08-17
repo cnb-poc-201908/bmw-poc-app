@@ -1,4 +1,24 @@
 :host {
+
+    background-color: #D8D8D8;
+
+    ion-content {
+        &.main-content {
+            bottom:60px;
+            --offset-top: -60px !important;
+        }
+    }
+
+    ion-footer {
+        &.main-footer {
+            position:fixed;
+            bottom:0px;
+            min-height:60px;
+            background-color: #FFF;
+            border-top: 1px solid #f4f5f8;
+        }
+    }
+    
     ion-item {
         --inner-border-width: 0px 0px 0px 0px;
     }
