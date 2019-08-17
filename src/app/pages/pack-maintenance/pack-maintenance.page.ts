@@ -9,6 +9,12 @@ export class PackMaintenancePage implements OnInit {
 
   public packages: Array<{}> = [];
 
+  public selectedPackages: Array<{}> = [];
+
+  public selectedAmount: Number = 0;
+
+  public selectedHours: Number = 0;
+
   constructor() { }
 
   ngOnInit() {
