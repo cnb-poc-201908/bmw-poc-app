@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EtcComponent implements OnInit {
 
+  items = [
+    {text: '加油', value: '200元'},
+    {text: '加油', value: '100元'}
+  ];
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addItem() {
+    this.items.push({text: '加油', value: '300元'});
   }
 
 }

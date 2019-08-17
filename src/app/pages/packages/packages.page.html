@@ -1,43 +1,67 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-        <ion-text color="light">
-          <ion-text color="light" class="fw700">BMW POC</ion-text>
-        </ion-text>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">BMW POC</ion-text>
+      </ion-text>
     </ion-title>
-    <!-- <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
-        <ion-icon name="notifications"></ion-icon>
-        <ion-badge color="dark" slot="end">2</ion-badge>
+    <ion-buttons slot="start">
+      <ion-button size="small" shape="round" color="medium">
+        <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
-    </ion-buttons> -->
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar class="tab-warp ion-color-primary" color="newBlue">
+    <ion-segment scrollable (ionChange)="changeTab($event)">
+      <ion-segment-button checked value="maintenance">
+        <ion-label>
+          <div class="btn-label">
+            <img src="../../../assets/icon/packages/etc.png">
+            <span>保养</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="check">
+        <ion-label>
+          <div class="btn-label">
+            <img src="../../../assets/icon/packages/etc.png">
+            <span>查修</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="accident">
+        <ion-label>
+          <div class="btn-label">
+            <img src="../../../assets/icon/packages/etc.png">
+            <span>事故车</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="etc">
+        <ion-label>
+          <div class="btn-label">
+            <img src="../../../assets/icon/packages/etc.png">
+            <span>杂项</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button>
+        <ion-label>
+          <div class="btn-label">
+            <img src="../../../assets/icon/packages/etc.png">
+            <span>首保</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <!-- <ion-segment-button>
+        <ion-label>PDI</ion-label>
+      </ion-segment-button> -->
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content padding>
-  <ion-segment scrollable (ionChange)="changeTab($event)">
-    <ion-segment-button checked value="maintenance">
-      <ion-label>保养</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="check">
-      <ion-label>查修</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="accident">
-      <ion-label>事故车</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="etc">
-      <ion-label>杂项</ion-label>
-    </ion-segment-button>
-    <!-- <ion-segment-button>
-      <ion-label>首保</ion-label>
-    </ion-segment-button>
-    <ion-segment-button>
-      <ion-label>PDI</ion-label>
-    </ion-segment-button> -->
-
-  </ion-segment>
-
+<ion-content>
   <ion-content>
     <div *ngIf="currentTab == 'maintenance'">
       <tab-maintenance></tab-maintenance>
@@ -51,6 +75,6 @@
     <div *ngIf="currentTab == 'etc'">
       <tab-etc></tab-etc>
     </div>
-  </ion-content> 
+  </ion-content>
 
 </ion-content>

@@ -1,3 +1,30 @@
-<p>
-  etc works!
-</p>
+<ion-segment>
+  <ion-segment-button checked>
+    <ion-label>费用类</ion-label>
+  </ion-segment-button>
+  <ion-segment-button>
+    <ion-label>外包</ion-label>
+  </ion-segment-button>
+</ion-segment>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="addItem()">
+    <!-- <ion-ripple-effect></ion-ripple-effect> -->
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+<ion-card *ngFor="let item of items" color="light">
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-label>{{item.text}}</ion-label>
+        </ion-col>
+        <ion-col>
+          {{item.value}}
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card-content>
+</ion-card>
