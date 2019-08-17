@@ -4,6 +4,7 @@
          <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
          <ion-label>{{pack.title}}</ion-label>
          <ion-note *ngIf="pack.prefer" class="ticket" slot="end">优惠券</ion-note>
+         <ion-note slot="end">￥{{pack.price}}</ion-note>
        </ion-item>
        <div *ngIf="pack.selected == true">
         <ion-item *ngFor="let item of pack.details">
