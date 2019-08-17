@@ -47,6 +47,9 @@ export class VirecleListPage implements OnInit {
 
   //search virecles
   searchFilter(e) {
+    if ( e.target.value === null || e.target.value.trim() === '' ) {
+      return;
+    }
     this.rest.getBasicInfoById(e.target.value).subscribe( res => {
       if (res.code === 200) {
         this.vericlelist.splice(0,this.vericlelist.length);
