@@ -11,6 +11,23 @@
             background-color: #FFF;
             border-top: 1px solid #f4f5f8;
         }
+
+        ion-grid {
+            &.footer-grid {
+                height:100%;
+
+            }
+            &.footer-grid .footer-grid-row {
+                height:100%;
+            }
+        }
+
+        ion-button {
+            &.btn-submit {
+                --background: #CB1919;
+                width: 140px;
+            }
+        }
     }
     
     ion-item {
