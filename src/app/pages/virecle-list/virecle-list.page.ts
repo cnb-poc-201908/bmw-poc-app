@@ -25,20 +25,20 @@ export class VirecleListPage implements OnInit {
   }
 
   RedirectToDetail(object) {
-    this.router.navigate(['search-filter'], {
+    this.router.navigate(['home-results'], {
         queryParams: {
           object: JSON.stringify(object)
         }
     });
   }
 
-  getItems(e){
+  getItems(e) {
     var q = e.target.value;
-    if(q && q.trim() !== '') {
+    if ( q && q.trim() !== '') {
       this.vericlelist = this.ListForFilter.filter((item) => {
-        item = item["regno"];
-        return (item.toLowerCase().indexOf(q.toLowerCase()) > -1)
-      })
+        item = item['regno'];
+        return (item.toLowerCase().indexOf(q.toLowerCase()) > -1);
+      });
     }
 
   }
