@@ -13,6 +13,7 @@ export class VirecleListPage implements OnInit {
   public vericlelist: any = [];
   public vericlelistinfo: any = [];
   public dateTime: string;
+  public searchKey: string;
 
   constructor(private rest: RestService, public router: Router, private camera: Camera) { }
 
@@ -27,17 +28,63 @@ export class VirecleListPage implements OnInit {
           object: JSON.stringify(object)
         }
     });
-}
+  }
+
+  //search virecles
+  searchFilter() {
+    if ( this.searchKey === '' || this.searchKey == null ) {
+      this.getVircleRecords();
+    } else {
+      this.rest.getBasicInfoById(this.searchKey).subscribe( res => {
+        if (res.code === 200) {
+          this.vericlelist.splice(0,this.vericlelist.length);
+          this.vericlelistinfo = res['basicInfoList'];
+          for (let i = 0; i < this.vericlelistinfo.length; i++) {
+            if ( this.vericlelistinfo[i]['status'] !== 'W') {
+              continue;
+            }
+            const regno = this.vericlelistinfo[i]['virecle_info']['regno'];
+            let reservFlag = true;
+            let saName = 'SA:' + this.vericlelistinfo[i]['AppointmentSA'];
+            if ( this.vericlelistinfo[i]['AppointmentFlag'] !== 'Y') {
+              reservFlag = false;
+              saName = '';
+            }
+            const checkintime = this.vericlelistinfo[i]['checkintime']
+            //reformat the data
+            const jsonBasicInfo = {
+              'regno': regno,
+              'reservFlag': reservFlag,
+              'checkintime': checkintime,
+              'saName': saName,
+              'virecle_info': this.vericlelistinfo[i]['virecle_info'],
+              'customer_info': this.vericlelistinfo[i]['customer_info']
+            }
+            this.vericlelist.push(jsonBasicInfo);
+            //sort by checktime 
+            this.vericlelist.sort(function( a, b ) {
+              const checkintimeA = a.checkintime,
+              checkintimeB = b.checkintime;
+              if ( checkintimeA > checkintimeB ) {
+                return 1;
+              }
+            });
+          }
+        } else {}
+      });
+    }
+  }
 
   getVircleRecords() {
     this.rest.getBasicInfolist().subscribe( response => {
       if (response.code === 200) {
+        this.vericlelist.splice(0, this.vericlelist.length);
         this.vericlelistinfo = response['basicInfoList'];
         for (let i = 0; i < this.vericlelistinfo.length; i++) {
           if ( this.vericlelistinfo[i]['status'] !== 'W') {
             continue;
           }
-          let regno = this.vericlelistinfo[i]['virecle_info']['regno'];
+          const regno = this.vericlelistinfo[i]['virecle_info']['regno'];
           let reservFlag = true;
           let saName = 'SA:' + this.vericlelistinfo[i]['AppointmentSA'];
           if ( this.vericlelistinfo[i]['AppointmentFlag'] !== 'Y') {
@@ -45,22 +92,21 @@ export class VirecleListPage implements OnInit {
             saName = '';
 
           }
-          let checkintime = this.vericlelistinfo[i]['checkintime']
+          const checkintime = this.vericlelistinfo[i]['checkintime']
 
           //reformat the data
-          let jsonBasicInfo = {
+          const jsonBasicInfo = {
             'regno': regno,
             'reservFlag': reservFlag,
             'checkintime': checkintime,
             'saName': saName,
             'virecle_info': this.vericlelistinfo[i]['virecle_info'],
             'customer_info': this.vericlelistinfo[i]['customer_info']
-          }
+          };
           this.vericlelist.push(jsonBasicInfo);
-          
           //sort by checktime 
-          this.vericlelist.sort(function( a, b ){
-            let checkintimeA = a.checkintime,
+          this.vericlelist.sort(function( a, b ) {
+            const checkintimeA = a.checkintime,
             checkintimeB = b.checkintime;
             if ( checkintimeA > checkintimeB ) {
               return 1;
@@ -68,7 +114,7 @@ export class VirecleListPage implements OnInit {
           });
         }
       }
-    })
+    });
   }
 
   takePhoto() {
@@ -78,7 +124,7 @@ export class VirecleListPage implements OnInit {
      encodingType: this.camera.EncodingType.JPEG,
      mediaType: this.camera.MediaType.PICTURE,                      //有PICTURE VIDEO ALLMEDIA
      saveToPhotoAlbum: true,                                       // 是否保存到相册
-     sourceType: this.camera.PictureSourceType.CAMERA ,            //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
+     sourceType: this.camera.PictureSourceType.CAMERA            //是打开相机拍照还是打开相册选择  PHOTOLIBRARY : 相册选择, CAMERA : 拍照,
    }
 
    this.camera.getPicture(options).then((imageData) => {

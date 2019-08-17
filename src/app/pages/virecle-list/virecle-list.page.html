@@ -1,12 +1,25 @@
 <ion-header>
-  <ion-toolbar color="newblue">
-    <ion-title>客户车辆列表</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="secondary"></ion-menu-button>
+    </ion-buttons>
+    <ion-text color="light">
+        <ion-text color="light" class="fw700">客户车辆列表</ion-text>
+    </ion-text>
     <ion-buttons slot="primary">
         <ion-button (click)="takePhoto()">
           <ion-icon slot="icon-only" name="camera"></ion-icon>
         </ion-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar color="dark">
+      <ion-searchbar [(ngModel)]="searchKey"></ion-searchbar>
+      <ion-buttons slot="end">
+          <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
+            <ion-icon name="options"></ion-icon>
+          </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content padding>

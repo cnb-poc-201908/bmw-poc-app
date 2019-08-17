@@ -76,5 +76,10 @@ export class RestService {
         return this.httpGet(this.url + `/repairOrder/GetBasicInfolist`);
     }
 
+    /*get information by id*/
+    getBasicInfoById(regno): Observable<any> {
+        return this.httpGet(this.url + `/repairOrder/GetBasicInfo/` + regno);
+    }
+
 
 }
