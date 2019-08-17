@@ -14,8 +14,10 @@ export class VirecleListPage implements OnInit {
   public vericlelistinfo: any = [];
   public dateTime: string;
   public searchKey: string;
+  public ListForFilter: any = [];
 
-  constructor(private rest: RestService, public router: Router, private camera: Camera) { }
+  constructor(private rest: RestService, public router: Router, private camera: Camera) {
+   }
 
   ngOnInit() {
     this.getVircleRecords();
@@ -28,6 +30,17 @@ export class VirecleListPage implements OnInit {
           object: JSON.stringify(object)
         }
     });
+  }
+
+  getItems(e){
+    var q = e.target.value;
+    if(q && q.trim() !== '') {
+      this.vericlelist = this.ListForFilter.filter((item) => {
+        item = item["regno"];
+        return (item.toLowerCase().indexOf(q.toLowerCase()) > -1)
+      })
+    }
+
   }
 
   //search virecles
@@ -104,6 +117,7 @@ export class VirecleListPage implements OnInit {
             'customer_info': this.vericlelistinfo[i]['customer_info']
           };
           this.vericlelist.push(jsonBasicInfo);
+          this.ListForFilter.push(jsonBasicInfo);
           //sort by checktime 
           this.vericlelist.sort(function( a, b ) {
             const checkintimeA = a.checkintime,
