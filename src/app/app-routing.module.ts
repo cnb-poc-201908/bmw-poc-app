@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'packages', loadChildren: './pages/packages/packages.module#PackagesPageModule' },
   { path: 'virecle-list', loadChildren: './pages/virecle-list/virecle-list.module#VirecleListPageModule' },
   { path: 'search-filter', loadChildren: './pages/modal/search-filter/search-filter.module#SearchFilterPageModule' },
+  { path: '**', loadChildren: './pages/login/login.module#LoginPageModule' },
 
 ];
 

@@ -6,7 +6,7 @@
   "projects": {
     "app": {
       "root": "app",
-      "sourceRoot": "src",
+      "sourceRoot": "app/src",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
