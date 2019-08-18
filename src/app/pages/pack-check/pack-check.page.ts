@@ -46,7 +46,7 @@ export class PackCheckPage implements OnInit {
 
   async popUpCreate() {
     const alert = await this.alertCtrl.create({
-      header: 'Prompt!',
+      header: '添加查修条目',
       inputs: [
         {
           name: 'input-desc',
