@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { Router } from '@angular/router';
-import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
+import { LoadingController, Platform, ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: 'app-virecle-list',
@@ -15,9 +16,46 @@ export class VirecleListPage implements OnInit {
   public dateTime: string;
   public searchKey: string;
   public ListForFilter: any = [];
-
-  constructor(private rest: RestService, public router: Router, private camera: Camera) {
+  selectedImage: string;
+  constructor(private rest: RestService, 
+    public router: Router, private camera: Camera,
+    private actionSheetCtrl: ActionSheetController,
+    public platform: Platform) {
    }
+
+   getPicture(sourceType: PictureSourceType) {
+    if (this.platform.is('cordova')) {
+        this.camera.getPicture({
+            quality: 100,
+            destinationType: this.camera.DestinationType.DATA_URL,
+            sourceType: sourceType,
+            allowEdit: true,
+            saveToPhotoAlbum: false,
+            correctOrientation: true
+        }).then((imageData) => {
+            this.selectedImage = `data:image/jpeg;base64,${imageData}`;
+        });
+    } else {
+        alert('cordova not available');
+    }
+
+}
+   async selectSource() {
+    const actionSheet = await this.actionSheetCtrl.create({
+        header: 'Select Source',
+        buttons: [
+            {
+                text: 'Capture Image',
+                role: 'camera',
+                icon: 'camera',
+                handler: () => {
+                    return this.getPicture(this.camera.PictureSourceType.CAMERA);
+                }
+            }
+        ]
+    });
+    await actionSheet.present();
+}
 
   ngOnInit() {
     this.getVircleRecords();
@@ -43,7 +81,7 @@ export class VirecleListPage implements OnInit {
     }
 
   }
-*/
+  */
 
   //search virecles
   searchFilter(e) {

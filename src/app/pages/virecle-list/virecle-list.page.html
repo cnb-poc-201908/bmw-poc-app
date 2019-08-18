@@ -1,52 +1,54 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button color="secondary"></ion-menu-button>
-    </ion-buttons>
-    <ion-text color="light">
-        <ion-text color="light" class="fw700">客户车辆列表</ion-text>
-    </ion-text>
-    <ion-buttons slot="primary">
-        <ion-button (click)="takePhoto()">
-          <ion-icon slot="icon-only" name="camera"></ion-icon>
-        </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-  <ion-toolbar color="primary">
-      <ion-searchbar [(ngModel)]="searchKey" (ionBlur)="searchFilter($event)" (ionClear)="getVircleRecords()"></ion-searchbar>
-      <!--
-      <ion-buttons slot="end">
-          <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
-            <ion-icon name="search"></ion-icon>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button color="secondary"></ion-menu-button>
+      </ion-buttons>
+      <ion-text color="light">
+          <ion-text color="light" class="fw700">客户车辆列表</ion-text>
+      </ion-text>
+      <ion-buttons slot="primary">
+          <ion-button (click)="selectSource()">
+            <ion-icon slot="icon-only" name="camera"></ion-icon>
           </ion-button>
       </ion-buttons>
-      -->
     </ion-toolbar>
-</ion-header>
-
-<ion-content padding>
-  <ion-label>
-      <p>{{ dateTime }}</p>
-</ion-label>
-  <ion-card *ngFor="let item of vericlelist" color="light" (click)="RedirectToDetail(item)">
-    <ion-card-content>
-      <ion-grid>
-        <ion-row>
-          <ion-col>
-            <ion-label>{{item.regno}}&nbsp;</ion-label>
-            <ion-label class="reservationcss" *ngIf="item.reservFlag">
-                <ion-icon name="star-outline" slot="icon-only"></ion-icon>
-            </ion-label>
-            <ion-label>&nbsp;</ion-label>
-            <ion-label class="sacss" *ngIf="item.reservFlag">
-                {{item.saName}}
-            </ion-label>
-          </ion-col>
-          <ion-col size="6" class="reservationTime">
-            到店时间: {{item.checkintime}}
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-card-content>
-  </ion-card>
-</ion-content>
+    <ion-toolbar color="primary">
+        <ion-searchbar [(ngModel)]="searchKey" (ionBlur)="searchFilter($event)" (ionClear)="getVircleRecords()"></ion-searchbar>
+        <!--
+        <ion-buttons slot="end">
+            <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
+              <ion-icon name="search"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        -->
+      </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-label>
+        <p>{{ dateTime }}</p>
+  </ion-label>
+  <img [src]="selectedImage" *ngIf="selectedImage">
+    <ion-card *ngFor="let item of vericlelist" color="light" (click)="RedirectToDetail(item)">
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-label>{{item.regno}}&nbsp;</ion-label>
+              <ion-label class="reservationcss" *ngIf="item.reservFlag">
+                  <ion-icon name="star-outline" slot="icon-only"></ion-icon>
+              </ion-label>
+              <ion-label>&nbsp;</ion-label>
+              <ion-label class="sacss" *ngIf="item.reservFlag">
+                  {{item.saName}}
+              </ion-label>
+            </ion-col>
+            <ion-col size="6" class="reservationTime">
+              到店时间: {{item.checkintime}}
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>
+  
