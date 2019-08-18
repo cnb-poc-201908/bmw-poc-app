@@ -1,0 +1,55 @@
+:host {
+
+    background-color: #D8D8D8;
+
+    ion-content {
+        &.main-content {
+            bottom:60px;
+            --offset-top: -60px !important;
+        }
+    }
+
+    ion-footer {
+        &.main-footer {
+            position:fixed;
+            bottom:0px;
+            min-height:60px;
+            background-color: #FFF;
+            border-top: 1px solid #f4f5f8;
+        }
+    }
+    
+    ion-item {
+        --inner-border-width: 0px 0px 0px 0px;
+    }
+
+    ion-card{
+        border-radius: 0px;
+    }
+
+    ion-card-content {
+        padding-left: 5px;
+        padding-right: 5px;
+        background-color: #FFF;
+    }
+
+    ion-label {
+        &.details {
+            font-size: 16px;
+            color : #A6A6A6;
+            padding-left: 15%;
+        }
+    }
+
+    ion-note {
+        &.ticket {
+            color: #FFF;
+            background-color: #40B84B;
+            border-radius: 10px;
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 16px;
+        }
+    }
+
+}

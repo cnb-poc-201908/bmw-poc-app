@@ -1,60 +1,174 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-buttons slot="start">
-      <ion-menu-button color="secondary"></ion-menu-button>
-    </ion-buttons>
+  <!-- <ion-toolbar color="primary">
     <ion-title>
-        <ion-text color="light">
-          <ion-text color="light" class="fw700">Ionic 4 Start</ion-text>
-        </ion-text>
+      <ion-text color="light">
+        <ion-text color="light" class="fw700">BMW POC</ion-text>
+      </ion-text>
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="notifications()">
-        <ion-icon name="notifications"></ion-icon>
-        <ion-badge color="dark" slot="end">2</ion-badge>
+    <ion-buttons slot="start">
+      <ion-button size="small" shape="round" color="medium" (click)="back()">
+        <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
+  </ion-toolbar> -->
+  <ion-toolbar color="primary">
+      <ion-icon name="arrow-back" (click)="back()" style="font-size: 1.4rem;"></ion-icon>
+      <ion-slides pager="true">
+          <ion-slide>
+            <section class="customer-header">
+              <ion-grid style="width: 50%;
+              padding-top: 0;
+              padding-bottom: 0;">
+                <ion-row>
+                  <ion-col text-left style="font-size: 1.5rem;" class="padding-top-bottom-1">{{objectReceive?.regno}}<ion-icon name="information-circle-outline"></ion-icon></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="customer-text padding-top-bottom-1">{{objectReceive?.customer_info?.salute}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="customer-text padding-top-bottom-1">{{objectReceive?.customer_info?.phone | maskPhone}}</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left class="customer-text padding-top-bottom-1">保修日期: 2019-09-09</ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col text-left><span class="incompleted-info padding-top-bottom-1">完善客户信息</span></ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-grid style="width: 50%;
+              padding-top: 0;
+              padding-bottom: 0;">
+                  <ion-row>
+                    <ion-col text-right class="padding-top-bottom-1">
+                     <span class="aftersales-info" (click)="notifications($event)">售后提醒</span>
+                       <!-- <span class="bubble">88</span> -->
+                      <ion-badge color="danger" (click)="notifications($event)">3</ion-badge>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col text-right class="padding-top-bottom-1">
+                        <ion-input inputmode="text" placeholder="请输入/KM" value=""></ion-input>
+                        <div class="customer-text">当前里程</div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col text-right class="padding-top-bottom-1">
+                        <div style="display: flex;">
+                          <ion-input inputmode="text" placeholder="请输入" value=""></ion-input>
+                          <!-- <div>
+                            <img src="../../../assets/icon/packages/etc.png">
+                          </div> -->
+                          <ion-icon name="calendar"></ion-icon>
+                        </div>
+                        <div class="customer-text">交车时间</div>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+            </section>
+          </ion-slide>
+          <ion-slide>
+            <section>
+                <ion-text color="light">这里是很多描述信息。。。</ion-text>
+            </section>
+          </ion-slide>
+        </ion-slides>
   </ion-toolbar>
-  <ion-toolbar color="dark">
-    <ion-searchbar [(ngModel)]="searchKey"></ion-searchbar>
-    <ion-buttons slot="end">
-      <ion-button size="small" shape="round" color="medium" (click)="searchFilter()">
-        <ion-icon name="options"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+  <ion-toolbar class="tab-warp" color="primary" style="padding: 5px 14px;">
+    <ion-segment scrollable (ionChange)="changeTab($event)">
+      <ion-segment-button checked value="maintenance">
+        <ion-label>
+          <div class="btn-label">
+            <!-- <img src="../../../assets/icon/packages/etc.png"> -->
+            <ion-icon name="clipboard" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+            <span>保养</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="check">
+        <ion-label>
+          <div class="btn-label">
+            <!-- <img src="../../../assets/icon/packages/etc.png"> -->
+            <ion-icon name="construct" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+            <span>查修</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="accident">
+        <ion-label>
+          <div class="btn-label">
+            <!-- <img src="../../../assets/icon/packages/etc.png"> -->
+            <ion-icon name="warning" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+            <span>事故车</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="first">
+          <ion-label>
+            <div class="btn-label">
+              <!-- <img src="../../../assets/icon/packages/etc.png"> -->
+              <ion-icon name="paper" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+              <span>首保</span>
+            </div>
+          </ion-label>
+        </ion-segment-button>
+      <ion-segment-button value="etc">
+        <ion-label>
+          <div class="btn-label">
+            <!-- <img src="../../../assets/icon/packages/etc.png"> -->
+            <ion-icon name="calculator" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+            <span>杂项</span>
+          </div>
+        </ion-label>
+      </ion-segment-button>
+    </ion-segment>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
-  <ion-card no-margin class="no-radius">
-    <ion-item lines="none" color="medium">
-      <ion-label>
-        <h2 no-margin class="fw500 no-margin">
-          <ion-text color="dark">Alert / Toast test</ion-text>
-        </h2>
 
-        <p class="text-11x no-margin">
-          <ion-text  color="primary">{{yourLocation}}</ion-text>
-        </p>
-      </ion-label>
-      <ion-button shape="round" fill="outline" size="small" color="primary" (click)="alertLocation()">
-        Location
-        <ion-icon name="locate"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-card>
-
-  <ion-card class="bg-white">
-    <ion-img [src]="themeCover"></ion-img>
-    <ion-button expand="full" color="dark" (click)="presentImage(themeCover)" no-margin>
-      Modal 1: Modal Image
-    </ion-button>
-  </ion-card>
-
-  <ion-button margin shape="round" expand="full" color="secondary" (click)="searchFilter()">
-    Modal 2: Search Filter
-  </ion-button>
-  
-  <popmenu></popmenu>
+    <ion-list-header color="light">
+      <ion-label class="fw700">Package</ion-label>
+    </ion-list-header>
+  <ion-list #slidingList>
+  <ion-card color="light" class="no-radius" *ngFor="let pack of items; index as i" >
+      <ion-card-content no-padding (click)="doClick(pack)">
+          <ion-item-sliding>
+            <ion-item (click)="doClick(pack)" no-padding>
+              <div class="package-type-color" [ngStyle]="setColorByType(pack.type)"></div>
+              <div class="package-type">{{pack.typeName}}</div>
+              <ion-label>{{pack.title}}</ion-label>
+              <ion-note slot="end" color="danger">￥100</ion-note>
+            </ion-item>
+            <ion-item-options side="end">
+                <ion-item-option color="danger" (click)="remove(i)">
+                  <ion-icon name="trash"></ion-icon>
+                  Delete
+                </ion-item-option>
+              </ion-item-options>
+          </ion-item-sliding>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
-  
+
+<ion-footer class="main-footer">
+    <ion-grid class="footer-grid" style="padding-top: 0;padding-bottom: 0">
+      <ion-row class="footer-grid-row">
+        <ion-col size="7" no-padding>
+          <ion-grid style="height: 100%;padding-top: 0;padding-bottom: 0">
+            <ion-row style="padding:3px;">
+              维修套餐组个数: {{packageAmount}}/个
+            </ion-row>
+            <ion-row style="padding:3px;">
+              标准维修时长: 2.5小时
+            </ion-row>
+          </ion-grid>
+        </ion-col>
+        <ion-col size="5" style="padding-top: 0;padding-bottom: 0">
+              <ion-button expand="full" size="large" class="btn-submit" color="danger" float-right>确定</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+</ion-footer>

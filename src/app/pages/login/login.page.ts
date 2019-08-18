@@ -80,13 +80,9 @@ export class LoginPage implements OnInit {
     await alert.present();
   }
 
-  // // //
-  goToRegister() {
-    this.navCtrl.navigateRoot('/register');
-  }
 
   goToHome() {
-    this.navCtrl.navigateRoot('/home-results');
+    this.navCtrl.navigateRoot('/virecle-list');
   }
 
 }

@@ -1,0 +1,18 @@
+:host {
+    ion-segment {
+        padding: 16px 16px 0;
+
+        ion-segment-button {
+            --padding-top: 10px;
+            --padding-bottom: 10px;
+        }
+    }
+
+    ion-fab {
+        position: fixed;
+    }
+
+    ion-card-content {
+        padding: 5px;
+    }
+}

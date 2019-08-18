@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -13,11 +13,14 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Modal Pages
 import { ImagePageModule } from './pages/modal/image/image.module';
-import { SearchFilterPageModule } from './pages/modal/search-filter/search-filter.module';
 
 // Components
 import { NotificationsComponent } from './components/notifications/notifications.component';
+import { ServicesModule } from './services/services.module';
 
+import { InterceptorService } from './services/interceptor.service';
+
+import { Camera } from '@ionic-native/camera/ngx';
 
 @NgModule({
   declarations: [AppComponent, NotificationsComponent],
@@ -28,13 +31,15 @@ import { NotificationsComponent } from './components/notifications/notifications
     AppRoutingModule,
     HttpClientModule,
     ImagePageModule,
-    SearchFilterPageModule
+    ServicesModule
   ],
   entryComponents: [NotificationsComponent],
   providers: [
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    Camera,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }
   ],
   bootstrap: [AppComponent]
 })

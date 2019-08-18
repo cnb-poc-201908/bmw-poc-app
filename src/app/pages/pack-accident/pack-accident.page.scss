@@ -1,0 +1,157 @@
+:host {
+    ion-header ion-toolbar {
+        padding-top: 0;
+    }
+
+    ion-content {
+        .title-wrap {
+            height: 12.2%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15px;
+            color: #666666;
+        }
+
+        .image-wrap {
+            width: 100%;
+            height: 65.3%;
+            background: url(../../../assets/img/accident/car.png);
+            background-size: cover;
+
+            .car-1 {
+                height: 11.6%;
+            }
+
+            .car-2 {
+                height: 16.6%;
+            }
+
+            .car-3 {
+                height: 33.9%;
+            }
+
+            .car-4 {
+                height: 23.4%;
+                display: flex;
+                flex-direction: row;
+
+                .car-left {
+                    width: 34%;
+                }
+
+                .car-middle {
+                    width: 31%;
+                }
+
+                .car-right {
+                    width: 35%;
+                }
+            }
+
+            .car-5 {
+                height: 14.5%;
+            }
+
+            .car-2,
+            .car-3 {
+                display: flex;
+                flex-direction: row;
+
+                .car-left {
+                    width: 38%;
+                }
+
+                .car-middle {
+                    width: 23%;
+
+                }
+
+                .car-right {
+                    width: 39%;
+                }
+            }
+
+            .car-3 .car-left,
+            .car-3 .car-right {
+                display: flex;
+                flex-direction: column;
+
+                .top {
+                    height: 43%;
+                    padding: 4px;
+
+                    div {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .bottom {
+                    height: 57%;
+                    padding: 4px;
+
+                    div {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+            }
+        }
+
+        .car-1,
+        .car-2 .car-left,
+        .car-2 .car-middle,
+        .car-2 .car-right,
+        .car-3 .car-middle,
+        .car-4 .car-left,
+        .car-4 .car-middle,
+        .car-4 .car-right,
+        .car-5 {
+            padding: 4px;
+
+            div {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        .rank-wrap {
+            height: 22.5%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 11px;
+            color: #666666;
+
+            .rank-content {
+                display: flex;
+                flex-direction: row;
+
+                span {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    width: 30px;
+                    height: 20px;
+                }
+            }
+
+            .yellow {
+                background: #EAD420;
+            }
+
+            .orange {
+                background: #D87A30;
+            }
+
+            .red {
+                background: #CB1919;
+            }
+        }
+    }
+
+    ion-footer {
+        height: 60px;
+    }
+}

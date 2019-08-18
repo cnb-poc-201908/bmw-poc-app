@@ -1,0 +1,45 @@
+:host {
+    ion-card-content{
+        background: #FFFFFF;
+        padding-inline-start: 0px;
+        padding-inline-end: 0px;
+        padding-bottom: 7px;
+        padding-top: 7px;
+    }
+    
+    ion-title{
+        font-family: NotoNastaliqUrdu;
+        font-size: 20px;
+        color: #FFFFFF;
+        text-align: center;
+    }
+
+}
+
+.reservationcss{
+    color:#40B84B;
+}
+
+
+.sacss{
+    font-family: PingFangSC-Regular;
+    font-size: 11px;
+    color: #969696;
+    text-align: center;
+}
+
+.reservationTime{
+    text-align: right
+}
+
+
+  
+.ion-color-newblue {
+    --ion-color-base: var(--ion-color-new);
+    --ion-color-base-rgb: var(--ion-color-new-rgb);
+    --ion-color-contrast: var(--ion-color-new-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-new-contrast-rgb);
+    --ion-color-shade: var(--ion-color-new-shade);
+    --ion-color-tint: var(--ion-color-new-tint);
+  }
+  

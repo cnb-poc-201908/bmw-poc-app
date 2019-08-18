@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PopmenuComponent } from './../../components/popmenu/popmenu.component';
 
 import { HomeResultsPage } from './home-results.page';
+import { PipesModule } from 'src/app/pipe/PipesModule';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
     IonicModule,
+    PipesModule,
     RouterModule.forChild(routes)
   ],
   declarations: [HomeResultsPage, PopmenuComponent]
