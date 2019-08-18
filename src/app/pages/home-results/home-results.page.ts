@@ -8,7 +8,6 @@ import {
   ModalController } from '@ionic/angular';
 
 // Modals
-import { SearchFilterPage } from '../../pages/modal/search-filter/search-filter.page';
 import { ImagePage } from './../modal/image/image.page';
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
@@ -108,12 +107,6 @@ export class HomeResultsPage {
     changeLocation.present();
   }
 
-  async searchFilter () {
-    const modal = await this.modalCtrl.create({
-      component: SearchFilterPage
-    });
-    return await modal.present();
-  }
 
   async presentImage(image: any) {
     const modal = await this.modalCtrl.create({

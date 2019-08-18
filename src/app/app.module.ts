@@ -13,7 +13,6 @@ import { AppRoutingModule } from './app-routing.module';
 
 // Modal Pages
 import { ImagePageModule } from './pages/modal/image/image.module';
-import { SearchFilterPageModule } from './pages/modal/search-filter/search-filter.module';
 
 // Components
 import { NotificationsComponent } from './components/notifications/notifications.component';
@@ -32,7 +31,6 @@ import { Camera } from '@ionic-native/camera/ngx';
     AppRoutingModule,
     HttpClientModule,
     ImagePageModule,
-    SearchFilterPageModule,
     ServicesModule
   ],
   entryComponents: [NotificationsComponent],

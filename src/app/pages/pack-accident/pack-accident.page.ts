@@ -12,4 +12,8 @@ export class PackAccidentPage implements OnInit {
   ngOnInit() {
   }
 
+  selectImg(id) {
+
+  }
+
 }
