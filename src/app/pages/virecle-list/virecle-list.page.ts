@@ -3,6 +3,7 @@ import { RestService } from 'src/app/services/rest.service';
 import { Router } from '@angular/router';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { LoadingController, Platform, ActionSheetController } from '@ionic/angular';
+import { LoadingService } from 'src/app/services/loading.service';
 
 @Component({
   selector: 'app-virecle-list',
@@ -17,13 +18,17 @@ export class VirecleListPage implements OnInit {
   public searchKey: string;
   public ListForFilter: any = [];
   selectedImage: string;
+  imageText: string;
   constructor(private rest: RestService, 
     public router: Router, private camera: Camera,
     private actionSheetCtrl: ActionSheetController,
-    public platform: Platform) {
+    public platform: Platform,
+    public loading: LoadingService) {
    }
 
    getPicture(sourceType: PictureSourceType) {
+     this.selectedImage = "";
+     this.imageText = "";
     if (this.platform.is('cordova')) {
         this.camera.getPicture({
             quality: 100,
@@ -34,6 +39,17 @@ export class VirecleListPage implements OnInit {
             correctOrientation: true
         }).then((imageData) => {
             this.selectedImage = `data:image/jpeg;base64,${imageData}`;
+            let data = {
+              "image":imageData,
+              "configure":{
+                "multi_crop":false
+              }
+            };this.loading.present();
+            this.rest.getVehiclePlate(data).subscribe((res:any)=>{this.loading.dismiss();
+              if(res.success){
+                this.imageText = res.plates[0].txt;
+              }
+            });
         });
     } else {
         alert('cordova not available');
@@ -51,7 +67,15 @@ export class VirecleListPage implements OnInit {
                 handler: () => {
                     return this.getPicture(this.camera.PictureSourceType.CAMERA);
                 }
-            }
+            },
+            {
+              text: 'Use Libary',
+              role: 'libary',
+              icon: 'folder-open',
+              handler: () => {
+                  return this.getPicture(this.camera.PictureSourceType.PHOTOLIBRARY);
+              }
+          }
         ]
     });
     await actionSheet.present();
@@ -130,7 +154,8 @@ export class VirecleListPage implements OnInit {
   }
 
   getVircleRecords() {
-    this.rest.getBasicInfolist().subscribe( response => {
+    this.loading.present();
+    this.rest.getBasicInfolist().subscribe( response => {this.loading.dismiss();console.log('getVircleRecords');
       if (response.code === 200) {
         this.vericlelist.splice(0, this.vericlelist.length);
         this.vericlelistinfo = response['basicInfoList'];

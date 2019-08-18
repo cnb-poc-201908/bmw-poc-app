@@ -85,6 +85,15 @@ export class RestService {
         return this.httpGet(this.url + `/repairOrder/GetPackagelist/`);
     }
 
+    getVehiclePlate(data){
+        const httpOptions = {
+            headers: new HttpHeaders({
+            'Content-Type': 'application/octet-stream; charset=utf-8',
+            'Authorization': 'APPCODE c15d52d17fe341afaba457198e02aa13' 
+              })
+            };
+        return this.http.post("http://ocrcp.market.alicloudapi.com/rest/160601/ocr/ocr_vehicle_plate.json", data, httpOptions);
+    }
 
 
 

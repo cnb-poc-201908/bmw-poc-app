@@ -14,18 +14,18 @@ export class InterceptorService implements HttpInterceptor {
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     console.log('http start');
     // this.common.openSpinner();
-    this.loading.present();
-    const mergedHeaders = new HttpHeaders({
-    });
+    // this.loading.present();
+    // const mergedHeaders = new HttpHeaders({
+    // });
 
-    const req = request.clone({
-      headers: mergedHeaders
-    }); 
+    // const req = request.clone({
+    //   headers: mergedHeaders
+    // }); 
 
-    return next.handle(req).pipe(
+    return next.handle(request).pipe(
       tap(
-        event => {
-            this.loading.dismiss();
+        event => {console.log('http start222',request.url,request.method);
+            // this.loading.dismiss();
         },
         catchError((err: HttpErrorResponse) => this.ErrorHandle(err))
       )

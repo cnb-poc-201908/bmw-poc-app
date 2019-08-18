@@ -14,11 +14,12 @@ export class LoadingService {
     this.isLoading = true;
     return await this.loadingController.create({
       message: '加载中',
-      duration: 5000,
+      // duration: 5000,
     }).then(a => {
       a.present().then(() => {
+        console.log('loading presented');
         if (!this.isLoading) {
-          a.dismiss();
+          a.dismiss().then(() => console.log('abort laoding'));
         }
       });
     });
@@ -26,6 +27,6 @@ export class LoadingService {
 
   async dismiss() {
     this.isLoading = false;
-    return await this.loadingController.dismiss();
+    return await this.loadingController.dismiss().then(() => console.log('loading dismissed'));
   }
 }

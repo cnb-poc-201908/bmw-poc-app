@@ -8,6 +8,7 @@ import { PopmenuComponent } from './../../components/popmenu/popmenu.component';
 
 import { HomeResultsPage } from './home-results.page';
 import { PipesModule } from 'src/app/pipe/PipesModule';
+import { ShadowCssDirective } from 'src/app/directive/ShadowCssDirective';
 
 const routes: Routes = [
   {
@@ -25,6 +26,6 @@ const routes: Routes = [
     PipesModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [HomeResultsPage, PopmenuComponent]
+  declarations: [HomeResultsPage, PopmenuComponent,ShadowCssDirective]
 })
 export class HomeResultsPageModule {}

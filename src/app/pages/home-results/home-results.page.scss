@@ -60,30 +60,9 @@
             color: #fff;
         }
     }
-    // ion-footer {
-    //     &.main-footer {
-    //         min-height:80px;
-    //         background-color: #FFF;
-    //         border-top: 1px solid #f4f5f8;
-    //     }
-
-    //     ion-grid {
-    //         &.footer-grid {
-    //             height:100%;
-
-    //         }
-    //         &.footer-grid .footer-grid-row {
-    //             height:100%;
-    //         }
-    //     }
-
-    //     ion-button {
-    //         &.btn-submit {
-    //             --background: #CB1919;
-    //             width: 140px;
-    //         }
-    //     }
-    // }
+    .regno-info{
+        font-size: 1.5rem;
+    }
     .segment-scrollable.sc-ion-segment-ios-h{
         justify-content: center;
     }
@@ -106,8 +85,7 @@
         .incompleted-info{
             line-height: .6rem;
             width: 5rem;
-            display: block;
-            font-size: .69rem;
+            font-size: .6rem;
             color: #fff;
             padding: .16rem .33rem;
             background-color: #787CE4;

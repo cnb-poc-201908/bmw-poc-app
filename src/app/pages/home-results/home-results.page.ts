@@ -5,7 +5,8 @@ import {
   MenuController,
   ToastController,
   PopoverController,
-  ModalController } from '@ionic/angular';
+  ModalController, 
+  PickerController} from '@ionic/angular';
 
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
@@ -25,7 +26,7 @@ export class HomeResultsPage {
   @ViewChild('slidingList') slidingList;
   public objectReceive: any;
   packageAmount:number;
-
+  @ViewChild('datePicker') datePicker;
   constructor(
     public navCtrl: NavController,
     public menuCtrl: MenuController,
@@ -33,7 +34,8 @@ export class HomeResultsPage {
     public alertCtrl: AlertController,
     // public modalCtrl: ModalController,
     public toastCtrl: ToastController,
-    public activeRoute: ActivatedRoute
+    public activeRoute: ActivatedRoute,
+    private pickerCtrl: PickerController
   ) {
     this.items = [
       {title: 'item1',type:'maintenance',typeName:'保养',details : [
@@ -81,16 +83,16 @@ export class HomeResultsPage {
 
   async remove(i) {
     this.items.splice(i, 1);
+    await this.slidingList.closeSlidingItems();
     const toast = await this.toastCtrl.create({
       message: '删除成功!',
       duration: 3000,
       position: 'top',
-      closeButtonText: 'OK',
+      closeButtonText: '确定',
       showCloseButton: true,
       color:"warning"
     });
     toast.present();
-    await this.slidingList.closeSlidingItems();
   }
 
   changeTab(event) {
@@ -108,6 +110,9 @@ export class HomeResultsPage {
 
   settings() {
     this.navCtrl.navigateForward('settings');
+  }
+  showPicker(){
+    this.datePicker.open();
   }
 
   async alertLocation() {
