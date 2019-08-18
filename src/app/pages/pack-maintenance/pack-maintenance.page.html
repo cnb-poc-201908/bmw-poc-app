@@ -11,17 +11,21 @@
 
 <ion-content>
     <ion-card color="light" *ngFor="let pack of packages" >
-      <ion-card-content style="float:left;width:100%" (click)="doClick(pack)">
-          <ion-item (click)="doClick(pack)">
+      <ion-card-content style="float:left;width:100%">
+          <ion-item (click)="doClick($event)">
             <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
-            <ion-label>{{pack.title}}</ion-label>
-            <ion-note *ngIf="pack.prefer" class="ticket" slot="end">优惠券</ion-note>
-            <ion-note slot="end">￥{{pack.price}}</ion-note>
+            <ion-label>{{pack.PackageName}}</ion-label>
+            <ion-note *ngIf="pack.Campaign1 != ''" class="ticket" slot="end">优惠券</ion-note>
+            <ion-note slot="end">￥{{pack.totalPrice}}</ion-note>
           </ion-item>
-          <div *ngIf="pack.selected == true">
-            <ion-item *ngFor="let item of pack.details">
-                <ion-label class="details">{{item.label}}</ion-label>
-                <ion-note slot="end">X {{item.amount}}</ion-note>
+          <div *ngIf="pack.selected && pack.selected != undefined">
+            <ion-item *ngFor="let item of pack.PartInfo">
+                <ion-label class="details">{{item.PartsName}}</ion-label>
+                <ion-note slot="end">￥{{item.PartPrice != '' ? item.PartPrice : 0}}</ion-note>
+            </ion-item>
+            <ion-item>
+              <ion-label class="details">工时费</ion-label>
+              <ion-note slot="end">￥{{pack.totalLaborPrice}}</ion-note>
             </ion-item>
           </div>
       </ion-card-content>
@@ -43,7 +47,7 @@
         </ion-col>
         <ion-col size="5">
           <ion-row>
-            <ion-button class="btn-submit" size="large" color="danger">确定</ion-button>
+            <ion-button expand="full" size="large" class="btn-submit" color="danger" >确定</ion-button>
           </ion-row>
         </ion-col>
       </ion-row>

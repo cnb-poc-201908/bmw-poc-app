@@ -81,5 +81,11 @@ export class RestService {
         return this.httpGet(this.url + `/repairOrder/GetBasicInfo/` + regno);
     }
 
+    getPackageList(): Observable<any> {
+        return this.httpGet(this.url + `/repairOrder/GetPackagelist/`);
+    }
+
+
+
 
 }

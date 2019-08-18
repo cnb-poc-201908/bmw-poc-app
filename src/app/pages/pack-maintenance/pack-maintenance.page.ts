@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RestService } from 'src/app/services/rest.service';
 
 @Component({
   selector: 'app-pack-maintenance',
@@ -7,87 +8,75 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PackMaintenancePage implements OnInit {
 
-  public packages: Array<{}> = [];
+  public packages = [];
 
-  public selectedPackages: Array<{}> = [];
+  public selectedPackages = [];
 
-  public selectedAmount: Number = 0;
+  public selectedAmount  = 0;
 
-  public selectedHours: Number = 0;
+  public selectedHours = 0;
 
-  constructor() { }
+  constructor(private rest: RestService) { }
 
   ngOnInit() {
-    this.packages = [
-      { 
-        title: '保养/更换机油', 
-        selected : false,
-        prefer : true,
-        price : 500,
-        details : [
-          {label : '全合成机油2L', amount : 2},
-          {label : '机油垫片', amount : 1},
-          {label : '机油滤芯', amount : 1},
-        ]
-      },
-      { 
-        title: '发动机清洗', 
-        selected : false,
-        prefer : false,
-        price : 200,
-        details : []
-      },
-      { 
-        title: '燃油系统养护', 
-        selected : false,
-        prefer : true,
-        price : 350,
-        details : []
-      },
-      { 
-        title: '喷油嘴清洗', 
-        selected : false,
-        prefer : false,
-        price : 120,
-        details : []
-      },
-      { 
-        title: '水箱清洗', 
-        selected : false,
-        prefer : false,
-        price : 80,
-        details : []
-      },
-      { 
-        title: '节气门清洗', 
-        selected : false,
-        prefer : true,
-        price : 280,
-        details : []
-      },
-      { 
-        title: '前雨刷', 
-        selected : false,
-        prefer : false,
-        price : 240,
-        details : []
-      },
-      { 
-        title: '空调滤清器', 
-        selected : false,
-        prefer : false,
-        price : 50,
-        details : []
-      },
-    ]
+    this.rest.getPackageList().subscribe(res=>{
+      if (res && res.code === 200) {
+        const packs = res.basicInfoList;
+        this.packages = packs.filter(item=>{
+          return item.RepairTypeCode === 'MA'
+        })
+        this.packages.forEach(item=>{
+          let totalPartPrice = 0;
+          let totalLaborPrice = 0;
+          let totalLaborHours = 0;
+          if (item.PartInfo && item.PartInfo.length > 0) {
+            item.PartInfo.forEach(part=>{
+              part.PartPrice = part.PartPrice != "" ? Number(part.PartPrice) : 0;
+              totalPartPrice = totalPartPrice + part.PartPrice;
+            })
+          }
+          if (item.Laborinfo && item.Laborinfo.length > 0) {
+            item.Laborinfo.forEach(part=>{
+              part.LaborPrice = part.LaborPrice != "" ? Number(part.LaborPrice) : 0
+              totalLaborPrice = totalLaborPrice + part.LaborPrice;
+              totalLaborHours = totalLaborHours  + Number(part.LaborAmount);
+            })
+          }
+          item.totalPartPrice = totalPartPrice;
+          item.totalLaborPrice = totalLaborPrice;
+          item.totalLaborHours = totalLaborHours;
+          item.totalPrice = totalPartPrice + totalLaborPrice;
+          item.selected = false;
+        })
+      }
+    })
+
   }
 
-  doClick(item) {
-    item.selected = !item.selected
+  doClick(event) {
+    event.stopPropagation();
   }
 
-  select() {
+  select(pack) {
+    let hours = 0;
+    if (pack.selected == true) {
+      this.selectedPackages.push(pack);
+    } else {
+      this.selectedPackages.splice(this.selectedPackages.findIndex(item=>item.PackageID===pack.PackageID), 1);
+    }
 
+
+    if (this.selectedPackages.length > 0)  {
+      this.selectedPackages.forEach(item=>{
+        hours = hours + item.totalLaborHours;
+      })
+      this.selectedHours = hours;
+    } else {
+      this.selectedHours = 0;
+    }
+
+    this.selectedAmount = this.selectedPackages.length;
+    
   }
 
 }
