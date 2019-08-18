@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pack-check',
@@ -10,7 +11,7 @@ export class PackCheckPage implements OnInit {
   public checkpoints: Array<{}> = [];
   public selectedHours: Number = 0;
 
-  constructor() { }
+  constructor(private alertCtrl: AlertController) { }
 
   ngOnInit() {
     this.checkpoints = [
@@ -41,7 +42,41 @@ export class PackCheckPage implements OnInit {
   doExpand(event,item) {
     item.expand = !item.expand;
     event.stopPropagation();
-    
+  }
+
+  async popUpCreate() {
+    const alert = await this.alertCtrl.create({
+      header: 'Prompt!',
+      inputs: [
+        {
+          name: 'input-desc',
+          type: 'text',
+          placeholder: '问题描述'
+        },
+        {
+          name: 'input-hours',
+          type: 'text',
+          placeholder: '输入工时'
+        },
+      ],
+      buttons: [
+        {
+          text: '取消',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            console.log('Confirm Cancel');
+          }
+        }, {
+          text: '确定',
+          handler: () => {
+            console.log('Confirm Ok');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
 }
