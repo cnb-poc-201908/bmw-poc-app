@@ -2,7 +2,7 @@
   <ion-toolbar color="primary">
     <ion-title>
       <ion-text color="light">
-        <ion-text color="light" class="fw700">杂项</ion-text>
+        <ion-text color="light" class="fw700">杂费</ion-text>
       </ion-text>
     </ion-title>
     <ion-buttons slot="start">
@@ -24,14 +24,15 @@
 </ion-header>
 
 <ion-content>
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button (click)="addItem()">
-      <!-- <ion-ripple-effect></ion-ripple-effect> -->
-      <ion-icon name="add"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
 
   <div *ngIf="currentTab === 'cost'">
+    <div class="btn-wrap">
+      <div (click)="reservationEtc('加油费')">加油费</div>
+      <div (click)="reservationEtc('加油费')">服务费</div>
+      <div (click)="reservationEtc('加油费')">检车费</div>
+      <div (click)="reservationEtc('加油费')">洗车费</div>
+      <div (click)="addItem('cost')">+</div>
+    </div>
     <ion-card *ngFor="let item of costItems" color="light">
       <ion-card-content>
         <ion-grid>
@@ -39,8 +40,8 @@
             <ion-col>
               <ion-label>{{item.text}}</ion-label>
             </ion-col>
-            <ion-col>
-              <ion-label>{{item.value}}</ion-label>
+            <ion-col style="text-align: right;">
+              <ion-label>¥{{item.value}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -48,6 +49,11 @@
     </ion-card>
   </div>
   <div *ngIf="currentTab === 'out'">
+    <div class="btn-wrap">
+      <div (click)="reservationEtc('光盘')">光盘</div>
+      <div (click)="reservationEtc('贴膜')">贴膜</div>
+      <div (click)="addItem('out')">+</div>
+    </div>
     <ion-card *ngFor="let item of outItems" color="light">
       <ion-card-content>
         <ion-grid>
@@ -55,8 +61,8 @@
             <ion-col>
               <ion-label>{{item.text}}</ion-label>
             </ion-col>
-            <ion-col>
-              <ion-label>{{item.value}}</ion-label>
+            <ion-col style="text-align: right;">
+              <ion-label>¥{{item.value}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
@@ -65,8 +71,24 @@
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
-  </ion-toolbar>
+<ion-footer class="main-footer">
+  <ion-grid class="footer-grid">
+    <ion-row class="footer-grid-row">
+      <ion-col size="7">
+        <ion-grid style="height: 100%">
+          <ion-row style="padding:3px;">
+            <span class="etc-footer-label">费用类: ¥500</span>
+          </ion-row>
+          <ion-row style="padding:3px;">
+            <span class="etc-footer-label">外包类: ¥300</span>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col size="5">
+        <ion-row>
+          <ion-button expand="full" size="large" class="btn-submit" color="danger">确定</ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

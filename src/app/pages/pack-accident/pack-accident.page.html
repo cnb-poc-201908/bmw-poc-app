@@ -73,8 +73,21 @@
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-title>Footer</ion-title>
-  </ion-toolbar>
+<ion-footer class="main-footer">
+  <ion-grid class="footer-grid">
+    <ion-row class="footer-grid-row">
+      <ion-col size="7">
+        <ion-grid style="height: 100%">
+          <ion-row style="padding:3px;height: 100%;">
+            <div class="footer-label">漆面: 0个</div>
+          </ion-row>
+        </ion-grid>
+      </ion-col>
+      <ion-col size="5">
+        <ion-row>
+          <ion-button expand="full" size="large" class="btn-submit" color="danger">确定</ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-footer>

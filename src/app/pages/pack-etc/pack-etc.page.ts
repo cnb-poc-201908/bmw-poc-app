@@ -33,31 +33,59 @@ export class PackEtcPage implements OnInit {
     this.currentTab = event.detail.value;
   }
 
-  async addItem() {
+  async reservationEtc(item) {
     const changeLocation = await this.alertCtrl.create({
-      header: '添加条目',
-      // message: 'Type your Address.',
+      header: item,
       inputs: [
         {
-          name: 'text',
-          placeholder: '名称',
-          type: 'text'
-        },
-        {
           name: 'value',
-          placeholder: '费用',
+          placeholder: '金额',
           type: 'number'
         }
       ],
       buttons: [
         {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
+          text: '保存',
+          handler: async (data) => {
+            // console.log('Change clicked', data);
+            if (data.text === '' || data.value === '') {
+              return;
+            }
+            this[this.currentTab + 'Items'].push({ text: item, value: data.value });
+            const toast = await this.toastCtrl.create({
+              message: '添加成功！',
+              duration: 3000,
+              position: 'top',
+              closeButtonText: 'OK',
+              showCloseButton: true
+            });
+
+            toast.present();
           }
+        }
+      ]
+    });
+    changeLocation.present();
+  }
+
+  async addItem() {
+    const changeLocation = await this.alertCtrl.create({
+      header: '自定义费用',
+      inputs: [
+        {
+          name: 'text',
+          placeholder: '自定义项目',
+          type: 'text'
         },
         {
-          text: 'OK',
+          name: 'value',
+          placeholder: '金额',
+          type: 'number'
+        }
+      ],
+      buttons: [
+        {
+          text: '保存',
           handler: async (data) => {
             // console.log('Change clicked', data);
             if (data.text === '' || data.value === '') {

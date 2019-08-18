@@ -15,7 +15,8 @@
 
         .image-wrap {
             width: 100%;
-            height: 65.3%;
+            height: 68.3%;
+            padding: 2% 11% 2% 9%;
             background: url(../../../assets/img/accident/car.png);
             background-size: cover;
 
@@ -37,15 +38,15 @@
                 flex-direction: row;
 
                 .car-left {
-                    width: 34%;
-                }
-
-                .car-middle {
                     width: 31%;
                 }
 
+                .car-middle {
+                    width: 38%;
+                }
+
                 .car-right {
-                    width: 35%;
+                    width: 31%;
                 }
             }
 
@@ -59,16 +60,16 @@
                 flex-direction: row;
 
                 .car-left {
-                    width: 38%;
+                    width: 37%;
                 }
 
                 .car-middle {
-                    width: 23%;
+                    width: 28%;
 
                 }
 
                 .car-right {
-                    width: 39%;
+                    width: 35%;
                 }
             }
 
@@ -116,8 +117,12 @@
             }
         }
 
+        .car-1, .car-5 {
+            padding: 0 30%;
+        }
+
         .rank-wrap {
-            height: 22.5%;
+            height: 19.5%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -152,6 +157,33 @@
     }
 
     ion-footer {
-        height: 60px;
+        &.main-footer {
+            min-height:80px;
+            background-color: #FFF;
+            border-top: 1px solid #f4f5f8;
+        }
+
+        ion-grid {
+            &.footer-grid {
+                height:100%;
+
+            }
+            &.footer-grid .footer-grid-row {
+                height:100%;
+
+                .footer-label {
+                    display: flex;
+                    justify-content: space-around;
+                    align-items: center;
+                }
+            }
+        }
+
+        ion-button {
+            &.btn-submit {
+                --background: #CB1919;
+                width: 140px;
+            }
+        }
     }
 }
