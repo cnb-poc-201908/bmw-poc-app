@@ -7,6 +7,8 @@ export class StoreService {
 
     public maintenanceList = [];
 
+    public compainList = [];
+
     constructor() {
     }
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { isNgTemplate } from '@angular/compiler';
+import { StoreService } from 'src/app/services/store.service';
 
 
 @Component({
@@ -142,7 +143,7 @@ export class PackCampainPage implements OnInit {
   }
 ];
 
-  constructor(public activeRoute: ActivatedRoute) { }
+  constructor(public activeRoute: ActivatedRoute, private store: StoreService) { }
 
   getCampainNoByVn(vn) {
     this.campainNumbers = this.campainListOfVehicle.filter((item) => {
@@ -156,14 +157,52 @@ export class PackCampainPage implements OnInit {
     this.campainNumbers.forEach((campainNO) => {
       this.campainList.filter((item) => {
         if (item['CAMPAIGN'] === campainNO['CAMPCD']) {
-          this.packagesOfCampain.push(item);
+          this.packages.filter((packageitem) => {
+            if ( packageitem['PackageID'] === item['CAMPACNO'] ) {
+              const JsonCampain = {
+                'campacno': item['CAMPACNO'],
+                'packageid': packageitem['PackageID'],
+                'campainDetail': item,
+                'packageDetail': packageitem
+              };
+              this.packagesOfCampain.push(JsonCampain);
+            }
+            return packageitem['PackageID'] === item['CAMPACNO'];
+          });
         }
         return item['CAMPAIGN'] === campainNO['CAMPCD'];
       });
     });
   }
 
+  reformatPackage() {
+    this.packages.forEach(item => {
+      let totalPartPrice = 0;
+      let totalLaborPrice = 0;
+      let totalLaborHours = 0;
+      if (item['PartInfo'] && item['PartInfo'].length > 0) {
+        item['PartInfo'].forEach( part => {
+          part['PartPrice'] = part['PartPrice'] !== '' ? Number(part['PartPrice']) : 0;
+          totalPartPrice = totalPartPrice + part['PartPrice'];
+        });
+      }
+      if (item['Laborinfo'] && item['Laborinfo'].length > 0) {
+        item['Laborinfo'].forEach( part => {
+          part['LaborPrice'] = part['LaborPrice'] !== '' ? Number(part['LaborPrice']) : 0;
+          totalLaborPrice = totalLaborPrice + part['LaborPrice'];
+          totalLaborHours = totalLaborHours  + Number(part['LaborAmount']);
+        });
+      }
+      item['totalPartPrice'] = totalPartPrice;
+      item['totalLaborPrice'] = totalLaborPrice;
+      item['totalLaborHours'] = totalLaborHours;
+      item['totalPrice'] = totalPartPrice + totalLaborPrice;
+      item['selected'] = false;
+    });
+  }
+
   ngOnInit() {
+    this.reformatPackage();
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.parmVN = params['parmVN'];
       this.getCapainPackage();
@@ -171,15 +210,29 @@ export class PackCampainPage implements OnInit {
   }
 
   doClick(item) {
-    item.selected = !item.selected
+    item.packageDetail.selected = !item.packageDetail.selected;
   }
 
-  select(item) {
-    if ( item.selected ) {
-      this.selectedAmount += 1;
+  select(pack) {
+    let hours = 0;
+    if (pack.packageDetail.selected) {
+      this.selectedPackages.push(pack);
     } else {
-      this.selectedAmount -= 1;
+      this.selectedPackages.splice(this.selectedPackages.findIndex( item => item['packageid'] === pack.packageid), 1);
     }
+
+    if (this.selectedPackages.length > 0)  {
+      this.selectedPackages.forEach(item => {
+        hours = hours + item['packageDetail']['totalLaborHours'];
+      });
+      this.selectedHours = hours;
+    } else {
+      this.selectedHours = 0;
+    }
+
+    console.log(this.selectedPackages);
+
+    this.selectedAmount = this.selectedPackages.length;
   }
 
 }
