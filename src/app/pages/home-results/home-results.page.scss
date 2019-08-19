@@ -14,7 +14,7 @@
         }
     }
     ion-header {
-        background: #1C69D4;
+        // background: #1C69D4;
 
         .tab-warp {
             // height: 88px;
@@ -142,5 +142,10 @@
     .padding-top-bottom-1{
         padding-top: 1px;
         padding-bottom: 1px;
+    }
+    .sub-item{
+        --min-height: 30px;
+        line-height: .9;
+        font-size: .9rem;
     }
 }

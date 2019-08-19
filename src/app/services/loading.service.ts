@@ -17,9 +17,9 @@ export class LoadingService {
       // duration: 5000,
     }).then(a => {
       a.present().then(() => {
-        console.log('loading presented');
+        // console.log('loading presented');
         if (!this.isLoading) {
-          a.dismiss().then(() => console.log('abort laoding'));
+          a.dismiss()
         }
       });
     });
@@ -27,6 +27,6 @@ export class LoadingService {
 
   async dismiss() {
     this.isLoading = false;
-    return await this.loadingController.dismiss().then(() => console.log('loading dismissed'));
+    return await this.loadingController.dismiss();
   }
 }
