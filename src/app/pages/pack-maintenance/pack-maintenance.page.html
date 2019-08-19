@@ -28,10 +28,17 @@
                 <ion-label class="details">{{item.PartsName}} * {{item.PartsAmount}}</ion-label>
                 <ion-note slot="end" style="font-size: 12px;">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
             </ion-item>
-            <ion-item>
+            <!-- <ion-item>
               <ion-label class="details-labor">工时费</ion-label>
               <ion-note slot="end" style="font-size: 12px;">￥{{pack.totalLaborPrice}}</ion-note>
-            </ion-item>
+            </ion-item> -->
+          </div>
+          <div *ngIf="pack.selected && pack.selected != undefined">
+              <ion-item *ngFor="let item of pack.Laborinfo">
+                  <ion-checkbox color="primary" slot="start"></ion-checkbox>
+                  <ion-label class="details">{{item.LaborDescription}}</ion-label>
+                  <ion-note slot="end" style="font-size: 12px;">￥{{item.LaborPrice * item.LaborAmount}}</ion-note>
+              </ion-item>
           </div>
       </ion-card-content>
     </ion-card>
