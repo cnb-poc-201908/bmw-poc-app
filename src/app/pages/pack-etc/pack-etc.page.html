@@ -15,7 +15,7 @@
   <ion-grid class="footer-grid">
     <ion-row class="footer-grid-row">
       <ion-col size="6" *ngFor="let item of etcItems; let i = index;">
-        <div class="card-content" (click)="sumPrice(item)" [ngStyle]="{'background-image': 'url(' + imgList[0] + ')'}">
+        <div class="card-content" (click)="sumPrice(item)" [ngStyle]="{'background-image': 'url(' + imgList[i] + ')'}">
           <div class="card" [ngClass]="{'active': item.checked}">
             <div *ngIf="item.checked" class="check-icon">
               <ion-icon size="large" name="checkmark-circle"></ion-icon>

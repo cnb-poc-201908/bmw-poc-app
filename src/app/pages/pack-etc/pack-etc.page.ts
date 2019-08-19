@@ -18,7 +18,11 @@ export class PackEtcPage implements OnInit {
   etcItems = [];
   packageList = [];
   imgList = [
-    '../../../assets/img/avatar.jpeg'
+    '../../../assets/img/etc/tiemo.png',
+    '../../../assets/img/etc/daohang.png',
+    '../../../assets/img/etc/dipan.png',
+    '../../../assets/img/etc/yinxiang.png',
+    '../../../assets/img/etc/daoche.png'
   ];
 
   constructor(
