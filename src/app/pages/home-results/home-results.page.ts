@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   NavController,
   AlertController,
@@ -11,13 +11,15 @@ import {
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
 import { ActivatedRoute, Params } from '@angular/router';
+import { StoreService } from 'src/app/services/store.service';
+
 
 @Component({
   selector: 'app-home-results',
   templateUrl: './home-results.page.html',
   styleUrls: ['./home-results.page.scss']
 })
-export class HomeResultsPage {
+export class HomeResultsPage implements OnInit {
   searchKey = '';
   yourLocation = '123 Test Street';
   themeCover = 'assets/img/ionic4-Start-Theme-cover.jpg';
@@ -35,7 +37,8 @@ export class HomeResultsPage {
     // public modalCtrl: ModalController,
     public toastCtrl: ToastController,
     public activeRoute: ActivatedRoute,
-    private pickerCtrl: PickerController
+    private pickerCtrl: PickerController,
+    private store: StoreService,
   ) {
     this.items = [
       {title: 'item1',type:'maintenance',typeName:'保养',details : [
@@ -99,7 +102,12 @@ export class HomeResultsPage {
     this.currentTab = event.detail.value;
   }
 
+  forward(target) {
+    this.navCtrl.navigateForward("/pack-maintenance")
+  }
+
   ionViewWillEnter() {
+    console.log("Home======" + JSON.stringify(this.store.maintenanceList))
     this.menuCtrl.enable(true);
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.objectReceive = params['object'];
@@ -180,4 +188,9 @@ export class HomeResultsPage {
     }
     return {'border-top-color':''};
   }
+
+  ngOnInit() {
+    
+  }
+
 }

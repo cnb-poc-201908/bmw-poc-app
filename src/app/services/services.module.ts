@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RestService } from './rest.service';
 import { LoadingService } from './loading.service';
 import { InterceptorService } from './interceptor.service';
+import { StoreService } from './store.service';
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,7 @@ import { InterceptorService } from './interceptor.service';
     RestService,
     LoadingService,
     InterceptorService,
+    StoreService,
   ],
 })
 export class ServicesModule { }

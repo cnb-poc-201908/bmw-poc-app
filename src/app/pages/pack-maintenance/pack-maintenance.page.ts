@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-pack-maintenance',
@@ -16,9 +17,10 @@ export class PackMaintenancePage implements OnInit {
 
   public selectedHours = 0;
 
-  constructor(private rest: RestService) { }
+  constructor(private rest: RestService, private store: StoreService) { }
 
   ngOnInit() {
+    console.log("++++++++")
     this.rest.getPackageList().subscribe(res=>{
       if (res && res.code === 200) {
         const packs = res.basicInfoList;
@@ -50,6 +52,10 @@ export class PackMaintenancePage implements OnInit {
         })
       }
     })
+
+    this.store.maintenanceList = [{
+      time: new Date(),
+    }]
 
   }
 
