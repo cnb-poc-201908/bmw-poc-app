@@ -14,19 +14,31 @@
       <ion-card-content style="float:left;width:100%">
           <ion-item (click)="doClick($event)">
             <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
-            <ion-label>{{pack.PackageName}}</ion-label>
+            <ion-label class="pack-label">{{pack.PackageName}}</ion-label>
             <ion-note *ngIf="pack.Campaign1 != ''" class="ticket" slot="end">优惠券</ion-note>
-            <ion-note slot="end">￥{{pack.totalPrice}}</ion-note>
+            <ion-note slot="end" *ngIf="!pack.selected" style="margin-left:2px;margin-right:2px;">￥{{pack.totalPrice}}</ion-note>
+            <ion-note slot="end" style="margin-left:2px;margin-right:2px;padding-top:2%;">
+              <ion-icon *ngIf="pack.selected" name="arrow-down"></ion-icon>
+              <ion-icon *ngIf="!pack.selected" name="arrow-forward"></ion-icon>
+            </ion-note>
           </ion-item>
           <div *ngIf="pack.selected && pack.selected != undefined">
             <ion-item *ngFor="let item of pack.PartInfo">
-                <ion-label class="details">{{item.PartsName}} X {{item.PartsAmount}}</ion-label>
-                <ion-note slot="end">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
+                <ion-checkbox color="primary" slot="start"></ion-checkbox>
+                <ion-label class="details">{{item.PartsName}} * {{item.PartsAmount}}</ion-label>
+                <ion-note slot="end" style="font-size: 12px;">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
             </ion-item>
-            <ion-item>
-              <ion-label class="details">工时费</ion-label>
-              <ion-note slot="end">￥{{pack.totalLaborPrice}}</ion-note>
-            </ion-item>
+            <!-- <ion-item>
+              <ion-label class="details-labor">工时费</ion-label>
+              <ion-note slot="end" style="font-size: 12px;">￥{{pack.totalLaborPrice}}</ion-note>
+            </ion-item> -->
+          </div>
+          <div *ngIf="pack.selected && pack.selected != undefined">
+              <ion-item *ngFor="let item of pack.Laborinfo">
+                  <ion-checkbox color="primary" slot="start"></ion-checkbox>
+                  <ion-label class="details">{{item.LaborDescription}}</ion-label>
+                  <ion-note slot="end" style="font-size: 12px;">￥{{item.LaborPrice * item.LaborAmount}}</ion-note>
+              </ion-item>
           </div>
       </ion-card-content>
     </ion-card>
