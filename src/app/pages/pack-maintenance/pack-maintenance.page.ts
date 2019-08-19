@@ -35,7 +35,7 @@ export class PackMaintenancePage implements OnInit {
   }
 
   compute() {
-    console.log(JSON.stringify(this.packages))
+    // console.log(JSON.stringify(this.packages))
     this.packages.forEach(item=>{
       let totalPartPrice = 0;
       let totalLaborPrice = 0;

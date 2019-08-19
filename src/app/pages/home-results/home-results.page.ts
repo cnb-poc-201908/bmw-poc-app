@@ -49,12 +49,13 @@ export class HomeResultsPage implements OnInit {
   ) {
   }
 
-  async remove(i) {
-    this.packages.splice(i, 1);
+  async remove(pack) {
+    this.removePackage(pack);
+    this.init();
     await this.slidingList.closeSlidingItems();
     const toast = await this.toastCtrl.create({
       message: '删除成功!',
-      duration: 3000,
+      duration: 1000,
       position: 'top',
       closeButtonText: '确定',
       showCloseButton: true,
@@ -71,8 +72,11 @@ export class HomeResultsPage implements OnInit {
     this.navCtrl.navigateForward(target);
   }
   getPackagePrice(p:any){
-    let laborPrice = p.Laborinfo.reduce((a,b) => a + parseFloat(b.LaborPrice?b.LaborPrice:'0'), 0);
-    let partPrice = p.PartInfo.reduce((a,b) => a + parseFloat(b.PartPrice?b.PartPrice:'0'), 0);
+    let laborPrice = p.Laborinfo.reduce((a,b) => a + parseFloat((b.LaborPrice && b.LaborSelected==true)?b.LaborPrice:'0'), 0);
+    let partPrice = p.PartInfo.reduce((a,b) => a + parseFloat((b.PartPrice && b.PartSelected==true)?b.PartPrice:'0'), 0);
+    if(p.RepairTypeCode==="CHE"){
+      return p.Laborinfo[0].LaborAmount * parseFloat(p.Laborinfo[0].LaborUnitPrice?p.Laborinfo[0].LaborUnitPrice:'0');
+    }
     return laborPrice+partPrice;
   }
   getAllLaborAmount(){
@@ -99,45 +103,6 @@ export class HomeResultsPage implements OnInit {
   }
   showPicker(){
     this.datePicker.open();
-  }
-
-  async alertLocation() {
-    const changeLocation = await this.alertCtrl.create({
-      header: 'Change Location',
-      message: 'Type your Address.',
-      inputs: [
-        {
-          name: 'location',
-          placeholder: 'Enter your new Location',
-          type: 'text'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Change',
-          handler: async (data) => {
-            console.log('Change clicked', data);
-            this.yourLocation = data.location;
-            const toast = await this.toastCtrl.create({
-              message: 'Location was change successfully',
-              duration: 3000,
-              position: 'top',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
-
-            toast.present();
-          }
-        }
-      ]
-    });
-    changeLocation.present();
   }
 
   async notifications(ev: any) {
@@ -177,7 +142,7 @@ export class HomeResultsPage implements OnInit {
     this.init();
   }
   init(){
-    this.packages = [...this.store.maintenanceList,...this.store.compainList,...this.store.accidentList,...this.store.etcList].sort((a,b)=>{
+    this.packages = [...this.store.maintenanceList,...this.store.compainList,...this.store.accidentList,...this.store.etcList,...this.store.checkList].sort((a,b)=>{
       let typeA = a.RepairTypeCode.toUpperCase();
       let typeB = b.RepairTypeCode.toUpperCase();
       if (typeA < typeB) {
@@ -195,17 +160,16 @@ export class HomeResultsPage implements OnInit {
   doClick(pack){
     pack.expand = !pack.expand;
   }
-  removePartItem(packIndex,itemIndex){
-    this.packages[packIndex].PartInfo.splice(itemIndex,1);
-    if(this.packages[packIndex].PartInfo.length<1 && this.packages[packIndex].Laborinfo.length<1){console.log(packIndex,itemIndex);
-      this.remove(packIndex);
-    }
+  removePartItem(pack,itemIndex){
+    this.removeMAPart(pack,itemIndex);
+    this.removeCAMPart(pack,itemIndex)
+    this.init();
   }
-  removeLaborItem(packIndex,itemIndex){
-    this.packages[packIndex].Laborinfo.splice(itemIndex,1);
-    if(this.packages[packIndex].Laborinfo.length<1 && this.packages[packIndex].PartInfo.length<1){console.log(packIndex,itemIndex);
-      this.remove(packIndex);
-    }
+  removeLaborItem(pack,itemIndex){
+    this.removeMALabor(pack,itemIndex);
+    this.removeOTHLabor(pack,itemIndex);
+    this.removeCAMLabor(pack,itemIndex);
+    this.removeINCLabor(pack,itemIndex)
   }
   goNotification(){
     this.router.navigate(['pack-campain'], {
@@ -217,7 +181,7 @@ export class HomeResultsPage implements OnInit {
   async save(){
     const toast = await this.toastCtrl.create({
       message: '保存成功!',
-      duration: 3000,
+      duration: 1000,
       position: 'top',
       closeButtonText: '确定',
       showCloseButton: true,
@@ -227,13 +191,86 @@ export class HomeResultsPage implements OnInit {
   }
   async comingsoon(){
     const toast = await this.toastCtrl.create({
-      message: 'Coming Soon!',
-      duration: 3000,
+      message: '功能正在开发中!',
+      duration: 1000,
       position: 'top',
       closeButtonText: '确定',
       showCloseButton: true,
       color:"light"
     });
     toast.present();
+  }
+
+  private deletePackage(storeName,pack){
+    let index = this.store[storeName].findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store[storeName].splice(index,1);
+    }
+  }
+  private removeMAPart(pack,itemIndex){
+    let index = this.store.maintenanceList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.maintenanceList[index].PartInfo[itemIndex].PartSelected = false;
+      if(this.store.maintenanceList[index].PartInfo.filter(p=>p.PartSelected==true).length<1 && this.store.maintenanceList[index].Laborinfo.filter(l=>l.LaborSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  private removeMALabor(pack,itemIndex){
+    let index = this.store.maintenanceList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.maintenanceList[index].Laborinfo[itemIndex].LaborSelected = false;
+      if(this.store.maintenanceList[index].Laborinfo.filter(p=>p.LaborSelected==true).length<1 && this.store.maintenanceList[index].PartInfo.filter(l=>l.PartSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  private removeOTHLabor(pack,itemIndex){
+    let index = this.store.etcList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.etcList[index].Laborinfo[itemIndex].LaborSelected = false;
+      if(this.store.etcList[index].Laborinfo.filter(p=>p.LaborSelected==true).length<1 && this.store.etcList[index].PartInfo.filter(l=>l.PartSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  private removeCAMPart(pack,itemIndex){
+    let index = this.store.compainList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.compainList[index].PartInfo[itemIndex].PartSelected = false;
+      if(this.store.compainList[index].PartInfo.filter(p=>p.PartSelected==true).length<1 && this.store.compainList[index].Laborinfo.filter(l=>l.LaborSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  private removeCAMLabor(pack,itemIndex){
+    let index = this.store.compainList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.compainList[index].Laborinfo[itemIndex].LaborSelected = false;
+      if(this.store.compainList[index].Laborinfo.filter(p=>p.LaborSelected==true).length<1 && this.store.compainList[index].PartInfo.filter(l=>l.PartSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  private removeINCLabor(pack,itemIndex){
+    let index = this.store.accidentList.findIndex(m=>m.PackageID===pack.PackageID);
+    if(index>-1){
+      this.store.accidentList[index].Laborinfo[itemIndex].LaborSelected = false;
+      if(this.store.accidentList[index].Laborinfo.filter(p=>p.LaborSelected==true).length<1 && this.store.accidentList[index].PartInfo.filter(l=>l.PartSelected==true).length<1){
+        this.remove(pack);
+      }
+    }
+  }
+  removePackage(pack){
+    // this.removeMA(pack);
+    // this.removeCHE(pack);
+    // this.removeINC(pack);
+    // this.removeOTH(pack);
+    // this.removeCAM(pack);
+    this.deletePackage('maintenanceList',pack);
+    this.deletePackage('checkList',pack);
+    this.deletePackage('accidentList',pack);
+    this.deletePackage('etcList',pack);
+    this.deletePackage('compainList',pack);
   }
 }

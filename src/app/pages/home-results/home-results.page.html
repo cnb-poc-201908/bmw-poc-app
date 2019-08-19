@@ -28,7 +28,7 @@
                   <ion-col text-left style="font-size: 1.5rem;" class="padding-top-bottom-1">{{objectReceive?.regno}}<ion-icon name="information-circle-outline"></ion-icon></ion-col>
                 </ion-row> -->
                 <ion-row>
-                  <ion-col text-left class="customer-text padding-top-bottom-1">{{store.customer.customer_info?.SALUTE}}</ion-col>
+                  <ion-col text-left class="customer-text padding-top-bottom-1">{{store.customer.customer_info?.SURNAME + store.customer.customer_info?.TITLE}}</ion-col>
                 </ion-row>
                 <ion-row>
                   <ion-col text-left class="customer-text padding-top-bottom-1">{{store.customer.customer_info?.PHONE | maskPhone}}</ion-col>
@@ -75,7 +75,7 @@
           </ion-slide>
           <ion-slide>
             <section>
-                <ion-text color="light">这里是很多描述信息。。。</ion-text>
+                <ion-text color="light">机油保养</ion-text>
             </section>
           </ion-slide>
         </ion-slides>
@@ -113,16 +113,16 @@
           <ion-label>
             <div class="btn-label">
               <!-- <img src="../../../assets/icon/packages/etc.png"> -->
-              <ion-icon name="paper" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+              <ion-icon name="cart" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
               <span>加装</span>
             </div>
           </ion-label>
         </ion-segment-button>
-      <ion-segment-button value="etc">
+      <ion-segment-button value="etc" (click)="comingsoon()">
         <ion-label>
           <div class="btn-label">
             <!-- <img src="../../../assets/icon/packages/etc.png"> -->
-            <ion-icon name="calculator" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
+            <ion-icon name="paper" style="font-size: 1.6rem;margin: auto 0;"></ion-icon>
             <span>备注</span>
           </div>
         </ion-label>
@@ -143,28 +143,32 @@
           <ion-item-sliding>
             <ion-item no-padding style="z-index: 0;" (click)="doClick(pack)" [ngStyle]="{'border-bottom':pack.expand && pack.expand ==true ? '1px solid '+setColorByType(pack.RepairTypeCode) :''}">
               <div class="package-type-color" [ngStyle]="{'border-top-color':setColorByType(pack.RepairTypeCode)}"></div>
-              <div class="package-type">{{pack.RepairType}}</div>
+              <div class="package-type">{{pack.RepairType | slice:0:2}}</div>
               <ion-label>{{pack.PackageName}}</ion-label>
               <ion-note slot="end">{{getPackagePrice(pack) | currency:'￥':true:'1.2-2'}}</ion-note>
             </ion-item>
             <ion-item-options side="end">
-                <ion-item-option color="danger" (click)="remove(i)">
+                <ion-item-option color="danger" (click)="remove(pack)">
                   <ion-icon name="trash"></ion-icon>
-                  Delete
+                  删除
                 </ion-item-option>
               </ion-item-options>
           </ion-item-sliding>
           <ng-container *ngIf="pack.expand && pack.expand ==true">
-              <ion-item *ngFor="let item of pack.PartInfo; index as j" class="sub-item">
+            <ng-container *ngFor="let item of pack.PartInfo; index as j">
+              <ion-item *ngIf="item.PartSelected == true" class="sub-item">
                   <ion-label class="details">P {{item.PartsName}}</ion-label>
                   <ion-note slot="end">{{!item.PartPrice ? '0' : item.PartPrice | currency:'￥':true:'1.2-2'}}</ion-note>
-                  <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removePartItem(i,j)"></ion-icon>
+                  <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removePartItem(pack,j)"></ion-icon>
               </ion-item>
-              <ion-item *ngFor="let item of pack.Laborinfo; index as j" class="sub-item">
+            </ng-container>
+            <ng-container *ngFor="let item of pack.Laborinfo; index as j" >
+              <ion-item *ngIf="item.LaborSelected == true" class="sub-item">
                 <ion-label class="details">L {{item.LaborDescription}}</ion-label>
                 <ion-note slot="end">{{item.LaborPrice | currency:'￥':true:'1.2-2'}}</ion-note>
-                <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removeLaborItem(i,j)"></ion-icon>
+                <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removeLaborItem(pack,j)"></ion-icon>
               </ion-item>
+            </ng-container>
             </ng-container>
       </ion-card-content>
     </ion-card>

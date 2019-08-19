@@ -89,6 +89,7 @@ export class PackEtcPage implements OnInit {
     const etcList = [];
     this.etcItems.forEach(element => {
       if (element.checked) {
+        element.Laborinfo[0].LaborSelected = true;
         etcList.push(element);
       }
     });

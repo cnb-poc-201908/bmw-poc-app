@@ -134,6 +134,9 @@ export class PackAccidentPage implements OnInit {
       for (let i = 0; i < this.packageList.length; i++) {
         if (element.accidentRank !== null && element.accidentId === this.packageList[i].PaintArea
           && element.accidentRank.toString() === this.packageList[i].ProcesslevelforPaint) {
+            this.packageList[i].Laborinfo[0].LaborSelected = true;
+            this.packageList[i].Laborinfo.forEach(i=>i.LaborSelected=true);
+            this.packageList[i].PartInfo.forEach(i=>i.PartSelected=true);
             accidentList.push(this.packageList[i]);
         }
       }
