@@ -43,7 +43,28 @@
     <ion-card *ngFor="let item of vericlelist" color="light" (click)="RedirectToDetail(item)">
       <ion-card-content>
         <ion-grid>
-          <ion-row>
+            <ion-row *ngIf="item.reservFlag">
+              <ion-col>
+                <ion-label>{{item.regno}}&nbsp;</ion-label>
+                <ion-label><span class="reserv">已预约</span></ion-label>
+                <br/>
+                <ion-label class="sacss" *ngIf="item.reservFlag">
+                    {{item.saName}}
+                </ion-label>
+              </ion-col>
+              <ion-col size="6" class="reservationTime">
+                到店时间: {{item.checkintime}}
+              </ion-col>
+            </ion-row>
+          <ion-row *ngIf="!item.reservFlag">
+            <ion-col>
+              <ion-label>{{item.regno}}</ion-label>
+            </ion-col>
+            <ion-col size="6" class="reservationTime">
+              到店时间: {{item.checkintime}}
+            </ion-col>
+          </ion-row>
+          <!-- <ion-row>
             <ion-col>
               <ion-label>{{item.regno}}&nbsp;</ion-label>
               <ion-label class="reservationcss" *ngIf="item.reservFlag">
@@ -57,7 +78,7 @@
             <ion-col size="6" class="reservationTime">
               到店时间: {{item.checkintime}}
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-grid>
       </ion-card-content>
     </ion-card>

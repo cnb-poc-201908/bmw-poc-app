@@ -210,3 +210,10 @@ ion-item {
   .swiper-container-horizontal>.swiper-pagination-bullets{
     bottom:0px;
   }
+
+  .alert-button.pack-accident {
+    font-weight: normal !important;
+  }
+  .alert-button.pack-accident.paint-level-active {
+    background: #D87A30;
+  }

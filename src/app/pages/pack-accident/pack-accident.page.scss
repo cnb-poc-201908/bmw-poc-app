@@ -21,7 +21,7 @@
             background-size: cover;
 
             .car-1 {
-                height: 11.6%;
+                height: 10%;
             }
 
             .car-2 {
@@ -29,11 +29,11 @@
             }
 
             .car-3 {
-                height: 33.9%;
+                height: 34.9%;
             }
 
             .car-4 {
-                height: 23.4%;
+                height: 26%;
                 display: flex;
                 flex-direction: row;
 
@@ -51,7 +51,7 @@
             }
 
             .car-5 {
-                height: 14.5%;
+                height: 11.5%;
             }
 
             .car-2,
@@ -117,8 +117,21 @@
             }
         }
 
-        .car-1, .car-5 {
+        .car-1,
+        .car-5 {
             padding: 0 30%;
+        }
+
+        .cover-yellow {
+            background: rgba(234, 212, 32, 0.7);
+        }
+
+        .cover-orange {
+            background: rgba(216, 122, 48, 0.7);
+        }
+
+        .cover-red {
+            background: rgba(203, 24, 24, 0.7);
         }
 
         .rank-wrap {
@@ -158,18 +171,19 @@
 
     ion-footer {
         &.main-footer {
-            min-height:80px;
+            min-height: 80px;
             background-color: #FFF;
             border-top: 1px solid #f4f5f8;
         }
 
         ion-grid {
             &.footer-grid {
-                height:100%;
+                height: 100%;
 
             }
+
             &.footer-grid .footer-grid-row {
-                height:100%;
+                height: 100%;
 
                 .footer-label {
                     display: flex;
@@ -186,4 +200,5 @@
             }
         }
     }
+
 }

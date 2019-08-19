@@ -12,14 +12,8 @@ import {
 export class PackEtcPage implements OnInit {
 
   currentTab = 'cost';
-  costItems = [
-    { text: '费用类1', value: 200 },
-    { text: '费用类2', value: 100 }
-  ];
-  outItems = [
-    { text: '外包1', value: 200 },
-    { text: '外包2', value: 100 }
-  ];
+  costItems = [];
+  outItems = [];
 
   constructor(
     public alertCtrl: AlertController,
@@ -27,6 +21,10 @@ export class PackEtcPage implements OnInit {
   ) { }
 
   ngOnInit() {
+  }
+
+  back() {
+    window.history.back();
   }
 
   changeTab(event) {
@@ -47,20 +45,10 @@ export class PackEtcPage implements OnInit {
         {
           text: '保存',
           handler: async (data) => {
-            // console.log('Change clicked', data);
-            if (data.text === '' || data.value === '') {
+            if (data.value === '') {
               return;
             }
             this[this.currentTab + 'Items'].push({ text: item, value: data.value });
-            const toast = await this.toastCtrl.create({
-              message: '添加成功！',
-              duration: 3000,
-              position: 'top',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
-
-            toast.present();
           }
         }
       ]
@@ -87,20 +75,33 @@ export class PackEtcPage implements OnInit {
         {
           text: '保存',
           handler: async (data) => {
-            // console.log('Change clicked', data);
             if (data.text === '' || data.value === '') {
               return;
             }
             this[this.currentTab + 'Items'].push({ text: data.text, value: data.value });
-            const toast = await this.toastCtrl.create({
-              message: '添加成功！',
-              duration: 3000,
-              position: 'top',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
+          }
+        }
+      ]
+    });
+    changeLocation.present();
+  }
 
-            toast.present();
+  async reservationEtcEdit(item) {
+    const changeLocation = await this.alertCtrl.create({
+      header: item.text,
+      inputs: [
+        {
+          name: 'value',
+          placeholder: '金额',
+          type: 'number',
+          value: item.value
+        }
+      ],
+      buttons: [
+        {
+          text: '保存',
+          handler: async (data) => {
+            item.value = data.value;
           }
         }
       ]

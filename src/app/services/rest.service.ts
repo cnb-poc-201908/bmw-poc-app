@@ -95,6 +95,9 @@ export class RestService {
         return this.http.post("http://ocrcp.market.alicloudapi.com/rest/160601/ocr/ocr_vehicle_plate.json", data, httpOptions);
     }
 
+    getPaintPackagelist(): Observable<any> {
+        return this.httpGet(this.url + `/repairOrder/GetPaintPackagelist`);
+    }
 
 
 }
