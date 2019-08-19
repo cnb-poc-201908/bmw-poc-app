@@ -35,6 +35,13 @@ export class PackEtcPage implements OnInit {
           if (element.RepairTypeCode === 'OTH') {
             element['checked'] = false;
             this.etcItems.push(element);
+            this.etcItems.forEach(etc => {
+              etc['sumprice'] = 0;
+              etc.Laborinfo.forEach(labor => {
+                // tslint:disable-next-line:radix
+                etc['sumprice'] += parseInt(labor.LaborPrice);
+              });
+            });
           }
         });
         if (this.store.etcList.length) {
