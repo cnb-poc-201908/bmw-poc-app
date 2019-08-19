@@ -14,58 +14,89 @@ export class PackCampainPage implements OnInit {
 
   public packages: Array<{}> = [
     {
-      'Magic': '2',
-      'PackageID': 'SUMMER01',
-      'PackageName': '夏日优惠：更换雨刮片',
       'AccountID': 'C0000001',
-      'RepairType': '一般维修',
-      'RepairTypeCode': 'NOR',
+      'RepairTypeCode': 'CAM',
+      'PackageName': '夏日优惠：更换雨刮片',
+      'PackagePrice': '',
+      'RepairType': '活动',
+      'Magic': '44',
+      'Model': '',
       'Laborinfo': [
         {
+          'LaborStatus': 'F',
+          'LaborUnitPrice': '40.00',
           'LaborCode': '6161541',
+          'LaborAmount': '1',
           'LaborDescription': '更换两个雨刷片',
-          'LaborAmount': '1.00',
-          'LaborPrice': '50.00'
+          'LaborPrice': '40'
         }
       ],
       'PartInfo': [
         {
-          'Magic': '4',
+          'PartsAmount': '1.00',
           'PartsCode': '61610427668',
           'PartsName': '雨刮片组件',
-          'PartsAmount': '1.00',
-          'PartPrice': '210.00'
-        },
-        {
-          'PartsCode': '83210398511',
-          'PartsName': '发动机机油 5W30',
-          'PartsAmount': '4.25',
-          'PartPrice': '200.0'
+          'Partstatus': 'F',
+          'PartPrice': '300.00'
         }
       ],
-      'Campaign1': 'V201908',
-      'Model': 'E60',
-      'Engine': 'D60'
+      'PackageID': 'SUMMER01',
+      'CHECKType': '',
+      'Engine': ''
     },
     {
-      'Magic': '11',
-      'PackageID': 'T201901',
-      'PackageName': '车载电脑升级',
       'AccountID': 'W0000011',
-      'RepairType': '活动',
-      'RepairTypeCode': 'CAM',
+      'RepairTypeCode': 'PDI',
+      'PackageName': 'PDI检查',
+      'PackagePrice': '',
+      'RepairType': 'PDI',
+      'Magic': '45',
+      'Model': '',
       'Laborinfo': [
         {
-          'LaborCode': '6614890',
-          'LaborDescription': '车载电脑升级',
-          'LaborAmount': '10.00',
-          'LaborPrice': '500.00'
+          'LaborStatus': 'F',
+          'LaborUnitPrice': '40.00',
+          'LaborCode': '0000741',
+          'LaborAmount': '1',
+          'LaborDescription': '弹簧锁止器移交检验',
+          'LaborPrice': '40'
+        },
+        {
+          'LaborStatus': 'F',
+          'LaborUnitPrice': '40.00',
+          'LaborCode': '0000556',
+          'LaborAmount': '2',
+          'LaborDescription': '进行车辆测试',
+          'LaborPrice': '80'
         }
       ],
       'PartInfo': [],
-      'Campaign1': 'T201901',
-      'Model': 'E46',
-      'Engine': 'N46'
+      'PackageID': 'PDI01',
+      'CHECKType': '',
+      'Engine': ''
+    },
+    {
+      'AccountID': 'W0000011',
+      'RepairTypeCode': 'CAM',
+      'PackageName': '车载电脑升级',
+      'PackagePrice': '',
+      'RepairType': '活动',
+      'Magic': '46',
+      'Model': '',
+      'Laborinfo': [
+        {
+          'LaborStatus': 'F',
+          'LaborUnitPrice': '40.00',
+          'LaborCode': '6614890',
+          'LaborAmount': '10',
+          'LaborDescription': '车载电脑升级',
+          'LaborPrice': '400'
+        }
+      ],
+      'PartInfo': [],
+      'PackageID': 'T201901',
+      'CHECKType': '',
+      'Engine': ''
     }
   ];
 
