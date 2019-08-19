@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RestService } from 'src/app/services/rest.service';
 import { StoreService } from 'src/app/services/store.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pack-maintenance',
@@ -17,10 +18,11 @@ export class PackMaintenancePage implements OnInit {
 
   public selectedHours = 0;
 
-  constructor(private rest: RestService, private store: StoreService) { }
+  constructor(private rest: RestService, 
+          private store: StoreService,
+          public navCtrl: NavController,) { }
 
   ngOnInit() {
-    console.log("++++++++")
     this.rest.getPackageList().subscribe(res=>{
       if (res && res.code === 200) {
         const packs = res.basicInfoList;
@@ -34,13 +36,15 @@ export class PackMaintenancePage implements OnInit {
           if (item.PartInfo && item.PartInfo.length > 0) {
             item.PartInfo.forEach(part=>{
               part.PartPrice = part.PartPrice != "" ? Number(part.PartPrice) : 0;
-              totalPartPrice = totalPartPrice + part.PartPrice;
+              part.PartsAmount = Number(part.PartsAmount)
+              totalPartPrice = totalPartPrice + part.PartPrice * part.PartsAmount;
             })
           }
           if (item.Laborinfo && item.Laborinfo.length > 0) {
             item.Laborinfo.forEach(part=>{
-              part.LaborPrice = part.LaborPrice != "" ? Number(part.LaborPrice) : 0
-              totalLaborPrice = totalLaborPrice + part.LaborPrice;
+              part.LaborPrice = part.LaborPrice != "" ? Number(part.LaborPrice) : 0;
+              part.LaborAmount = Number(part.LaborAmount)
+              totalLaborPrice = totalLaborPrice + part.LaborPrice * part.LaborAmount;
               totalLaborHours = totalLaborHours  + Number(part.LaborAmount);
             })
           }
@@ -82,7 +86,11 @@ export class PackMaintenancePage implements OnInit {
     }
 
     this.selectedAmount = this.selectedPackages.length;
-    
+  }
+
+  submit() {
+    this.store.maintenanceList = this.selectedPackages;
+    this.navCtrl.navigateForward("/home-results");
   }
 
 }

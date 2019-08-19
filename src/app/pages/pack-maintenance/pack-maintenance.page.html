@@ -20,8 +20,8 @@
           </ion-item>
           <div *ngIf="pack.selected && pack.selected != undefined">
             <ion-item *ngFor="let item of pack.PartInfo">
-                <ion-label class="details">{{item.PartsName}}</ion-label>
-                <ion-note slot="end">￥{{item.PartPrice != '' ? item.PartPrice : 0}}</ion-note>
+                <ion-label class="details">{{item.PartsName}} X {{item.PartsAmount}}</ion-label>
+                <ion-note slot="end">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
             </ion-item>
             <ion-item>
               <ion-label class="details">工时费</ion-label>
@@ -38,16 +38,18 @@
         <ion-col size="7">
           <ion-grid style="height: 100%">
             <ion-row style="padding:3px;">
-              Packages: {{selectedAmount}}
+              Packages: {{selectedAmount}}个
             </ion-row>
             <ion-row style="padding:3px;">
-              预计维修时长: {{selectedHours}}
+              预计维修时长: {{selectedHours}}小时
             </ion-row>
           </ion-grid>
         </ion-col>
         <ion-col size="5">
           <ion-row>
-            <ion-button expand="full" size="large" class="btn-submit" color="danger" >确定</ion-button>
+            <ion-button expand="full" size="large" class="btn-submit" (click)="submit()" color="danger" >
+              确定
+            </ion-button>
           </ion-row>
         </ion-col>
       </ion-row>
