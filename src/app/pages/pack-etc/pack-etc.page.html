@@ -31,17 +31,29 @@
       <div (click)="reservationEtc('加油费')">洗车费</div>
       <div (click)="addItem('cost')">+</div>
     </div>
-    <ion-card *ngFor="let item of costItems" color="light">
-      <ion-card-content (click)="reservationEtcEdit(item)">
+    <ion-card *ngFor="let item of costItems let i = index;" color="light">
+      <ion-card-content>
         <ion-grid>
-          <ion-row>
+          <ion-item-sliding>
+            <ion-item no-padding>
+              <ion-label (click)="reservationEtcEdit(item)">{{item.text}}</ion-label>
+              <ion-note slot="end">￥{{item.value}}</ion-note>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="remove(i)">
+                <ion-icon name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+          <!-- <ion-row>
             <ion-col>
               <ion-label>{{item.text}}</ion-label>
             </ion-col>
             <ion-col style="text-align: right;">
               <ion-label>¥{{item.value}}</ion-label>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-grid>
       </ion-card-content>
     </ion-card>
@@ -52,17 +64,29 @@
       <div (click)="reservationEtc('贴膜')">贴膜</div>
       <div (click)="addItem('out')">+</div>
     </div>
-    <ion-card *ngFor="let item of outItems" color="light">
-      <ion-card-content (click)="reservationEtcEdit(item)">
+    <ion-card *ngFor="let item of outItems; let i = index;" color="light">
+      <ion-card-content>
         <ion-grid>
-          <ion-row>
+          <ion-item-sliding>
+            <ion-item no-padding>
+              <ion-label (click)="reservationEtcEdit(item)">{{item.text}}</ion-label>
+              <ion-note slot="end">￥{{item.value}}</ion-note>
+            </ion-item>
+            <ion-item-options side="end">
+              <ion-item-option color="danger" (click)="remove(i)">
+                <ion-icon name="trash"></ion-icon>
+                Delete
+              </ion-item-option>
+            </ion-item-options>
+          </ion-item-sliding>
+          <!-- <ion-row>
             <ion-col>
-              <ion-label >{{item.text}}</ion-label>
+              <ion-label>{{item.text}}</ion-label>
             </ion-col>
             <ion-col style="text-align: right;">
               <ion-label>¥{{item.value}}</ion-label>
             </ion-col>
-          </ion-row>
+          </ion-row> -->
         </ion-grid>
       </ion-card-content>
     </ion-card>

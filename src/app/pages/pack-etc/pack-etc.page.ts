@@ -109,4 +109,8 @@ export class PackEtcPage implements OnInit {
     changeLocation.present();
   }
 
+  remove(index) {
+    this[this.currentTab + 'Items'].splice(index, 1);
+  }
+
 }

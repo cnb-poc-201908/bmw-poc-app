@@ -52,6 +52,10 @@
     ion-card-content {
         padding: 5px;
 
+        ion-item {
+            --inner-border-width: 0px 0px 0px 0px;
+        }
+
         ion-label {
             font-size: 15px;
             color: #535353;
