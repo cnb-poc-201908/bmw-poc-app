@@ -17,6 +17,9 @@ export class PackEtcPage implements OnInit {
   sumprice = 0;
   etcItems = [];
   packageList = [];
+  imgList = [
+    '../../../assets/img/avatar.jpeg'
+  ];
 
   constructor(
     private rest: RestService,
@@ -63,7 +66,8 @@ export class PackEtcPage implements OnInit {
   }
 
   sumPrice(item) {
-    if (!item.checked) {
+    item.checked = !item.checked;
+    if (item.checked) {
       item.Laborinfo.forEach(labor => {
         // tslint:disable-next-line:radix
         this.sumprice += parseInt(labor.LaborPrice);

@@ -8,6 +8,42 @@
     ion-content {
         --background: var(--ion-color-light);
 
+        .card-content {
+            background-size: cover;
+            width: 100%;
+            height: 192px;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #fff;
+        }
+
+        .card-content {
+            .card {
+                width: 100%;
+                height: 100%;
+                padding: 10px;
+                display: flex;
+                justify-content: flex-start;
+                align-items: flex-end;
+
+                .check-icon {
+                    width: 100%;
+                    height: 100%;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    font-size: 20px;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                }
+            }
+
+            .card.active {
+                background: rgba(119, 168, 236, 0.7);
+            }
+        }
+
         ion-card {
             margin: 0;
 

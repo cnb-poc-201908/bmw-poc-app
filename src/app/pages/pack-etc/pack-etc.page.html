@@ -15,7 +15,18 @@
   <ion-grid class="footer-grid">
     <ion-row class="footer-grid-row">
       <ion-col size="6" *ngFor="let item of etcItems; let i = index;">
-        <ion-card>
+        <div class="card-content" (click)="sumPrice(item)" [ngStyle]="{'background-image': 'url(' + imgList[0] + ')'}">
+          <div class="card" [ngClass]="{'active': item.checked}">
+            <div *ngIf="item.checked" class="check-icon">
+              <ion-icon size="large" name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="content">
+              <div>{{item.PackageName}}</div>
+              <div>¥{{item.sumprice}}</div>
+            </div>
+          </div>
+        </div>
+        <!-- <ion-card>
           <img src="../../../assets/img/avatar.jpeg" />
           <ion-card-header>
             <ion-card-subtitle>
@@ -25,7 +36,7 @@
               </ion-item>
             </ion-card-subtitle>
           </ion-card-header>
-        </ion-card>
+        </ion-card> -->
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -43,7 +54,8 @@
       </ion-col>
       <ion-col size="5">
         <ion-row>
-          <ion-button shape="round" expand="full" size="large" (click)="submit()" class="btn-submit" color="primary">确定</ion-button>
+          <ion-button shape="round" expand="full" size="large" (click)="submit()" class="btn-submit" color="primary">确定
+          </ion-button>
         </ion-row>
       </ion-col>
     </ion-row>
