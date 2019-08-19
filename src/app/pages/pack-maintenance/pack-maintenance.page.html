@@ -14,7 +14,7 @@
       <ion-card-content style="float:left;width:100%">
           <ion-item (click)="doClick($event)">
             <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
-            <ion-label>{{pack.PackageName}}</ion-label>
+            <ion-label class="pack-label">{{pack.PackageName}}</ion-label>
             <ion-note *ngIf="pack.Campaign1 != ''" class="ticket" slot="end">优惠券</ion-note>
             <ion-note slot="end" *ngIf="!pack.selected" style="margin-left:2px;margin-right:2px;">￥{{pack.totalPrice}}</ion-note>
             <ion-note slot="end" style="margin-left:2px;margin-right:2px;padding-top:2%;">
@@ -25,7 +25,7 @@
           <div *ngIf="pack.selected && pack.selected != undefined">
             <ion-item *ngFor="let item of pack.PartInfo">
                 <ion-checkbox color="primary" slot="start"></ion-checkbox>
-                <ion-label class="details">{{item.PartsName}} X {{item.PartsAmount}}</ion-label>
+                <ion-label class="details">{{item.PartsName}} * {{item.PartsAmount}}</ion-label>
                 <ion-note slot="end" style="font-size: 12px;">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
             </ion-item>
             <ion-item>

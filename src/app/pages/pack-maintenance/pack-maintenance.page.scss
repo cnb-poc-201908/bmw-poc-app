@@ -47,12 +47,15 @@
     ion-label {
         &.details {
             font-size: 12px;
-            color : #A6A6A6;
+            color : #535353;
         }
         &.details-labor {
             font-size: 12px;
-            color : #A6A6A6;
+            color : #535353;
             padding-left: 15%;
+        }
+        &.pack-label {
+            color: #535353;
         }
     }
 
