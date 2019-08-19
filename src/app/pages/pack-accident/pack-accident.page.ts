@@ -140,11 +140,11 @@ export class PackAccidentPage implements OnInit {
     });
     this.store.accidentList = accidentList;
     // console.log(this.store.accidentList);
-    this.navCtrl.navigateForward('/home-results');
+    this.navCtrl.navigateBack('/home-results');
   }
 
   back() {
-    this.navCtrl.navigateForward('/home-results');
+    this.navCtrl.navigateBack('/home-results');
   }
 
 }

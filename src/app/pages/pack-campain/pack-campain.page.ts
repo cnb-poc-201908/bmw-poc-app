@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { isNgTemplate } from '@angular/compiler';
 import { StoreService } from 'src/app/services/store.service';
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class PackCampainPage implements OnInit {
       ],
       'PartInfo': [
         {
+          'Magic': '4',
           'PartsCode': '61610427668',
           'PartsName': '雨刮片组件',
           'PartsAmount': '1.00',
@@ -82,7 +84,7 @@ export class PackCampainPage implements OnInit {
   public campainList: Array<{}> = [{
     'CAMPAIGN': 'V201907',
     'Type': 'V',
-    'CAMPDESC': '免费进行夏日雨刮器检查，如需更换，可以免费进行更换',
+    'CAMPDESC': '免费进行两个雨刷片更换',
     'CAMPACNO': 'SUMMER01',
     'CAMPACKNAME': '夏日优惠：更换雨刮片',
     'START': ' 2019/07/01',
@@ -143,7 +145,7 @@ export class PackCampainPage implements OnInit {
   }
 ];
 
-  constructor(public activeRoute: ActivatedRoute, private store: StoreService) { }
+  constructor(public activeRoute: ActivatedRoute, private store: StoreService, public navCtrl: NavController) { }
 
   getCampainNoByVn(vn) {
     this.campainNumbers = this.campainListOfVehicle.filter((item) => {
@@ -202,11 +204,25 @@ export class PackCampainPage implements OnInit {
   }
 
   ngOnInit() {
-    this.reformatPackage();
-    this.activeRoute.queryParams.subscribe((params: Params) => {
-      this.parmVN = params['parmVN'];
-      this.getCapainPackage();
-    });
+    if (this.store.compainList.length > 0) {
+      this.packagesOfCampain.splice(0, this.packagesOfCampain.length);
+      this.packagesOfCampain = JSON.parse(localStorage.getItem('packagesOfCampain'));
+      this.store.compainList.forEach((item) => {
+        this.packagesOfCampain.forEach(element => {
+          if (element['packageid'] === item['PackageID']) {
+            element['packageDetail']['selected'] = true;
+            this.select(element);
+          }
+        });
+      });
+    } else {
+      this.reformatPackage();
+      this.activeRoute.queryParams.subscribe((params: Params) => {
+        this.parmVN = params['parmVN'];
+        this.getCapainPackage();
+        localStorage.setItem('packagesOfCampain', JSON.stringify(this.packagesOfCampain));
+      });
+    }
   }
 
   doClick(item) {
@@ -216,23 +232,26 @@ export class PackCampainPage implements OnInit {
   select(pack) {
     let hours = 0;
     if (pack.packageDetail.selected) {
-      this.selectedPackages.push(pack);
+      this.selectedPackages.push(pack['packageDetail']);
     } else {
-      this.selectedPackages.splice(this.selectedPackages.findIndex( item => item['packageid'] === pack.packageid), 1);
+      this.selectedPackages.splice(this.selectedPackages.findIndex( item => item['PackageID'] === pack.packageid), 1);
     }
 
     if (this.selectedPackages.length > 0)  {
       this.selectedPackages.forEach(item => {
-        hours = hours + item['packageDetail']['totalLaborHours'];
+        hours = hours + item['totalLaborHours'];
       });
       this.selectedHours = hours;
     } else {
       this.selectedHours = 0;
     }
 
-    console.log(this.selectedPackages);
-
     this.selectedAmount = this.selectedPackages.length;
+  }
+
+  submitToHomeResults() {
+    this.store.compainList = this.selectedPackages;
+    this.navCtrl.navigateBack('/home-results');
   }
 
 }
