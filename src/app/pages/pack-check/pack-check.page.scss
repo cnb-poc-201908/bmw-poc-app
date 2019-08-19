@@ -2,7 +2,38 @@
 
     background-color: #D8D8D8;
 
+    .label-content {
+        margin : 15px;
+    }
+
     ion-content {
+        
+        ion-textarea {
+            border-radius: 5px;
+            border: 1px solid #272983;
+            --padding-start: 10px;
+            --padding-top: 10px;
+            textarea {
+                background-color : #FFF;
+            }
+
+        }
+
+        ion-item {
+            ion-input {
+                &.input-hours {
+                    border-bottom: 1px solid #272983;
+                }
+            }
+        }
+
+        ion-label {
+            &.item-label{
+                font-size: 16px;
+            }
+        }
+        
+
     }
 
     ion-footer {

@@ -4,18 +4,15 @@
         <ion-back-button text="返回" defaultHref="home-results"></ion-back-button>
       </ion-buttons>
       <ion-title>
-        检修
+        查修
       </ion-title>
       <ion-buttons slot="primary">
-          <ion-button (click)="popUpCreate()">
-              <ion-icon name="add-circle-outline" style="font-size:24px;color:#FFF;"></ion-icon>
-          </ion-button>
-        </ion-buttons>
+      </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
-    <ion-card color="light" *ngFor="let item of checkpoints" >
+    <!-- <ion-card color="light" *ngFor="let item of checkpoints" >
         <ion-card-content style="float:left;width:100%" >
             <ion-item (click)="doExpand($event,item)">
               <ion-icon style="color:#2f32a0;" *ngIf="!item.expand" name="add-circle"></ion-icon>
@@ -29,7 +26,25 @@
                 </ion-item>
             </div>
         </ion-card-content>
-    </ion-card>
+    </ion-card> -->
+
+    <ion-item>
+        <ion-label position="stacked" class="item-label">查修项目</ion-label>
+        <ion-textarea rows="6" cols="20" color="primary" [(ngModel)]="description" placeholder="请选取/输入查修项目">
+        </ion-textarea>
+    </ion-item>
+    <ion-item>
+        <ion-label position="stacked" class="item-label">预计工时</ion-label>
+        <ion-input class="input-hours" [(ngModel)]="selectedHours" type="number"></ion-input>
+    </ion-item>
+
+    <div class="label-content">
+      <ion-chip *ngFor="let item of checkpoints" [color]="item.color" (click)="select(item)">
+        <ion-label>
+          {{item.PackageName}}
+        </ion-label>
+      </ion-chip>
+    </div>
 
 </ion-content>
 
