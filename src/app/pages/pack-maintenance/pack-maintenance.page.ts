@@ -35,6 +35,7 @@ export class PackMaintenancePage implements OnInit {
   }
 
   compute() {
+    console.log(JSON.stringify(this.packages))
     this.packages.forEach(item=>{
       let totalPartPrice = 0;
       let totalLaborPrice = 0;
@@ -44,6 +45,7 @@ export class PackMaintenancePage implements OnInit {
           part.PartPrice = part.PartPrice != "" ? Number(part.PartPrice) : 0;
           part.PartsAmount = Number(part.PartsAmount)
           totalPartPrice = totalPartPrice + part.PartPrice * part.PartsAmount;
+          part.PartSelected = true;
         })
       }
       if (item.Laborinfo && item.Laborinfo.length > 0) {
@@ -52,6 +54,7 @@ export class PackMaintenancePage implements OnInit {
           part.LaborAmount = Number(part.LaborAmount)
           totalLaborPrice = totalLaborPrice + part.LaborPrice * part.LaborAmount;
           totalLaborHours = totalLaborHours  + Number(part.LaborAmount);
+          part.LaborSelected = true;
         })
       }
       item.totalPartPrice = totalPartPrice;
@@ -67,6 +70,8 @@ export class PackMaintenancePage implements OnInit {
           this.packages.forEach(pack=>{
             if (pack.PackageID === item.PackageID) {
               pack.selected = true;
+              pack.Laborinfo = item.Laborinfo;
+              pack.PartInfo = item.PartInfo;
               this.select(pack);
             }
           })
