@@ -46,9 +46,16 @@
 
     ion-label {
         &.details {
-            font-size: 16px;
-            color : #A6A6A6;
+            font-size: 12px;
+            color : #535353;
+        }
+        &.details-labor {
+            font-size: 12px;
+            color : #535353;
             padding-left: 15%;
+        }
+        &.pack-label {
+            color: #535353;
         }
     }
 
@@ -59,7 +66,9 @@
             border-radius: 10px;
             padding-left: 8px;
             padding-right: 8px;
-            font-size: 16px;
+            font-size: 12px;
+            margin-left: 2px;
+            margin-right: 2px;
         }
     }
 
