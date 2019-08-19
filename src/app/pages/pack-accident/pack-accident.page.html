@@ -1,9 +1,12 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-buttons slot="start" (click)="back()">
+    <!-- <ion-buttons slot="start" (click)="back()">
       <ion-button size="small" shape="round" color="medium">
         <ion-icon name="arrow-back"></ion-icon>
       </ion-button>
+    </ion-buttons> -->
+    <ion-buttons slot="start">
+      <ion-back-button text="返回" defaultHref="home-results"></ion-back-button>
     </ion-buttons>
     <ion-title>事故车</ion-title>
     <ion-buttons slot="end">
@@ -22,22 +25,50 @@
     <div class="car-1">
       <div class="accident-cover" (click)="selectImg('1')"
         [ngClass]="{'cover-yellow': accidentList[0].accidentRank === 1, 'cover-orange': accidentList[0].accidentRank === 2, 'cover-red': accidentList[0].accidentRank === 3}">
+        <div [hidden]="accidentList[0].accidentRank === null">
+          <div>后保险杠</div>
+          <div>
+            <ion-icon name="alert"></ion-icon>
+          </div>
+        </div>
+        <div [hidden]="accidentList[0].accidentRank === null">{{accidentList[0].accidentRank}}级</div>
       </div>
     </div>
     <div class="car-2">
       <div class="car-left">
         <div class="accident-cover" (click)="selectImg('2')"
           [ngClass]="{'cover-yellow': accidentList[1].accidentRank === 1, 'cover-orange': accidentList[1].accidentRank === 2, 'cover-red': accidentList[1].accidentRank === 3}">
+          <div [hidden]="accidentList[1].accidentRank === null">
+            <div>右后侧围</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[1].accidentRank === null">{{accidentList[1].accidentRank}}级</div>
         </div>
       </div>
       <div class="car-middle">
         <div class="accident-cover" (click)="selectImg('3')"
           [ngClass]="{'cover-yellow': accidentList[2].accidentRank === 1, 'cover-orange': accidentList[2].accidentRank === 2, 'cover-red': accidentList[2].accidentRank === 3}">
+          <div [hidden]="accidentList[2].accidentRank === null">
+            <div>后部行李<br>箱盖</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[2].accidentRank === null">{{accidentList[2].accidentRank}}级</div>
         </div>
       </div>
       <div class="car-right">
         <div class="accident-cover" (click)="selectImg('4')"
           [ngClass]="{'cover-yellow': accidentList[3].accidentRank === 1, 'cover-orange': accidentList[3].accidentRank === 2, 'cover-red': accidentList[3].accidentRank === 3}">
+          <div [hidden]="accidentList[3].accidentRank === null">
+            <div>左后侧围</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[3].accidentRank === null">{{accidentList[3].accidentRank}}级</div>
         </div>
       </div>
     </div>
@@ -46,28 +77,63 @@
         <div class="top">
           <div class="accident-cover" (click)="selectImg('5')"
             [ngClass]="{'cover-yellow': accidentList[4].accidentRank === 1, 'cover-orange': accidentList[4].accidentRank === 2, 'cover-red': accidentList[4].accidentRank === 3}">
+            <div [hidden]="accidentList[4].accidentRank === null">
+              <div>右后车门</div>
+              <div>
+                <ion-icon name="alert"></ion-icon>
+              </div>
+            </div>
+            <div [hidden]="accidentList[4].accidentRank === null">{{accidentList[4].accidentRank}}级</div>
           </div>
         </div>
         <div class="bottom">
           <div class="accident-cover" (click)="selectImg('6')"
             [ngClass]="{'cover-yellow': accidentList[5].accidentRank === 1, 'cover-orange': accidentList[5].accidentRank === 2, 'cover-red': accidentList[5].accidentRank === 3}">
+            <div [hidden]="accidentList[5].accidentRank === null">
+              <div>右前车门</div>
+              <div>
+                <ion-icon name="alert"></ion-icon>
+              </div>
+            </div>
+            <div [hidden]="accidentList[5].accidentRank === null">{{accidentList[5].accidentRank}}级</div>
           </div>
         </div>
       </div>
       <div class="car-middle">
         <div class="accident-cover" (click)="selectImg('7')"
           [ngClass]="{'cover-yellow': accidentList[6].accidentRank === 1, 'cover-orange': accidentList[6].accidentRank === 2, 'cover-red': accidentList[6].accidentRank === 3}">
+          <div [hidden]="accidentList[6].accidentRank === null">
+            <div>车顶</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[6].accidentRank === null">{{accidentList[6].accidentRank}}级</div>
         </div>
       </div>
       <div class="car-right">
         <div class="top">
           <div class="accident-cover" (click)="selectImg('8')"
             [ngClass]="{'cover-yellow': accidentList[7].accidentRank === 1, 'cover-orange': accidentList[7].accidentRank === 2, 'cover-red': accidentList[7].accidentRank === 3}">
+            <div [hidden]="accidentList[7].accidentRank === null">
+              <div>左后车门</div>
+              <div>
+                <ion-icon name="alert"></ion-icon>
+              </div>
+            </div>
+            <div [hidden]="accidentList[7].accidentRank === null">{{accidentList[7].accidentRank}}级</div>
           </div>
         </div>
         <div class="bottom">
           <div class="accident-cover" (click)="selectImg('9')"
             [ngClass]="{'cover-yellow': accidentList[8].accidentRank === 1, 'cover-orange': accidentList[8].accidentRank === 2, 'cover-red': accidentList[8].accidentRank === 3}">
+            <div [hidden]="accidentList[8].accidentRank === null">
+              <div>左前车门</div>
+              <div>
+                <ion-icon name="alert"></ion-icon>
+              </div>
+            </div>
+            <div [hidden]="accidentList[8].accidentRank === null">{{accidentList[8].accidentRank}}级</div>
           </div>
         </div>
       </div>
@@ -76,22 +142,50 @@
       <div class="car-left">
         <div class="accident-cover" (click)="selectImg('10')"
           [ngClass]="{'cover-yellow': accidentList[9].accidentRank === 1, 'cover-orange': accidentList[9].accidentRank === 2, 'cover-red': accidentList[9].accidentRank === 3}">
+          <div [hidden]="accidentList[9].accidentRank === null">
+            <div>右前侧围</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[9].accidentRank === null">{{accidentList[9].accidentRank}}级</div>
         </div>
       </div>
       <div class="car-middle">
         <div class="accident-cover" (click)="selectImg('11')"
           [ngClass]="{'cover-yellow': accidentList[10].accidentRank === 1, 'cover-orange': accidentList[10].accidentRank === 2, 'cover-red': accidentList[10].accidentRank === 3}">
+          <div [hidden]="accidentList[10].accidentRank === null">
+            <div>车前盖</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[10].accidentRank === null">{{accidentList[10].accidentRank}}级</div>
         </div>
       </div>
       <div class="car-right">
         <div class="accident-cover" (click)="selectImg('12')"
           [ngClass]="{'cover-yellow': accidentList[11].accidentRank === 1, 'cover-orange': accidentList[11].accidentRank === 2, 'cover-red': accidentList[11].accidentRank === 3}">
+          <div [hidden]="accidentList[11].accidentRank === null">
+            <div>左前侧围</div>
+            <div>
+              <ion-icon name="alert"></ion-icon>
+            </div>
+          </div>
+          <div [hidden]="accidentList[11].accidentRank === null">{{accidentList[11].accidentRank}}级</div>
         </div>
       </div>
     </div>
     <div class="car-5">
       <div class="accident-cover" (click)="selectImg('13')"
         [ngClass]="{'cover-yellow': accidentList[12].accidentRank === 1, 'cover-orange': accidentList[12].accidentRank === 2, 'cover-red': accidentList[12].accidentRank === 3}">
+        <div [hidden]="accidentList[12].accidentRank === null">
+          <div>前保险杠</div>
+          <div>
+            <ion-icon name="alert"></ion-icon>
+          </div>
+        </div>
+        <div [hidden]="accidentList[12].accidentRank === null">{{accidentList[12].accidentRank}}级</div>
       </div>
     </div>
   </div>

@@ -103,6 +103,32 @@
         .accident-cover {
             display: flex;
             flex-direction: column;
+            color: #fff;
+
+            div:first-child {
+                display: flex;
+                justify-content: space-around;
+                // align-items: flex-start;
+                font-size: 14px;
+
+                div:first-child {
+                    white-space: nowrap;
+                }
+                div:last-child {
+                    display: flex;
+                    justify-content: flex-end;
+                    align-items: flex-start;
+                    font-size: 20px;
+                }
+
+            }
+
+            div:last-child {
+                display: flex;
+                justify-content: flex-end;
+                align-items: flex-end;
+                font-size: 14px;
+            }
         }
 
         .car-1,
