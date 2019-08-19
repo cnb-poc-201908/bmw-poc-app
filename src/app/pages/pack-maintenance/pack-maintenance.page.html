@@ -24,7 +24,7 @@
           </ion-item>
           <div *ngIf="pack.selected && pack.selected != undefined">
             <ion-item *ngFor="let item of pack.PartInfo">
-                <ion-checkbox color="primary" slot="start"></ion-checkbox>
+                <ion-checkbox color="primary" slot="start" [(ngModel)]="item.PartSelected"></ion-checkbox>
                 <ion-label class="details">{{item.PartsName}} * {{item.PartsAmount}}</ion-label>
                 <ion-note slot="end" style="font-size: 12px;">￥{{item.PartPrice * item.PartsAmount}}</ion-note>
             </ion-item>
@@ -35,7 +35,7 @@
           </div>
           <div *ngIf="pack.selected && pack.selected != undefined">
               <ion-item *ngFor="let item of pack.Laborinfo">
-                  <ion-checkbox color="primary" slot="start"></ion-checkbox>
+                  <ion-checkbox color="primary" slot="start" [(ngModel)]="item.LaborSelected"></ion-checkbox>
                   <ion-label class="details">{{item.LaborDescription}}</ion-label>
                   <ion-note slot="end" style="font-size: 12px;">￥{{item.LaborPrice * item.LaborAmount}}</ion-note>
               </ion-item>
