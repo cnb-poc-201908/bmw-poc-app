@@ -12,30 +12,14 @@
 </ion-header>
 
 <ion-content>
-    <!-- <ion-card color="light" *ngFor="let item of checkpoints" >
-        <ion-card-content style="float:left;width:100%" >
-            <ion-item (click)="doExpand($event,item)">
-              <ion-icon style="color:#2f32a0;" *ngIf="!item.expand" name="add-circle"></ion-icon>
-              <ion-icon style="color:#2f32a0;" *ngIf="item.expand" name="remove-circle"></ion-icon>
-              <ion-label>&nbsp;&nbsp;{{item.title}}</ion-label>
-            </ion-item>
-            <div *ngIf="item.expand == true">
-                <ion-item *ngFor="let point of item.points">
-                    <ion-label class="details">{{point.label}}</ion-label>
-                    <ion-checkbox slot="end" [(ngModel)]="point.selected"></ion-checkbox>
-                </ion-item>
-            </div>
-        </ion-card-content>
-    </ion-card> -->
-
     <ion-item>
-        <ion-label position="stacked" class="item-label">查修项目</ion-label>
+        <ion-label position="stacked" class="item-label">输入问题描述</ion-label>
         <ion-textarea rows="6" cols="20" color="primary" [(ngModel)]="description" placeholder="请选取/输入查修项目">
         </ion-textarea>
     </ion-item>
     <ion-item>
-        <ion-label position="stacked" class="item-label">预计工时</ion-label>
-        <ion-input class="input-hours" [(ngModel)]="selectedHours" type="number"></ion-input>
+        <ion-label position="stacked" class="item-label">输入工时数</ion-label>
+        <ion-input class="input-hours" [(ngModel)]="selectedHours" type="number" placeholder="请输入工时数"></ion-input>
     </ion-item>
 
     <div class="label-content">
@@ -63,7 +47,9 @@
         </ion-col>
         <ion-col size="5">
           <ion-row>
-            <ion-button expand="full" size="large" class="btn-submit" (click)="submit()" color="danger" >确定</ion-button>
+              <ion-button shape="round" expand="full" size="large" class="btn-submit" (click)="submit()" color="primary" >
+                确定
+              </ion-button>
           </ion-row>
         </ion-col>
       </ion-row>

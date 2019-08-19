@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Camera, CameraOptions, PictureSourceType } from '@ionic-native/camera/ngx';
 import { LoadingController, Platform, ActionSheetController } from '@ionic/angular';
 import { LoadingService } from 'src/app/services/loading.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-virecle-list',
@@ -23,7 +24,8 @@ export class VirecleListPage implements OnInit {
     public router: Router, private camera: Camera,
     private actionSheetCtrl: ActionSheetController,
     public platform: Platform,
-    public loading: LoadingService) {
+    public loading: LoadingService,
+    private store:StoreService) {
    }
 
    getPicture(sourceType: PictureSourceType) {
@@ -48,6 +50,10 @@ export class VirecleListPage implements OnInit {
             this.rest.getVehiclePlate(data).subscribe((res:any)=>{this.loading.dismiss();
               if(res.success){
                 this.imageText = res.plates[0].txt;
+                if(this.imageText){
+                  console.log('this.imageText',this.imageText);
+                  this.vericlelist = this.vericlelist.filter(v=>v.regno === this.imageText);
+                }
               }
             });
         });
@@ -87,6 +93,10 @@ export class VirecleListPage implements OnInit {
   }
 
   RedirectToDetail(object) {
+    this.store.customer = object;
+    // this.store.myPackages =[
+
+    // ];
     this.router.navigate(['home-results'], {
         queryParams: {
           object: JSON.stringify(object)
@@ -155,7 +165,8 @@ export class VirecleListPage implements OnInit {
 
   getVircleRecords() {
     this.loading.present();
-    this.rest.getBasicInfolist().subscribe( response => {this.loading.dismiss();console.log('getVircleRecords');
+    this.rest.getBasicInfolist().subscribe( response => {
+      this.loading.dismiss();
       if (response.code === 200) {
         this.vericlelist.splice(0, this.vericlelist.length);
         this.vericlelistinfo = response['basicInfoList'];
@@ -218,4 +229,13 @@ export class VirecleListPage implements OnInit {
    }, (err) => {
      console.log(err);
    });  }
+
+   doRefresh(event) {
+     setTimeout(() => {
+      this.getVircleRecords();
+    this.selectedImage = "";
+     this.imageText = "";
+      event.target.complete();
+    }, 1000);
+  }
 }

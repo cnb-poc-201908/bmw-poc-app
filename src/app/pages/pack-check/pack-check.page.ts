@@ -32,6 +32,15 @@ export class PackCheckPage implements OnInit {
         }
       })
       this.checkpoints = result.slice(result.length/2, result.length);
+      this.checkpoints.forEach(item=>{
+        switch (item.CHECKType) {
+          case 'A': item.color = 'tertiary'; break;
+          case 'B': item.color = 'warning'; break;
+          case 'C': item.color = 'success'; break;
+          case 'D': item.color = 'danger'; break;
+          case 'F': item.color = 'tertiary'; break;
+        }
+      })
 
       }
     })
@@ -50,9 +59,10 @@ export class PackCheckPage implements OnInit {
   }
 
   submit() {
-    let checkObj = this.checkpoints.find(item=>item.PackageID === 'NCC');
-    checkObj.PackageName = this.description;
-    checkObj.Laborinfo[0].LaborAmount = this.selectedHours;
+    let checkObj = {};
+    Object.assign(checkObj, this.checkpoints.find(item=>item.PackageID === 'NCC'));
+    checkObj['PackageName'] = this.description;
+    checkObj['Laborinfo'][0].LaborAmount = this.selectedHours;
     this.store.checkList = [];
     this.store.checkList.push(checkObj);
     this.navCtrl.navigateBack("/home-results");

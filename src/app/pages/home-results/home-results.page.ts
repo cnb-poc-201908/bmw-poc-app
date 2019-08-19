@@ -10,8 +10,9 @@ import {
 
 // Call notifications test by Popover and Custom Component.
 import { NotificationsComponent } from './../../components/notifications/notifications.component';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { StoreService } from 'src/app/services/store.service';
+import { CurrencyPipe, DecimalPipe } from '@angular/common';
 
 
 @Component({
@@ -24,10 +25,13 @@ export class HomeResultsPage implements OnInit {
   yourLocation = '123 Test Street';
   themeCover = 'assets/img/ionic4-Start-Theme-cover.jpg';
   public currentTab:string = "maintenance";
-  items:any;
+  packages:Array<any>;
   @ViewChild('slidingList') slidingList;
   public objectReceive: any;
   packageAmount:number;
+  private isInit:boolean = false;
+  camCount:number;
+
   @ViewChild('datePicker') datePicker;
   constructor(
     public navCtrl: NavController,
@@ -38,54 +42,15 @@ export class HomeResultsPage implements OnInit {
     public toastCtrl: ToastController,
     public activeRoute: ActivatedRoute,
     private pickerCtrl: PickerController,
-    private store: StoreService,
+    public store: StoreService,
+    private currencyPipe: CurrencyPipe,
+    private decimalPipe: DecimalPipe,
+    public router: Router
   ) {
-    this.items = [
-      {title: 'item1',type:'maintenance',typeName:'保养',details : [
-        {label : '全合成机油2L', amount : 2},
-        {label : '机油垫片', amount : 1},
-        {label : '机油滤芯', amount : 1},
-      ]},
-      {title: 'item2',type:'check',typeName:'查修',points : [
-        {label : '发动机问题1', key : "00001", selected : false},
-        {label : '发动机问题2', key : "00002", selected : false},
-        {label : '发动机问题3', key : "00003", selected : false},
-        {label : '发动机问题4', key : "00004", selected : false},
-      ]},
-      {title: 'item3',type:'check',typeName:'查修',points : [
-        {label : '发动机问题1', key : "00001", selected : false},
-        {label : '发动机问题2', key : "00002", selected : false},
-        {label : '发动机问题3', key : "00003", selected : false},
-        {label : '发动机问题4', key : "00004", selected : false},
-      ]},
-      {title: 'item4',type:'accident',typeName:'事故'},
-      {title: 'item5',type:'etc',typeName:'杂项'},
-      {title: 'item6',type:'first',typeName:'首保'},
-      {title: 'item7',type:'maintenance',typeName:'保养'},
-      {title: 'item8',type:'maintenance',typeName:'保养'},
-      {title: 'item9',type:'check',typeName:'查修'},
-      {title: 'item10',type:'check',typeName:'查修'}
-  ].sort((a,b)=>{
-    let typeA = a.type.toUpperCase();
-    let typeB = b.type.toUpperCase();
-    if (typeA < typeB) {
-      return -1;
-    }
-    if (typeA > typeB) {
-      return 1;
-    }
-    return 0;
-  });
-  let obj = this.items.reduce((a, c) => (a[c.type] = (a[c.type] || 0) + 1, a), Object.create(null));
-  this.packageAmount = Object.keys(obj).length;
-  }
-  
-  back() {
-    window.history.back();
   }
 
   async remove(i) {
-    this.items.splice(i, 1);
+    this.packages.splice(i, 1);
     await this.slidingList.closeSlidingItems();
     const toast = await this.toastCtrl.create({
       message: '删除成功!',
@@ -103,17 +68,30 @@ export class HomeResultsPage implements OnInit {
   }
 
   forward(target) {
-    this.navCtrl.navigateForward("/pack-maintenance")
+    this.navCtrl.navigateForward(target);
   }
-
+  getPackagePrice(p:any){
+    let laborPrice = p.Laborinfo.reduce((a,b) => a + parseFloat(b.LaborPrice?b.LaborPrice:'0'), 0);
+    let partPrice = p.PartInfo.reduce((a,b) => a + parseFloat(b.PartPrice?b.PartPrice:'0'), 0);
+    return laborPrice+partPrice;
+  }
+  getAllLaborAmount(){
+    return this.packages.reduce((a,b)=>(a + b.Laborinfo.reduce((c,d) => c + parseFloat(d.LaborAmount?d.LaborAmount:'0'),0)),0) / 12;
+  }
+  ionViewDidEnter(){
+    this.isInit = true;
+  }
   ionViewWillEnter() {
-    console.log("Home======" + JSON.stringify(this.store.maintenanceList))
     this.menuCtrl.enable(true);
     this.activeRoute.queryParams.subscribe((params: Params) => {
       this.objectReceive = params['object'];
       this.objectReceive = JSON.parse(this.objectReceive);
-      console.log(this.objectReceive)
+      // console.log(this.objectReceive)
    });
+   //back to home page, refresh data
+   if(this.isInit){
+    this.init();
+   }
   }
 
   settings() {
@@ -173,24 +151,89 @@ export class HomeResultsPage implements OnInit {
   }
   setColorByType(type){
     switch (type) {
-      case 'maintenance':
-        return {'border-top-color':'#1C69D4'};
-      case 'check' :
-        return {'border-top-color':'#f65050'};
-      case 'accident' :
-        return {'border-top-color':'#86888f'};
-      case 'etc' :
-        return {'border-top-color':'#8290e0'};
-      case 'first' :
-        return {'border-top-color':'#10dc60'};
+      case 'MA':
+        return '#1C69D4';
+      case 'CHE' :
+        return '#f65050';
+      case 'INC' :
+        return '#86888f';
+      case 'OTH' :
+        return '#8290e0';
+      case 'FMA' :
+        return '#10dc60';
+      case 'CAM' :
+        return '#e0b500';
+      case 'PDI' :
+        return '#10dc60';
+      case 'TXT' :
+        return '#d12765';
       default :
         break;
     }
-    return {'border-top-color':''};
+    return '#110A3B';
   }
 
   ngOnInit() {
-    
+    this.init();
   }
-
+  init(){
+    this.packages = [...this.store.maintenanceList,...this.store.compainList,...this.store.accidentList,...this.store.etcList].sort((a,b)=>{
+      let typeA = a.RepairTypeCode.toUpperCase();
+      let typeB = b.RepairTypeCode.toUpperCase();
+      if (typeA < typeB) {
+        return -1;
+      }
+      if (typeA > typeB) {
+        return 1;
+      }
+      return 0;
+    });
+    let obj = this.packages.reduce((a, c) => (a[c.RepairTypeCode] = (a[c.RepairTypeCode] || 0) + 1, a), Object.create(null));
+    this.packageAmount = Object.keys(obj).length;
+    this.camCount = this.store.campainListOfVehicle.filter((cam:any)=>cam.KEY===this.store.customer.virecle_info.CHASSIS).length;
+  }
+  doClick(pack){
+    pack.expand = !pack.expand;
+  }
+  removePartItem(packIndex,itemIndex){
+    this.packages[packIndex].PartInfo.splice(itemIndex,1);
+    if(this.packages[packIndex].PartInfo.length<1 && this.packages[packIndex].Laborinfo.length<1){console.log(packIndex,itemIndex);
+      this.remove(packIndex);
+    }
+  }
+  removeLaborItem(packIndex,itemIndex){
+    this.packages[packIndex].Laborinfo.splice(itemIndex,1);
+    if(this.packages[packIndex].Laborinfo.length<1 && this.packages[packIndex].PartInfo.length<1){console.log(packIndex,itemIndex);
+      this.remove(packIndex);
+    }
+  }
+  goNotification(){
+    this.router.navigate(['pack-campain'], {
+      queryParams: {
+        parmVN: this.store.customer.virecle_info.CHASSIS
+      }
+  });
+  }
+  async save(){
+    const toast = await this.toastCtrl.create({
+      message: '保存成功!',
+      duration: 3000,
+      position: 'top',
+      closeButtonText: '确定',
+      showCloseButton: true,
+      color:"success"
+    });
+    toast.present();
+  }
+  async comingsoon(){
+    const toast = await this.toastCtrl.create({
+      message: 'Coming Soon!',
+      duration: 3000,
+      position: 'top',
+      closeButtonText: '确定',
+      showCloseButton: true,
+      color:"light"
+    });
+    toast.present();
+  }
 }

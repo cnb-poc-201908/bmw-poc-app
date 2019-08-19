@@ -134,52 +134,11 @@ export class PackCampainPage implements OnInit {
   }
 ];
 
-  public campainListOfVehicle: Array<{}> = [{
-    'CAMPCD': 'V201907',
-    'CAMPTYPE': 'V',
-    'KEY': 'LBV8W3103KMN09672',
-    'MAGIC': '',
-    'STATUS': 'O',
-    'EDDATE': ' 2019/08/01'
-  },
-  {
-    'CAMPCD': 'T201908',
-    'CAMPTYPE': 'V',
-    'KEY': 'LBV8W3103KMN09672',
-    'MAGIC': '',
-    'STATUS': 'O',
-    'EDDATE': ' 2019/08/01'
-  },
-  {
-    'CAMPCD': 'V201907',
-    'CAMPTYPE': 'V',
-    'KEY': 'WBAPG510XBA846572',
-    'MAGIC': '',
-    'STATUS': 'O',
-    'EDDATE': ' 2019/08/01'
-  },
-  {
-    'CAMPCD': 'V201907',
-    'CAMPTYPE': 'V',
-    'KEY': 'LBV3M2108EMC54311',
-    'MAGIC': '',
-    'STATUS': 'O',
-    'EDDATE': ' 2019/08/01'
-  },
-  {
-    'CAMPCD': 'T201908',
-    'CAMPTYPE': 'V',
-    'KEY': 'LBV8A1406JMM11509',
-    'MAGIC': '',
-    'STATUS': 'O',
-    'EDDATE': ' 2019/08/01'
-  }
-];
 
   constructor(public activeRoute: ActivatedRoute, private store: StoreService, public navCtrl: NavController) { }
 
   getCampainNoByVn(vn) {
-    this.campainNumbers = this.campainListOfVehicle.filter((item) => {
+    this.campainNumbers = this.store.campainListOfVehicle.filter((item) => {
       return item['KEY'] === vn;
     });
   }

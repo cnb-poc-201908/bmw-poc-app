@@ -3,9 +3,11 @@
       <ion-buttons slot="start">
         <ion-menu-button color="secondary"></ion-menu-button>
       </ion-buttons>
-      <ion-text color="light">
-          <ion-text color="light" class="fw700">客户车辆列表</ion-text>
-      </ion-text>
+      <ion-title text-center>
+        <ion-text color="light">
+            <ion-text color="light" class="fw700">客户车辆列表</ion-text>
+        </ion-text>
+    </ion-title>
       <ion-buttons slot="primary">
           <ion-button (click)="selectSource()">
             <ion-icon slot="icon-only" name="camera"></ion-icon>
@@ -23,13 +25,15 @@
         -->
       </ion-toolbar>
   </ion-header>
-  
   <ion-content padding>
+      <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+          <ion-refresher-content></ion-refresher-content>
+        </ion-refresher>
     <ion-label>
         <p>{{ dateTime }}</p>
   </ion-label>
   <img [src]="selectedImage" *ngIf="selectedImage">
-  <ion-card *ngIf="imageText">
+  <!-- <ion-card *ngIf="imageText">
       <ion-card-content color="dark">
         <ion-grid>
           <ion-row>
@@ -39,7 +43,7 @@
           </ion-row>
         </ion-grid>
       </ion-card-content>
-  </ion-card>
+  </ion-card> -->
     <ion-card *ngFor="let item of vericlelist" color="light" (click)="RedirectToDetail(item)">
       <ion-card-content>
         <ion-grid>

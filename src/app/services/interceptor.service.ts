@@ -12,7 +12,7 @@ export class InterceptorService implements HttpInterceptor {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('http start');
+    // console.log('http start');
     // this.common.openSpinner();
     // this.loading.present();
     // const mergedHeaders = new HttpHeaders({
@@ -24,7 +24,7 @@ export class InterceptorService implements HttpInterceptor {
 
     return next.handle(request).pipe(
       tap(
-        event => {console.log('http start222',request.url,request.method);
+        event => {
             // this.loading.dismiss();
         },
         catchError((err: HttpErrorResponse) => this.ErrorHandle(err))
