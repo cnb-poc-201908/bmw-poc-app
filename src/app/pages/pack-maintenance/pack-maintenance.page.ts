@@ -90,7 +90,7 @@ export class PackMaintenancePage implements OnInit {
 
   submit() {
     this.store.maintenanceList = this.selectedPackages;
-    this.navCtrl.navigateForward("/home-results");
+    this.navCtrl.navigateBack("/home-results");
   }
 
 }
