@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { StoreService } from 'src/app/services/store.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pack-check',
@@ -15,6 +17,8 @@ export class PackCheckPage implements OnInit {
   public description = "";
 
   constructor(private alertCtrl: AlertController,
+    private store: StoreService,
+    public navCtrl: NavController,
     private rest: RestService) { }
 
   ngOnInit() {
@@ -27,36 +31,7 @@ export class PackCheckPage implements OnInit {
           return item
         }
       })
-      console.log(JSON.stringify(result))
-      this.checkpoints = result;
-
-      /** 
-      let sets = new Set();
-      this.content.forEach(item=>{
-        sets.add(item.CHETDES)
-      })
-
-      let temp = Array.from(sets) 
-      temp.forEach(item=>{
-        let obj = { title : item, expand : false, points : []}
-        this.content.forEach(con=>{
-          if (item === con.CHETDES) {
-            obj.points.push({ label : con.ASPAKDES, key : con.ASPAKNO, selected: false})
-          }
-        })
-        this.checkpoints.push(obj)
-      })
-
-      this.checkpoints.forEach(item=>{
-        item.points.forEach(pt=>{
-          result.forEach(res=>{
-            if (pt.key === res.PackageID) {
-              pt.hours = Number(res.Laborinfo[0].LaborAmount)
-            }
-          })
-        })
-      })
-      */
+      this.checkpoints = result.slice(result.length/2, result.length);
 
       }
     })
@@ -74,6 +49,14 @@ export class PackCheckPage implements OnInit {
 
   }
 
+  submit() {
+    let checkObj = this.checkpoints.find(item=>item.PackageID === 'NCC');
+    checkObj.PackageName = this.description;
+    checkObj.Laborinfo[0].LaborAmount = this.selectedHours;
+    this.store.checkList = [];
+    this.store.checkList.push(checkObj);
+    this.navCtrl.navigateBack("/home-results");
+  }
 
 
 

@@ -13,6 +13,8 @@ export class StoreService {
 
     public etcList = [];
 
+    public checkList = [];
+
     constructor() {
     }
 
