@@ -24,8 +24,10 @@
 
         ion-button {
             &.btn-submit {
-                --background: #CB1919;
+                // --background: #CB1919;
                 width: 140px;
+                padding: 3px 10px;
+                font-size: 16px;
             }
         }
     }
