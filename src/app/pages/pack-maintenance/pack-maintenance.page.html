@@ -15,7 +15,7 @@
           <ion-item (click)="doClick($event)">
             <ion-checkbox color="primary" slot="start" (ionChange)="select(pack)" [(ngModel)]="pack.selected"></ion-checkbox>
             <ion-label class="pack-label">{{pack.PackageName}}</ion-label>
-            <ion-note *ngIf="pack.Campaign1 != ''" class="ticket" slot="end">优惠券</ion-note>
+            <!-- <ion-note *ngIf="pack.Campaign1 != ''" class="ticket" slot="end">优惠券</ion-note> -->
             <ion-note slot="end" *ngIf="!pack.selected" style="margin-left:2px;margin-right:2px;">￥{{pack.totalPrice}}</ion-note>
             <ion-note slot="end" style="margin-left:2px;margin-right:2px;padding-top:2%;">
               <ion-icon *ngIf="pack.selected" name="arrow-down"></ion-icon>
