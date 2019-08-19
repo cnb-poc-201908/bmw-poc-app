@@ -29,37 +29,50 @@ export class PackMaintenancePage implements OnInit {
         this.packages = packs.filter(item=>{
           return item.RepairTypeCode === 'MA'
         })
-        this.packages.forEach(item=>{
-          let totalPartPrice = 0;
-          let totalLaborPrice = 0;
-          let totalLaborHours = 0;
-          if (item.PartInfo && item.PartInfo.length > 0) {
-            item.PartInfo.forEach(part=>{
-              part.PartPrice = part.PartPrice != "" ? Number(part.PartPrice) : 0;
-              part.PartsAmount = Number(part.PartsAmount)
-              totalPartPrice = totalPartPrice + part.PartPrice * part.PartsAmount;
-            })
-          }
-          if (item.Laborinfo && item.Laborinfo.length > 0) {
-            item.Laborinfo.forEach(part=>{
-              part.LaborPrice = part.LaborPrice != "" ? Number(part.LaborPrice) : 0;
-              part.LaborAmount = Number(part.LaborAmount)
-              totalLaborPrice = totalLaborPrice + part.LaborPrice * part.LaborAmount;
-              totalLaborHours = totalLaborHours  + Number(part.LaborAmount);
-            })
-          }
-          item.totalPartPrice = totalPartPrice;
-          item.totalLaborPrice = totalLaborPrice;
-          item.totalLaborHours = totalLaborHours;
-          item.totalPrice = totalPartPrice + totalLaborPrice;
-          item.selected = false;
-        })
+        this.compute()
       }
     })
+  }
 
-    this.store.maintenanceList = [{
-      time: new Date(),
-    }]
+  compute() {
+    this.packages.forEach(item=>{
+      let totalPartPrice = 0;
+      let totalLaborPrice = 0;
+      let totalLaborHours = 0;
+      if (item.PartInfo && item.PartInfo.length > 0) {
+        item.PartInfo.forEach(part=>{
+          part.PartPrice = part.PartPrice != "" ? Number(part.PartPrice) : 0;
+          part.PartsAmount = Number(part.PartsAmount)
+          totalPartPrice = totalPartPrice + part.PartPrice * part.PartsAmount;
+        })
+      }
+      if (item.Laborinfo && item.Laborinfo.length > 0) {
+        item.Laborinfo.forEach(part=>{
+          part.LaborPrice = part.LaborPrice != "" ? Number(part.LaborPrice) : 0;
+          part.LaborAmount = Number(part.LaborAmount)
+          totalLaborPrice = totalLaborPrice + part.LaborPrice * part.LaborAmount;
+          totalLaborHours = totalLaborHours  + Number(part.LaborAmount);
+        })
+      }
+      item.totalPartPrice = totalPartPrice;
+      item.totalLaborPrice = totalLaborPrice;
+      item.totalLaborHours = totalLaborHours;
+      item.totalPrice = totalPartPrice + totalLaborPrice;
+      item.selected = false;
+    })
+
+    if (this.store.maintenanceList.length > 0) {
+      this.store.maintenanceList.forEach(item=>{
+        if (item.selected) {
+          this.packages.forEach(pack=>{
+            if (pack.PackageID === item.PackageID) {
+              pack.selected = true;
+              this.select(pack);
+            }
+          })
+        }
+      })
+    } 
 
   }
 

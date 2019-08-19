@@ -52,11 +52,14 @@
     <ion-grid class="footer-grid">
       <ion-row class="footer-grid-row">
         <ion-col size="7">
-          <ion-grid style="height: 100%">
-            <ion-row style="padding-top: 8%;">
-              预计查修时长: {{selectedHours}}
-            </ion-row>
-          </ion-grid>
+            <ion-grid style="height: 100%">
+              <ion-row style="padding:3px;">
+                查修项目个数: {{selectedAmount}}个
+              </ion-row>
+              <ion-row style="padding:3px;">
+                查修预计工时: {{selectedHours}}小时
+              </ion-row>
+            </ion-grid>
         </ion-col>
         <ion-col size="5">
           <ion-row>
