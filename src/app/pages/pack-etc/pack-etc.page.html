@@ -2,95 +2,33 @@
   <ion-toolbar color="primary">
     <ion-title>
       <ion-text color="light">
-        <ion-text color="light" class="fw700">杂费</ion-text>
+        <ion-text color="light" class="fw700">加装</ion-text>
       </ion-text>
     </ion-title>
     <ion-buttons slot="start">
-      <ion-button (click)="back()" size="small" shape="round" color="medium">
-        <ion-icon name="arrow-back"></ion-icon>
-      </ion-button>
+      <ion-back-button text="返回" defaultHref="home-results"></ion-back-button>
     </ion-buttons>
   </ion-toolbar>
-  <ion-segment color="primary" (ionChange)="changeTab($event)">
-    <ion-segment-button checked value="cost">
-      <ion-label>费用类</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="out">
-      <ion-label>外包</ion-label>
-    </ion-segment-button>
-  </ion-segment>
 </ion-header>
 
 <ion-content>
-
-  <div *ngIf="currentTab === 'cost'">
-    <div class="btn-wrap">
-      <div (click)="reservationEtc('加油费')">加油费</div>
-      <div (click)="reservationEtc('加油费')">服务费</div>
-      <div (click)="reservationEtc('加油费')">检车费</div>
-      <div (click)="reservationEtc('加油费')">洗车费</div>
-      <div (click)="addItem('cost')">+</div>
-    </div>
-    <ion-card *ngFor="let item of costItems let i = index;" color="light">
-      <ion-card-content>
-        <ion-grid>
-          <ion-item-sliding>
-            <ion-item no-padding>
-              <ion-label (click)="reservationEtcEdit(item)">{{item.text}}</ion-label>
-              <ion-note slot="end">￥{{item.value}}</ion-note>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="danger" (click)="remove(i)">
-                <ion-icon name="trash"></ion-icon>
-                Delete
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-          <!-- <ion-row>
-            <ion-col>
-              <ion-label>{{item.text}}</ion-label>
-            </ion-col>
-            <ion-col style="text-align: right;">
-              <ion-label>¥{{item.value}}</ion-label>
-            </ion-col>
-          </ion-row> -->
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </div>
-  <div *ngIf="currentTab === 'out'">
-    <div class="btn-wrap">
-      <div (click)="reservationEtc('光盘')">光盘</div>
-      <div (click)="reservationEtc('贴膜')">贴膜</div>
-      <div (click)="addItem('out')">+</div>
-    </div>
-    <ion-card *ngFor="let item of outItems; let i = index;" color="light">
-      <ion-card-content>
-        <ion-grid>
-          <ion-item-sliding>
-            <ion-item no-padding>
-              <ion-label (click)="reservationEtcEdit(item)">{{item.text}}</ion-label>
-              <ion-note slot="end">￥{{item.value}}</ion-note>
-            </ion-item>
-            <ion-item-options side="end">
-              <ion-item-option color="danger" (click)="remove(i)">
-                <ion-icon name="trash"></ion-icon>
-                Delete
-              </ion-item-option>
-            </ion-item-options>
-          </ion-item-sliding>
-          <!-- <ion-row>
-            <ion-col>
-              <ion-label>{{item.text}}</ion-label>
-            </ion-col>
-            <ion-col style="text-align: right;">
-              <ion-label>¥{{item.value}}</ion-label>
-            </ion-col>
-          </ion-row> -->
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </div>
+  <ion-grid class="footer-grid">
+    <ion-row class="footer-grid-row">
+      <ion-col size="6" *ngFor="let item of etcItems; let i = index;">
+        <ion-card>
+          <img src="../../../assets/img/avatar.jpeg" />
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-item>
+                <ion-checkbox color="primary" (click)="sumPrice(item)" [(ngModel)]="item.checked"></ion-checkbox>
+                <ion-label><span>{{item.PackageName}}</span><span>¥{{item.price || '500'}}</span></ion-label>
+              </ion-item>
+            </ion-card-subtitle>
+          </ion-card-header>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
 
 <ion-footer class="main-footer">
@@ -98,17 +36,14 @@
     <ion-row class="footer-grid-row">
       <ion-col size="7">
         <ion-grid style="height: 100%">
-          <ion-row style="padding:3px;">
-            <span class="etc-footer-label">费用类: ¥500</span>
-          </ion-row>
-          <ion-row style="padding:3px;">
-            <span class="etc-footer-label">外包类: ¥300</span>
+          <ion-row style="padding:3px;height: 100%;">
+            <div class="footer-label">总价: ¥{{sumprice}}</div>
           </ion-row>
         </ion-grid>
       </ion-col>
       <ion-col size="5">
         <ion-row>
-          <ion-button expand="full" size="large" class="btn-submit" color="danger">确定</ion-button>
+          <ion-button shape="round" expand="full" size="large" (click)="submit()" class="btn-submit" color="primary">确定</ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

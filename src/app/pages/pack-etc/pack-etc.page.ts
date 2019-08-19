@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {
   AlertController,
-  ToastController
+  ToastController,
+  NavController
 } from '@ionic/angular';
+import { RestService } from 'src/app/services/rest.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-pack-etc',
@@ -11,106 +14,72 @@ import {
 })
 export class PackEtcPage implements OnInit {
 
-  currentTab = 'cost';
-  costItems = [];
-  outItems = [];
+  sumprice = 0;
+  etcItems = [];
+  packageList = [];
 
   constructor(
-    public alertCtrl: AlertController,
-    public toastCtrl: ToastController
+    private rest: RestService,
+    private store: StoreService,
+    public navCtrl: NavController,
   ) { }
 
   ngOnInit() {
+    this.getPackagelist();
   }
 
-  back() {
-    window.history.back();
-  }
-
-  changeTab(event) {
-    this.currentTab = event.detail.value;
-  }
-
-  async reservationEtc(item) {
-    const changeLocation = await this.alertCtrl.create({
-      header: item,
-      inputs: [
-        {
-          name: 'value',
-          placeholder: '金额',
-          type: 'number'
-        }
-      ],
-      buttons: [
-        {
-          text: '保存',
-          handler: async (data) => {
-            if (data.value === '') {
-              return;
-            }
-            this[this.currentTab + 'Items'].push({ text: item, value: data.value });
+  getPackagelist() {
+    this.rest.getPackageList().subscribe(res => {
+      if (res && res.code === 200) {
+        res.basicInfoList.forEach(element => {
+          if (element.RepairTypeCode === 'OTH') {
+            element['checked'] = false;
+            this.etcItems.push(element);
           }
+        });
+        if (this.store.etcList.length) {
+          this.store.etcList.forEach(element => {
+            this.etcItems.forEach(etc => {
+              if (element.PackageID === etc.PackageID) {
+                etc['checked'] = true;
+                etc.Laborinfo.forEach(labor => {
+                  // tslint:disable-next-line:radix
+                  this.sumprice += parseInt(labor.LaborPrice);
+                });
+              }
+            });
+          });
         }
-      ]
+        // console.log(this.etcItems, 111);
+      }
     });
-    changeLocation.present();
   }
 
-  async addItem() {
-    const changeLocation = await this.alertCtrl.create({
-      header: '自定义费用',
-      inputs: [
-        {
-          name: 'text',
-          placeholder: '自定义项目',
-          type: 'text'
-        },
-        {
-          name: 'value',
-          placeholder: '金额',
-          type: 'number'
-        }
-      ],
-      buttons: [
-        {
-          text: '保存',
-          handler: async (data) => {
-            if (data.text === '' || data.value === '') {
-              return;
-            }
-            this[this.currentTab + 'Items'].push({ text: data.text, value: data.value });
-          }
-        }
-      ]
-    });
-    changeLocation.present();
+  sumPrice(item) {
+    if (!item.checked) {
+      item.Laborinfo.forEach(labor => {
+        // tslint:disable-next-line:radix
+        this.sumprice += parseInt(labor.LaborPrice);
+      });
+    } else {
+      item.Laborinfo.forEach(labor => {
+        // tslint:disable-next-line:radix
+        this.sumprice -= parseInt(labor.LaborPrice);
+      });
+    }
   }
 
-  async reservationEtcEdit(item) {
-    const changeLocation = await this.alertCtrl.create({
-      header: item.text,
-      inputs: [
-        {
-          name: 'value',
-          placeholder: '金额',
-          type: 'number',
-          value: item.value
-        }
-      ],
-      buttons: [
-        {
-          text: '保存',
-          handler: async (data) => {
-            item.value = data.value;
-          }
-        }
-      ]
+  submit() {
+    this.store.etcList = [];
+    const etcList = [];
+    this.etcItems.forEach(element => {
+      if (element.checked) {
+        etcList.push(element);
+      }
     });
-    changeLocation.present();
-  }
-
-  remove(index) {
-    this[this.currentTab + 'Items'].splice(index, 1);
+    this.store.etcList = etcList;
+    // console.log(this.store.etcList);
+    this.navCtrl.navigateBack('/home-results');
   }
 
 }

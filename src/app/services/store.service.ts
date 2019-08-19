@@ -11,6 +11,8 @@ export class StoreService {
 
     public accidentList = [];
 
+    public etcList = [];
+
     constructor() {
     }
 
