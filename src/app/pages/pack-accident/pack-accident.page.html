@@ -1,9 +1,14 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>事故车</ion-title>
-    <ion-buttons slot="start">
+    <ion-buttons slot="start" (click)="back()">
       <ion-button size="small" shape="round" color="medium">
         <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>事故车</ion-title>
+    <ion-buttons slot="end">
+      <ion-button size="small" shape="round" color="medium">
+        <ion-icon name="reverse-camera"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,53 +20,79 @@
   </div>
   <div class="image-wrap">
     <div class="car-1">
-      <div (click)="selectImg('1')" [ngClass]="{'cover-yellow': accidentList[0].accidentRank === 1, 'cover-orange': accidentList[0].accidentRank === 2, 'cover-red': accidentList[0].accidentRank === 3}"></div>
+      <div class="accident-cover" (click)="selectImg('1')"
+        [ngClass]="{'cover-yellow': accidentList[0].accidentRank === 1, 'cover-orange': accidentList[0].accidentRank === 2, 'cover-red': accidentList[0].accidentRank === 3}">
+      </div>
     </div>
     <div class="car-2">
       <div class="car-left">
-        <div (click)="selectImg('2')" [ngClass]="{'cover-yellow': accidentList[1].accidentRank === 1, 'cover-orange': accidentList[1].accidentRank === 2, 'cover-red': accidentList[1].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('2')"
+          [ngClass]="{'cover-yellow': accidentList[1].accidentRank === 1, 'cover-orange': accidentList[1].accidentRank === 2, 'cover-red': accidentList[1].accidentRank === 3}">
+        </div>
       </div>
       <div class="car-middle">
-        <div (click)="selectImg('3')" [ngClass]="{'cover-yellow': accidentList[2].accidentRank === 1, 'cover-orange': accidentList[2].accidentRank === 2, 'cover-red': accidentList[2].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('3')"
+          [ngClass]="{'cover-yellow': accidentList[2].accidentRank === 1, 'cover-orange': accidentList[2].accidentRank === 2, 'cover-red': accidentList[2].accidentRank === 3}">
+        </div>
       </div>
       <div class="car-right">
-        <div (click)="selectImg('4')" [ngClass]="{'cover-yellow': accidentList[3].accidentRank === 1, 'cover-orange': accidentList[3].accidentRank === 2, 'cover-red': accidentList[3].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('4')"
+          [ngClass]="{'cover-yellow': accidentList[3].accidentRank === 1, 'cover-orange': accidentList[3].accidentRank === 2, 'cover-red': accidentList[3].accidentRank === 3}">
+        </div>
       </div>
     </div>
     <div class="car-3">
       <div class="car-left">
         <div class="top">
-          <div (click)="selectImg('5')" [ngClass]="{'cover-yellow': accidentList[4].accidentRank === 1, 'cover-orange': accidentList[4].accidentRank === 2, 'cover-red': accidentList[4].accidentRank === 3}"></div>
+          <div class="accident-cover" (click)="selectImg('5')"
+            [ngClass]="{'cover-yellow': accidentList[4].accidentRank === 1, 'cover-orange': accidentList[4].accidentRank === 2, 'cover-red': accidentList[4].accidentRank === 3}">
+          </div>
         </div>
         <div class="bottom">
-          <div (click)="selectImg('6')" [ngClass]="{'cover-yellow': accidentList[5].accidentRank === 1, 'cover-orange': accidentList[5].accidentRank === 2, 'cover-red': accidentList[5].accidentRank === 3}"></div>
+          <div class="accident-cover" (click)="selectImg('6')"
+            [ngClass]="{'cover-yellow': accidentList[5].accidentRank === 1, 'cover-orange': accidentList[5].accidentRank === 2, 'cover-red': accidentList[5].accidentRank === 3}">
+          </div>
         </div>
       </div>
       <div class="car-middle">
-        <div (click)="selectImg('7')" [ngClass]="{'cover-yellow': accidentList[6].accidentRank === 1, 'cover-orange': accidentList[6].accidentRank === 2, 'cover-red': accidentList[6].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('7')"
+          [ngClass]="{'cover-yellow': accidentList[6].accidentRank === 1, 'cover-orange': accidentList[6].accidentRank === 2, 'cover-red': accidentList[6].accidentRank === 3}">
+        </div>
       </div>
       <div class="car-right">
         <div class="top">
-          <div (click)="selectImg('8')" [ngClass]="{'cover-yellow': accidentList[7].accidentRank === 1, 'cover-orange': accidentList[7].accidentRank === 2, 'cover-red': accidentList[7].accidentRank === 3}"></div>
+          <div class="accident-cover" (click)="selectImg('8')"
+            [ngClass]="{'cover-yellow': accidentList[7].accidentRank === 1, 'cover-orange': accidentList[7].accidentRank === 2, 'cover-red': accidentList[7].accidentRank === 3}">
+          </div>
         </div>
         <div class="bottom">
-          <div (click)="selectImg('9')" [ngClass]="{'cover-yellow': accidentList[8].accidentRank === 1, 'cover-orange': accidentList[8].accidentRank === 2, 'cover-red': accidentList[8].accidentRank === 3}"></div>
+          <div class="accident-cover" (click)="selectImg('9')"
+            [ngClass]="{'cover-yellow': accidentList[8].accidentRank === 1, 'cover-orange': accidentList[8].accidentRank === 2, 'cover-red': accidentList[8].accidentRank === 3}">
+          </div>
         </div>
       </div>
     </div>
     <div class="car-4">
       <div class="car-left">
-        <div (click)="selectImg('10')" [ngClass]="{'cover-yellow': accidentList[9].accidentRank === 1, 'cover-orange': accidentList[9].accidentRank === 2, 'cover-red': accidentList[9].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('10')"
+          [ngClass]="{'cover-yellow': accidentList[9].accidentRank === 1, 'cover-orange': accidentList[9].accidentRank === 2, 'cover-red': accidentList[9].accidentRank === 3}">
+        </div>
       </div>
       <div class="car-middle">
-        <div (click)="selectImg('11')" [ngClass]="{'cover-yellow': accidentList[10].accidentRank === 1, 'cover-orange': accidentList[10].accidentRank === 2, 'cover-red': accidentList[10].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('11')"
+          [ngClass]="{'cover-yellow': accidentList[10].accidentRank === 1, 'cover-orange': accidentList[10].accidentRank === 2, 'cover-red': accidentList[10].accidentRank === 3}">
+        </div>
       </div>
       <div class="car-right">
-        <div (click)="selectImg('12')" [ngClass]="{'cover-yellow': accidentList[11].accidentRank === 1, 'cover-orange': accidentList[11].accidentRank === 2, 'cover-red': accidentList[11].accidentRank === 3}"></div>
+        <div class="accident-cover" (click)="selectImg('12')"
+          [ngClass]="{'cover-yellow': accidentList[11].accidentRank === 1, 'cover-orange': accidentList[11].accidentRank === 2, 'cover-red': accidentList[11].accidentRank === 3}">
+        </div>
       </div>
     </div>
     <div class="car-5">
-      <div (click)="selectImg('13')" [ngClass]="{'cover-yellow': accidentList[12].accidentRank === 1, 'cover-orange': accidentList[12].accidentRank === 2, 'cover-red': accidentList[12].accidentRank === 3}"></div>
+      <div class="accident-cover" (click)="selectImg('13')"
+        [ngClass]="{'cover-yellow': accidentList[12].accidentRank === 1, 'cover-orange': accidentList[12].accidentRank === 2, 'cover-red': accidentList[12].accidentRank === 3}">
+      </div>
     </div>
   </div>
   <div class="rank-wrap">

@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {
   AlertController,
   ToastController,
+  NavController,
 } from '@ionic/angular';
 import { RestService } from 'src/app/services/rest.service';
+import { StoreService } from 'src/app/services/store.service';
 
 @Component({
   selector: 'app-pack-accident',
@@ -34,17 +36,32 @@ export class PackAccidentPage implements OnInit {
   constructor(
     public alertCtrl: AlertController,
     public toastCtrl: ToastController,
-    private rest: RestService
+    private rest: RestService,
+    private store: StoreService,
+    public navCtrl: NavController,
   ) { }
 
   ngOnInit() {
     this.getPaintPackagelist();
+    if (this.store.accidentList.length) {
+      this.accidentList.forEach(element => {
+        for (let i = 0; i < this.store.accidentList.length; i++) {
+          if (element.accidentId === this.store.accidentList[i].PaintArea) {
+            // tslint:disable-next-line:radix
+            element.accidentRank = parseInt(this.store.accidentList[i].ProcesslevelforPaint);
+            this.accidentIndexList.push(element.accidentId);
+          }
+        }
+      });
+
+      // console.log(this.store.accidentList);
+    }
   }
 
   getPaintPackagelist() {
     this.rest.getPaintPackagelist().subscribe(res => {
       if (res && res.code === 200) {
-        const packs = res.basicInfoList;
+        this.packageList = res.basicInfoList;
       }
     });
   }
@@ -111,13 +128,23 @@ export class PackAccidentPage implements OnInit {
   }
 
   submit() {
-    this.packageList = [];
+    this.store.accidentList = [];
+    const accidentList = [];
     this.accidentList.forEach(element => {
-      if (element.accidentRank !== null) {
-        this.packageList.push(element);
+      for (let i = 0; i < this.packageList.length; i++) {
+        if (element.accidentRank !== null && element.accidentId === this.packageList[i].PaintArea
+          && element.accidentRank.toString() === this.packageList[i].ProcesslevelforPaint) {
+            accidentList.push(this.packageList[i]);
+        }
       }
     });
-    console.log(this.packageList);
+    this.store.accidentList = accidentList;
+    // console.log(this.store.accidentList);
+    this.navCtrl.navigateForward('/home-results');
+  }
+
+  back() {
+    this.navCtrl.navigateForward('/home-results');
   }
 
 }

@@ -9,6 +9,8 @@ export class StoreService {
 
     public compainList = [];
 
+    public accidentList = [];
+
     constructor() {
     }
 
