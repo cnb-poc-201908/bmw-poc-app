@@ -3,13 +3,13 @@
       <ion-buttons slot="start">
           <ion-back-button text="返回"></ion-back-button>
         </ion-buttons>
-    <ion-title text-center>
+    <ion-title text-left>
       <ion-text color="light" class="regno-info">
         <ion-text color="light" class="fw700">{{store.customer?.regno}}</ion-text>
         <!-- <ion-icon name="information-circle-outline" appShadowCss shadowCustomCss='.icon-inner{padding-top: 2px;}'></ion-icon> -->
       </ion-text>
     </ion-title>
-    <ion-buttons slot="end" *ngIf="camCount>0">
+    <ion-buttons slot="end" [hidden]="camCount==0">
         <ion-button size="small" shape="round" color="medium" (click)="goNotification()">
           <ion-icon name="notifications"></ion-icon>
           <ion-badge color="danger" slot="end">{{camCount}}</ion-badge>
@@ -52,7 +52,7 @@
                   </ion-row> -->
                   <ion-row>
                     <ion-col text-right class="padding-top-bottom-1">
-                        <ion-input inputmode="text" placeholder="请输入/KM" value=""></ion-input>
+                        <ion-input inputmode="text" placeholder="请输入/KM" value="" type="number"></ion-input>
                         <div class="customer-text">当前里程</div>
                     </ion-col>
                   </ion-row>
@@ -155,18 +155,18 @@
               </ion-item-options>
           </ion-item-sliding>
           <ng-container *ngIf="pack.expand && pack.expand ==true">
+            <ng-container *ngFor="let item of pack.Laborinfo; index as j" >
+                <ion-item *ngIf="item.LaborSelected == true" class="sub-item">
+                  <ion-label class="details">L {{item.LaborDescription}}</ion-label>
+                  <ion-note slot="end">{{item.LaborPrice | currency:'￥':true:'1.2-2'}}</ion-note>
+                  <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removeLaborItem(pack,j)"></ion-icon>
+                </ion-item>
+              </ng-container>
             <ng-container *ngFor="let item of pack.PartInfo; index as j">
               <ion-item *ngIf="item.PartSelected == true" class="sub-item">
                   <ion-label class="details">P {{item.PartsName}}</ion-label>
                   <ion-note slot="end">{{!item.PartPrice ? '0' : item.PartPrice | currency:'￥':true:'1.2-2'}}</ion-note>
                   <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removePartItem(pack,j)"></ion-icon>
-              </ion-item>
-            </ng-container>
-            <ng-container *ngFor="let item of pack.Laborinfo; index as j" >
-              <ion-item *ngIf="item.LaborSelected == true" class="sub-item">
-                <ion-label class="details">L {{item.LaborDescription}}</ion-label>
-                <ion-note slot="end">{{item.LaborPrice | currency:'￥':true:'1.2-2'}}</ion-note>
-                <ion-icon name="remove-circle-outline" slot="end" color="danger" (click)="removeLaborItem(pack,j)"></ion-icon>
               </ion-item>
             </ng-container>
             </ng-container>
@@ -190,7 +190,7 @@
         </ion-col>
         <ion-col size="7" style="padding-top: 0;padding-bottom: 0">
             <!-- <ion-buttons> -->
-              <ion-button expand="round" size="medium" float-right (click)="comingsoon">结算</ion-button>
+              <ion-button expand="round" size="medium" float-right (click)="comingsoon()">结算</ion-button>
               <ion-button expand="round" size="medium" color="success" float-right (click)="save()">保存</ion-button>
             <!-- </ion-buttons> -->
         </ion-col>

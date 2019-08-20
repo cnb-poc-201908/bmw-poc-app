@@ -140,6 +140,8 @@ export class HomeResultsPage implements OnInit {
 
   ngOnInit() {
     this.init();
+    let d = new Date();
+    this.datePicker.value=d.getHours()+1 +":"+ (d.getMinutes()<10? "0"+d.getMinutes() : d.getMinutes());
   }
   init(){
     this.packages = [...this.store.maintenanceList,...this.store.compainList,...this.store.accidentList,...this.store.etcList,...this.store.checkList].sort((a,b)=>{
