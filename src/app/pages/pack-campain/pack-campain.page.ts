@@ -228,8 +228,10 @@ export class PackCampainPage implements OnInit {
     }
 
     if (this.selectedPackages.length > 0)  {
-      this.selectedPackages.forEach(item => {
+      this.selectedPackages.forEach((item:any) => {
         hours = hours + item['totalLaborHours'];
+        item.Laborinfo.forEach(i=>i.LaborSelected=true);
+        item.PartInfo.forEach(i=>i.PartSelected=true);
       });
       this.selectedHours = hours;
     } else {

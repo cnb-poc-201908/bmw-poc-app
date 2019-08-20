@@ -93,10 +93,15 @@ export class VirecleListPage implements OnInit {
   }
 
   RedirectToDetail(object) {
+    if(this.store.customer && this.store.customer.regno !== object.regno){
+      this.store.maintenanceList.length = 0;
+      this.store.compainList.length = 0;
+      this.store.compainList.length = 0;
+      this.store.accidentList.length = 0;
+      this.store.etcList.length = 0;
+      this.store.checkList.length = 0;
+    }
     this.store.customer = object;
-    // this.store.myPackages =[
-
-    // ];
     this.router.navigate(['home-results'], {
         queryParams: {
           object: JSON.stringify(object)

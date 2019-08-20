@@ -46,7 +46,10 @@ export class PackCheckPage implements OnInit {
     })
 
   }
-
+  ionViewDidEnter(){
+    this.description = this.store.checkList[0]  ? this.store.checkList[0].PackageName : "";
+    this.selectedHours = this.store.checkList[0] ? this.store.checkList[0].Laborinfo[0].LaborAmount : this.selectedHours;
+  }
   select(item) {
     if (this.description != "") {
       this.description = this.description + "," + item.PackageName;
