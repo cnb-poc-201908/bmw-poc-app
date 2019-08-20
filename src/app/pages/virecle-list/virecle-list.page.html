@@ -33,17 +33,17 @@
         <p>{{ dateTime }}</p>
   </ion-label>
   <img [src]="selectedImage" *ngIf="selectedImage">
-  <!-- <ion-card *ngIf="imageText">
+  <ion-card *ngIf="imageText && vericlelist.length < 1">
       <ion-card-content color="dark">
         <ion-grid>
           <ion-row>
             <ion-col>
-              <ion-label color="success">{{ imageText }}</ion-label>
+              <ion-label color="success">{{ vericlelist.length < 1 ? imageText + '无此车牌号' : imageText }}</ion-label>
             </ion-col>
           </ion-row>
         </ion-grid>
       </ion-card-content>
-  </ion-card> -->
+  </ion-card>
     <ion-card *ngFor="let item of vericlelist" color="light" (click)="RedirectToDetail(item)">
       <ion-card-content>
         <ion-grid>

@@ -152,7 +152,7 @@ export class HomeResultsPage implements OnInit {
         return 1;
       }
       return 0;
-    });
+    });console.log(this.packages);
     let obj = this.packages.reduce((a, c) => (a[c.RepairTypeCode] = (a[c.RepairTypeCode] || 0) + 1, a), Object.create(null));
     this.packageAmount = Object.keys(obj).length;
     this.camCount = this.store.campainListOfVehicle.filter((cam:any)=>cam.KEY===this.store.customer.virecle_info.CHASSIS).length;
